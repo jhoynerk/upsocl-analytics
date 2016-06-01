@@ -26,7 +26,7 @@ $ ->
     url = $(this).find('ol > li > input').val()
     button = '<a class="button open" data-url="' + url + '"> ' + url + ' </a>'
     $(this).append(button)
-    $(this).find('ol').hide()
+    $('.panel_urls > ol:first-child').hide()
     return
 
   $('.panel_urls').delegate 'a.open', 'click', ->
