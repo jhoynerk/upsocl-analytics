@@ -18,6 +18,7 @@ class Url < ActiveRecord::Base
   validates :line_id, :profile_id, presence: true
 
   before_save :set_title
+  before_create :set_update_date
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
@@ -47,6 +48,10 @@ class Url < ActiveRecord::Base
     if data_changed?
       self.title = Pismo[data].titles.last.split(' | ').first
     end
+  end
+
+  def set_update_date
+    self.data_updated_at = Time.now
   end
 
   def run_bg_task
