@@ -70,10 +70,10 @@ namespace :analytics do
     case time
     when '6month'
       @start_interval = 6.month.ago
-      @end_interval = 2.month.ago
+      @end_interval = 3.month.ago
     when 'month'
-      @start_interval = 2.month.ago
-      @end_interval = 3.week.ago
+      @start_interval = 3.month.ago
+      @end_interval = 2.week.ago
     when 'day'
       @start_interval = 3.week.ago
       @end_interval = Time.now

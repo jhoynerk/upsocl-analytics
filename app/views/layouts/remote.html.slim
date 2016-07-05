@@ -1,0 +1,18 @@
+doctype html
+html ng-app="upsocl"
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1.0" name="viewport"
+    title Upsocl Analytics
+    /! Main css styles
+    = stylesheet_link_tag    'application', media: 'all'
+    /! Main javascript files
+    = javascript_include_tag 'application'
+    
+    = csrf_meta_tags
+  body.top-navigation
+    #wrapper
+      /! Page wraper
+      #page-wrapper.gray-bg
+        .angular-container ng-view='' ui-view=''
+          = yield

@@ -1,0 +1,52 @@
+.ds-vc-widget.tag-list ng-repeat="reaction in reactions"
+  .ds-vc-category ng-click="addVote(reaction.id, url_path)"
+    a.ds-vc-category-icon.zoom
+      img.center-block.img-responsive src="{{ reaction.avatar.url }}"
+      .ds-vs-category-icon-text 
+        | {{ reaction.title }}
+    .ds-vc-category-stats ng-repeat="url in reactions_url"
+      span ng-if="url.reaction_id==reaction.id"
+        | {{ url.counts }}
+
+
+scss:
+  body{
+    margin: 0;
+  }
+  .ds-vc-widget {
+    display: block;
+    width: 100%;
+  }
+  .ds-vc-category {
+    float: left;
+    text-align: center;
+    width: 18%;
+    margin: 0 1%;
+    a {
+      text-decoration: none;
+      color: #3d3d3d;
+      cursor: pointer;
+      img {
+        height: 50px;
+        width: 50px;
+        border-style: none;
+      }
+      .ds-vs-category-icon-text {
+        padding: 3px 6px;
+        margin: 0;
+      }
+    }
+  }
+
+
+  .zoom:hover > img{
+    -moz-transform: scale(1);
+    -webkit-transition: -webkit-transform .3s;
+    -o-transition: -o-transform .3s;
+    transform: scale(1);
+    transition: transform .3s;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    zoom: 1.2;
+  }

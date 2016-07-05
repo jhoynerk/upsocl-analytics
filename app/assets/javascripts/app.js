@@ -1,14 +1,12 @@
-var app
-app = angular.module('upsocl',[
-  'templates',
-  'ui.router',
+var app = angular.module('upsocl',[
   'ngResource',
   'upsocl.controllers',
   'upsocl.services',
-  'daterangepicker'
+  'daterangepicker',
+  'ui.router'
 ])
 
-angular.module('upsocl').config(function($stateProvider) {
+app.config(function($stateProvider) {
   $stateProvider.state('campaigns', {
     url: '/',
     templateUrl: 'index_view',
@@ -17,6 +15,14 @@ angular.module('upsocl').config(function($stateProvider) {
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
+  }).state('viewReactions', {
+    url: '/reactions?url&post_id',
+    params: {
+        url: null,
+        post_id: null
+    },
+    templateUrl: 'view_reactions',
+    controller: 'ReactionsController'
   })
 }).run(function($state) {
   $state.go('campaigns');

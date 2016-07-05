@@ -1,6 +1,10 @@
-angular.module('upsocl.controllers', []).controller('CampaignListController', function($scope, $state, $window, Campaign) {
+myApp = angular.module('upsocl.controllers', [])
+
+myApp.controller('CampaignListController', function($scope, $state, $window, Campaign) {
   $scope.campaigns = Campaign.query();
-}).controller('CampaignUrlViewController', function($scope, $stateParams, Url) {
+})
+
+myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Url) {
   $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
   $scope.opts = run_datepicker();
   $scope.$watch('date', function(newDate) {
@@ -15,3 +19,25 @@ angular.module('upsocl.controllers', []).controller('CampaignListController', fu
       });
   }, false);
 })
+
+myApp.controller('ReactionsController', function($scope, $http, $stateParams, Reactions, ReactionData) {
+  $scope.reactions = Reactions.query();
+  $scope.url_path = $stateParams.url;
+  $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id } );
+  $scope.if_vote = false;
+  $scope.addVote = function(reaction_id, url_path){
+    if($scope.if_vote == false){
+      $http({
+        url: '/votes.json', 
+        method: "GET",
+        params: {reaction_id: reaction_id, url_path}
+      }).then(function(response) {
+        $scope.reactions_url = response.data
+        console.log($scope.reactions_url)
+      });
+      $scope.if_vote = true;
+    }
+  };
+
+});
+
