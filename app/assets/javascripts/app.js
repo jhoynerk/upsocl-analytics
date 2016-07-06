@@ -23,7 +23,7 @@ app.config(function($stateProvider) {
     },
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
-  })
+  });
 }).run(function($state) {
   $state.go('campaigns');
 });

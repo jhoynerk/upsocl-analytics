@@ -7,6 +7,6 @@ myApp.factory('Campaign', function($resource) {
 }).factory('Reactions', function($resource) {
   return $resource('/reactions.json');
 }).factory('ReactionData', function($resource) {
-  return $resource('/data_reactions.json', {method: 'GET', isArray: false });
+  return $resource('/data_reactions.json', { method: 'GET', isArray: false });
 });
 

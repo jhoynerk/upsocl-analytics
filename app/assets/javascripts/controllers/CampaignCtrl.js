@@ -32,8 +32,7 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
         method: "GET",
         params: {reaction_id: reaction_id, url_path}
       }).then(function(response) {
-        $scope.reactions_url = response.data
-        console.log($scope.reactions_url)
+        $scope.reactions_url = response.data;
       });
       $scope.if_vote = true;
     }
