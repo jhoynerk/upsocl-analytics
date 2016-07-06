@@ -23,10 +23,12 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Url
 myApp.controller('ReactionsController', function($scope, $http, $stateParams, Reactions, ReactionData) {
   $scope.reactions = Reactions.query();
   $scope.url_path = $stateParams.url;
-  $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id } );
+  if ($stateParams.url != null) {
+    $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id } );
+  }
   $scope.if_vote = false;
   $scope.addVote = function(reaction_id, url_path){
-    if($scope.if_vote == false){
+    if($scope.if_vote == false && url_path != null){
       $http({
         url: '/votes.json', 
         method: "GET",
