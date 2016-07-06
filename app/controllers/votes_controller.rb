@@ -2,8 +2,6 @@ class VotesController < ApplicationController
   respond_to :json
 
   def create
-    p "params_"*120
-    p params.inspect
     @url = Url.where(data: params[:url_path]).first
     if(@url.nil?)
 

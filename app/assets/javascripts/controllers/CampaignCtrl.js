@@ -30,7 +30,7 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
       $http({
         url: '/votes.json', 
         method: "GET",
-        params: {reaction_id: reaction_id, url_path}
+        params: {reaction_id: reaction_id, url_path: url_path}
       }).then(function(response) {
         $scope.reactions_url = response.data;
       });
