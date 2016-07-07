@@ -1,3 +1,5 @@
+
+h2.ds-vc-feelback-title ¿Cuál es tu reacción?
 .ds-vc-widget.tag-list ng-repeat="reaction in reactions"
   .ds-vc-category ng-click="addVote(reaction.id, url_path)"
     a.ds-vc-category-icon.zoom
@@ -12,10 +14,28 @@
 scss:
   body{
     margin: 0;
+    background-color: white;
+  }
+  .ds-vc-feelback-title {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    border-style: solid;
+    background-color: transparent;
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Helvetica,Arial,sans-serif;
+    border-width: 0;
+    border-color: #000;
+    padding: 0;
   }
   .ds-vc-widget {
     display: block;
     width: 100%;
+  }
+
+  .top-navigation #page-wrapper{
+    background-color: white;
   }
   .ds-vc-category {
     float: left;
