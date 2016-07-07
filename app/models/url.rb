@@ -120,4 +120,10 @@ class Url < ActiveRecord::Base
     return count_votes
   end
 
+  def remove_vote(reaction_id)
+    if votes.any?
+      all_votes = votes.where(reaction_id: reaction_id)
+      all_votes.last.delete unless all_votes.nil?
+    end
+  end
 end

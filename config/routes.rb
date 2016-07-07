@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   resources :reactions, only: [:index]
   get 'votes', to: 'votes#create'
+  get 'change_vote', to: 'votes#change_vote'
 
   resources :analytics do
     collection do

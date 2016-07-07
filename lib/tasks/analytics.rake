@@ -6,7 +6,7 @@ namespace :analytics do
     interval_range(arg_interval)
     if args.url_id.nil?
       interval = interval_status(arg_interval)
-      urls = Url.all.update_interval(@start_interval, @end_interval, interval.upcase)
+      urls = Url.all.update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc)
     else
       urls = [Url.find(args.url_id)]
     end

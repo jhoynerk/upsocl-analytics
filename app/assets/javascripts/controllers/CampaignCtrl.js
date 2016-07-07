@@ -26,9 +26,10 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
   if ($stateParams.url != null) {
     $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id } );
   }
-  $scope.if_vote = false;
+  $scope.new_vote = true;
+  $scope.vote = null;
   $scope.addVote = function(reaction_id, url_path){
-    if($scope.if_vote == false && url_path != null){
+    if($scope.new_vote == true && url_path != null){
       $http({
         url: '/votes.json', 
         method: "GET",
@@ -36,8 +37,19 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
       }).then(function(response) {
         $scope.reactions_url = response.data;
       });
-      $scope.if_vote = true;
+      $scope.new_vote = false;
+      $scope.vote = reaction_id;
+    }else{
+      $http({
+        url: '/change_vote.json',
+        method: "GET",
+        params: { reaction_id: reaction_id, url_path: url_path, before_vote: $scope.vote }
+      }).then( function(response) {
+        $scope.reactions_url = response.data;
+        $scope.vote = reaction_id;
+      })
     }
+
   };
 
 });
