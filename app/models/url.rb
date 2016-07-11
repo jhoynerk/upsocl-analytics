@@ -8,7 +8,7 @@ class Url < ActiveRecord::Base
   has_many :device_stadistics
   has_many :traffic_stadistics
   has_many :facebook_posts
-
+  has_many :votes
   accepts_nested_attributes_for :facebook_posts, allow_destroy: :true
 
   attr_accessor :params
@@ -112,4 +112,18 @@ class Url < ActiveRecord::Base
     countries.map(&:code)
   end
 
+  def count_votes
+    count_votes = []
+    Reaction.all.each do |r|
+      count_votes << { reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count }
+    end
+    return count_votes
+  end
+
+  def remove_vote(reaction_id)
+    if votes.any?
+      all_votes = votes.where(reaction_id: reaction_id)
+      all_votes.last.delete unless all_votes.nil?
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528134800) do
+ActiveRecord::Schema.define(version: 20160622150210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,15 @@ ActiveRecord::Schema.define(version: 20160528134800) do
 
   add_index "page_stadistics", ["url_id"], name: "index_page_stadistics_on_url_id", using: :btree
 
+  create_table "reactions", force: :cascade do |t|
+    t.string  "title",               null: false
+    t.integer "order",               null: false
+    t.string  "avatar",              null: false
+    t.integer "facebook_account_id"
+  end
+
+  add_index "reactions", ["facebook_account_id"], name: "index_reactions_on_facebook_account_id", using: :btree
+
   create_table "traffic_stadistics", force: :cascade do |t|
     t.integer  "url_id"
     t.date     "date"
@@ -206,5 +215,13 @@ ActiveRecord::Schema.define(version: 20160528134800) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "url_id"
+    t.integer "reaction_id"
+  end
+
+  add_index "votes", ["reaction_id"], name: "index_votes_on_reaction_id", using: :btree
+  add_index "votes", ["url_id"], name: "index_votes_on_url_id", using: :btree
 
 end

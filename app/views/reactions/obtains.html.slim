@@ -1,0 +1,50 @@
+.ds-vc-widget
+  - @reactions.each do |r|
+    .ds-vc-category
+      a.ds-vc-category-icon.zoom
+        = image_tag(r.avatar_url)
+        .ds-vs-category-icon-text = r.title
+      .ds-vc-category-stats
+        = @reactions.count
+
+scss:
+  body{
+    margin: 0;
+  }
+  .ds-vc-widget {
+    display: block;
+    width: 100%;
+  }
+  .ds-vc-category {
+    float: left;
+    text-align: center;
+    width: 18%;
+    margin: 0 1%;
+    a {
+      text-decoration: none;
+      color: #3d3d3d;
+      cursor: pointer;
+      img {
+        height: 50px;
+        width: 50px;
+        border-style: none;
+      }
+      .ds-vs-category-icon-text {
+        padding: 3px 6px;
+        margin: 0;
+      }
+    }
+  }
+
+
+  .zoom:hover > img{
+    -moz-transform: scale(1);
+    -webkit-transition: -webkit-transform .3s;
+    -o-transition: -o-transform .3s;
+    transform: scale(1);
+    transition: transform .3s;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    zoom: 1.2;
+  }

@@ -33,6 +33,12 @@ es:
       dfp_stadistic:
         one: Estadistica de DFP
         other: Estadisticas de DFP
+      reaction:
+        one: Reaccion
+        other: Reaciones
+      facebook_account:
+        one: Facebook
+        other: Facebook
     attributes:
       user/active:
         true_value: Cliente Activo
