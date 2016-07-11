@@ -34,7 +34,7 @@ class FacebookConnection
   end
 
   def count_shares
-    consult_shares["shares"]["count"]
+    (consult_shares["shares"].nil?) ? 0 : consult_shares["shares"]["count"]
   end
 
   private

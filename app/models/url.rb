@@ -1,5 +1,5 @@
 class Url < ActiveRecord::Base
-
+  has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
   has_many :page_stadistics
@@ -18,11 +18,12 @@ class Url < ActiveRecord::Base
   validates :line_id, :profile_id, presence: true
 
   before_save :set_title
+  before_create :set_update_date
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
 
-  scope :update_interval, -> (interval_start, interval_end) { where('created_at between ? and ?', interval_start, interval_end) }
+  scope :update_interval, -> (interval_start, interval_end, interval) { where( '(data_updated_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
 
   def social_count
     SocialShares.selected data, %w(facebook google twitter)
@@ -37,6 +38,9 @@ class Url < ActiveRecord::Base
         counts[:comments] = counts[:comments] + fbc.count_comments.to_i
         counts[:shares] = counts[:shares] + fbc.count_shares.to_i
       end
+    else
+      info_social = SocialShares.selected data, %w(facebook)
+      counts = { likes: info_social[:facebook]["like_count"], comments: info_social[:facebook]["comment_count"], shares: info_social[:facebook]["share_count"] }
     end
     counts
   end
@@ -47,6 +51,10 @@ class Url < ActiveRecord::Base
     end
   end
 
+  def set_update_date
+    self.data_updated_at = self.created_at
+  end
+
   def run_bg_task
     if self.data_changed?
       make_screenshot
@@ -55,7 +63,7 @@ class Url < ActiveRecord::Base
   end
 
   def run_analytics_task
-    Rake::Task["analytics:add_records"].invoke('week', id)
+    Rake::Task["analytics:add_records"].invoke('week', 'day', id)
   end
   handle_asynchronously :run_analytics_task
 

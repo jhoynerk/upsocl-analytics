@@ -1,12 +1,23 @@
 ul
   - urls.each do |u|
-      li 
-        p 
-          strong Url Id 
-          span = " = #{u.id}" 
-        p 
-          strong Url
-          span = " = #{u.data}"
-        p 
-          strong Line ID
-          span = " = #{u.line_id}" 
+    li
+      p
+        strong Url Id
+        span = " = #{u.id}"
+      p
+        strong Url
+        span = " = #{u.data}"
+      p
+        strong Line ID
+        span = " = #{u.line_id}"
+      p
+        strong Facebook Post Count
+        span = " = #{u.facebook_posts.count}"
+        ul
+          - u.facebook_posts.each do |fb|
+            li
+              p
+                strong User facebook
+                span = " = #{fb.facebook_account.name}  "
+                strong Post ID facebook
+                span = " = #{fb.post_id}"

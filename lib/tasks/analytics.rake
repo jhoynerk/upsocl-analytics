@@ -2,10 +2,11 @@ namespace :analytics do
   desc "Call Google Analytics Api for get data of url"
   task :add_records, [:time, :interval, :url_id] => :environment do |t, args|
     time_range(args.time)
-    interval_range(args.interval)
-
+    arg_interval = args.interval
+    interval_range(arg_interval)
     if args.url_id.nil?
-      urls = Url.all.update_interval(@start_interval, @end_interval)
+      interval = interval_status(arg_interval)
+      urls = Url.all.update_interval(@start_interval, @end_interval, interval.upcase)
     else
       urls = [Url.find(args.url_id)]
     end
@@ -69,13 +70,17 @@ namespace :analytics do
     case time
     when '6month'
       @start_interval = 6.month.ago
-      @end_interval = 2.month.ago
+      @end_interval = 3.month.ago
     when 'month'
-      @start_interval = 2.month.ago
-      @end_interval = 3.week.ago
+      @start_interval = 3.month.ago
+      @end_interval = 2.week.ago
     when 'day'
       @start_interval = 3.week.ago
       @end_interval = Time.now
     end
+  end
+
+  def interval_status(time)
+    (time == '6month') ? 'month6' : time
   end
 end

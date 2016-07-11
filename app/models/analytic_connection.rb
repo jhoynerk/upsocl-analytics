@@ -1,9 +1,6 @@
-require 'openssl'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class AnalyticConnection
   def initialize(profile_id = "92974712")
     @user = Legato::User.new GoogleOauth2Installed.access_token
-    p @user.accounts
     @profile = search_profile(profile_id)
   end
 
@@ -31,7 +28,7 @@ class AnalyticConnection
   def search_profile(id)
     all_profiles.each do |profile|
       if profile.id == id
-        profile and return
+        return profile
       end
     end
   end
