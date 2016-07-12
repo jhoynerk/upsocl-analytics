@@ -11,4 +11,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( graphics.js )
 Rails.application.config.assets.paths << Rails.root.join("vendor","assets","bower_components")
 Rails.application.config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
-Rails.application.assets.register_engine('.slim', Slim::Template)
+Rails.application.config.assets.configure do |env|
+  env.register_engine('.slim', Slim::Template)
+end
