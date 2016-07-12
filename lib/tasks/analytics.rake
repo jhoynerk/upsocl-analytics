@@ -79,7 +79,22 @@ namespace :analytics do
       @end_interval = Time.now
     end
   end
-
+=begin  
+  def change_reference(reference)
+    case reference
+    when 'referral'
+      'Facebook'
+    when 'Pagina'
+      'Upscol'
+    when 'organic'
+      'Buscadores de google'
+    when 'direct'
+      'Directo'
+    else
+      reference
+    end
+  end
+=end
   def interval_status(time)
     (time == '6month') ? 'month6' : time
   end

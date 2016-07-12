@@ -44,13 +44,23 @@ function make_pie_charts(info, legend_id, canvas_id, label){
   var colors = ["#1ab394", "#1c84c6","#ed5565","#23c6c8","#f8ac59","#9E9E9E"];
 
   var arr = [];
-
+  var traffic_type = {
+    Referral: 'Facebook',
+    Pagina: 'Upsocl',
+    Organic: 'Buscadores de Google',
+    Direct: 'Directo',
+    Tablet: 'Tablet',
+    Desktop: 'Desktop',
+    Mobile: 'Mobile'
+  };
   $.each(info, function(index, i){
-    arr.push({
-      value: parseInt(i.pageviews),
-      color: colors[index],
-      label: i[label]
-    });
+    if(i[label] != 'Facebook' ) {
+      arr.push({
+        value: parseInt(i.pageviews),
+        color: colors[index],
+        label: traffic_type[i[label]]
+      });
+    }
   });
   var total = totalize(info, 'pageviews');
 
