@@ -48,7 +48,7 @@ function make_pie_charts(info, legend_id, canvas_id, label){
     Referral: 'Facebook',
     Pagina: 'Upsocl',
     Organic: 'Buscadores de Google',
-    Direct: 'Direct',
+    Direct: 'Directo',
     Tablet: 'Tablet',
     Desktop: 'Desktop',
     Mobile: 'Mobile'
