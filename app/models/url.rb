@@ -126,4 +126,16 @@ class Url < ActiveRecord::Base
       all_votes.last.delete unless all_votes.nil?
     end
   end
+
+  def next_url
+    campaign_urls.where('urls.id > ?', id).first
+  end
+
+  def previous_url
+    campaign_urls.where('urls.id < ?', id).last
+  end
+
+  def campaign_urls
+    campaign.urls
+  end
 end

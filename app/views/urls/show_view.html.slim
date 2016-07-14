@@ -13,6 +13,14 @@
     h2.ng-binding.text-center Rango de Fechas
     input#daterange.input-sm.form-control.text-center.date-picker date-range-picker='' options="opts" ng-model="date" type="text" placeholder='Selecciones fechas a consultar' /
     button.btn.btn-primary.btn-block onClick="get_report()" Generar Reporte
+  .col-sm-offset-4.col-sm-4
+    div ng-if="url.next_url != nil"
+      a.btn.btn-outline.btn-info.pull-right ui-sref='viewCampaignUrl({ id: url.next_url.id })'
+        | Siguiente 
+        i.fa.fa-arrow-right 
+    div ng-if="url.previous_url != nil"
+      a.btn.btn-outline.btn-info.pull-left ui-sref='viewCampaignUrl({ id: url.previous_url.id })'
+        i.fa.fa-arrow-left  Anterior
 div#url_id data="{{ url.id }}"
 .wrapper.wrapper-content
   .ibox-content.m-b-sm.border-bottom
