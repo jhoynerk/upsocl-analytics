@@ -34,7 +34,7 @@
           .list-group
             span.list-group-item ng-repeat="url in campaign.urls"
               .col-lg-2
-                button.btn.btn-outline.btn-info ui-sref='viewCampaignUrl({ id: url.id })'
+                a.btn.btn-outline.btn-info ui-sref='viewCampaignUrl({ id: url.id })'
                   i.fa.fa-eye  Ver Campa&ntilde;a
               .col-lg-10
                 a href="{{ url.data }}" target='_blank' 
