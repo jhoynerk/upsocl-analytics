@@ -2,7 +2,7 @@ class ReactionsController < ApplicationController
   layout false
 
   def index
-    @reactions = Reaction.all
+    @reactions = Reaction.all.order(:order)
     respond_to do |format|
       format.html {}
       format.json { render :json => @reactions }
