@@ -1,15 +1,12 @@
 
 h2.ds-vc-feelback-title ¿Cuál es tu reacción?
 .ds-vc-widget.tag-list ng-repeat="reaction in reactions"
-  .ds-vc-category ng-click="addVote(reaction.id, url_path)"
-    a.ds-vc-category-icon.zoom
+  .ds-vc-category.grow ng-click="addVote(reaction.id, url_path)"
+    a.ds-vc-category-icon
       img.center-block.img-responsive src="{{ reaction.avatar.url }}"
-      .ds-vs-category-icon-text 
-        | {{ reaction.title }}
     .ds-vc-category-stats ng-repeat="url in reactions_url"
       span ng-if="url.reaction_id==reaction.id"
         | {{ url.counts }}
-
 
 scss:
   body{
@@ -47,8 +44,8 @@ scss:
       color: #3d3d3d;
       cursor: pointer;
       img {
-        height: 50px;
-        width: 50px;
+        height: 60px;
+        width: 60px;
         border-style: none;
       }
       .ds-vs-category-icon-text {
@@ -58,15 +55,8 @@ scss:
     }
   }
 
+  .grow { transition: all .2s ease-in-out; }
+  .grow:hover { transform: scale(1.4); }
 
-  .zoom:hover > img{
-    -moz-transform: scale(1);
-    -webkit-transition: -webkit-transform .3s;
-    -o-transition: -o-transform .3s;
-    transform: scale(1);
-    transition: transform .3s;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    zoom: 1.2;
-  }
+
+
