@@ -1,12 +1,18 @@
 ActiveAdmin.register Reaction do
-  permit_params :title, :order, :avatar
+  permit_params :title, :avatar
 
   index do
     selectable_column
     id_column
     column :title
-    column :order
     actions
+  end
+
+  form do |f|
+    f.inputs "Información Reacción" do
+      f.input :title
+      f.input :avatar
+    end
   end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
