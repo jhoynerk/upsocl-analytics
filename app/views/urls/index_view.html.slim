@@ -14,7 +14,7 @@
   .faq-item ng-repeat="campaign in campaigns"
     .row
       .col-md-7
-        a.faq-question data-toggle="collapse" href="#camp{{campaign.id}}" 
+        div.pointer.faq-question data-toggle="collapse" href="#camp{{campaign.id}}" 
           | {{ campaign.name }}
         small
           i.fa.fa-clock-o
