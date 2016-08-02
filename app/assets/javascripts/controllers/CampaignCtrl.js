@@ -4,9 +4,10 @@ myApp.controller('CampaignListController', function($scope, $state, $window, Cam
   $scope.campaigns = Campaign.query();
 })
 
-myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Url) {
+myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url) {
   $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
   $scope.opts = run_datepicker();
+  $scope.reactions = Reactions.query();
   $scope.$watch('date', function(newDate) {
     var startDate = newDate.startDate.format('YYYY-MM-DD');
     var endDate = newDate.endDate.format('YYYY-MM-DD');
@@ -18,6 +19,16 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Url
         $scope.datePicker.date = {startDate: null, endDate: null};
       });
   }, false);
+})
+
+myApp.controller('CampaignAllUrlViewController', function($scope, $stateParams, CampaignFull, Reactions) {
+  $scope.reactions = Reactions.query();
+  //$scope.campaign = Campaign.get({ id: $stateParams.id});
+  $scope.campaigns = CampaignFull.query();
+  $scope.sort = {
+      type: 'id',
+      reverse: false
+  };
 })
 
 myApp.controller('ReactionsController', function($scope, $http, $stateParams, Reactions, ReactionData) {

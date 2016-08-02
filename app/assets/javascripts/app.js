@@ -15,6 +15,10 @@ app.config(function($stateProvider) {
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
+  }).state('viewAllCampaignUrl', { //state for showing single movie
+    url: '/campaigns',
+    templateUrl: 'show_all_view',
+    controller: 'CampaignAllUrlViewController'
   }).state('viewReactions', {
     url: '/reactions?url&post_id',
     params: {

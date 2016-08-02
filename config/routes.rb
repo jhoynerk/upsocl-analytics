@@ -16,10 +16,13 @@ Rails.application.routes.draw do
   get "home/minor"
 
   resources :campaigns, only: [:index, :show]
+
+
   resources :urls, only: [:show]
 
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
+  get 'show_all_view', to: 'urls#show_all_view'
   
   get 'template', to: 'template#reactions'
   get 'template/index_view', to: 'reactions#index_view'
@@ -29,6 +32,7 @@ Rails.application.routes.draw do
   resources :reactions, only: [:index]
   get 'votes', to: 'votes#create'
   get 'change_vote', to: 'votes#change_vote'
+  get 'campaigns_full', to: 'campaigns#full_info'
 
   resources :analytics do
     collection do

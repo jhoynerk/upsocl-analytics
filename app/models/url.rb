@@ -93,18 +93,18 @@ class Url < ActiveRecord::Base
     objects = ['dfp_stadistics','device_stadistics','traffic_stadistics']
     result = {}
     objects.each do |obj|
-      result[obj] = self.send(obj).where( date: @params[:start_date]..@params[:end_date] ).totals
+      result[obj] = self.send(obj).where( date: datetime ).totals
     end
-    result['country_stadistics'] = country_stadistics.where( date: @params[:start_date]..@params[:end_date] ).totals(associated_countries)
-    result['page_stadistics'] = country_stadistics.where( date: @params[:start_date]..@params[:end_date] ).totals_by_date(associated_countries)
+    result['country_stadistics'] = country_stadistics.where( date: datetime ).totals(associated_countries)
+    result['page_stadistics'] = country_stadistics.where( date: datetime ).totals_by_date(associated_countries)
     result
   end
 
   def totals_stadistics
     if countries.any?
-      country_stadistics.where( date: @params[:start_date]..@params[:end_date] ).totals_filtered_by(associated_countries)[0]
+      country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)[0]
     else
-      page_stadistics.where( date: @params[:start_date]..@params[:end_date] ).totals_in_range
+      page_stadistics.where( date: datetime ).totals_in_range
     end
   end
 
@@ -137,5 +137,13 @@ class Url < ActiveRecord::Base
 
   def campaign_urls
     campaign.urls
+  end
+
+  def datetime
+    unless @params.nil?
+      @params[:start_date]..@params[:end_date]
+    else
+      Date.today.ago(2.year)..Date.today
+    end
   end
 end
