@@ -40,7 +40,11 @@ class Url < ActiveRecord::Base
       end
     else
       info_social = SocialShares.selected data, %w(facebook)
-      counts = { likes: info_social[:facebook]["like_count"], comments: info_social[:facebook]["comment_count"], shares: info_social[:facebook]["share_count"] }
+      unless info_social[:facebook].nil?
+        counts = { likes: info_social[:facebook]["like_count"], comments: info_social[:facebook]["comment_count"], shares: info_social[:facebook]["share_count"] }
+      else
+        counts = { likes: '--', comments: '--', shares: '--' }
+      end
     end
     counts
   end
