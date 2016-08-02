@@ -119,7 +119,7 @@ class Url < ActiveRecord::Base
   def count_votes
     count_votes = []
     Reaction.all.each do |r|
-      count_votes << { reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count }
+      count_votes << { title: r.title, reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count }
     end
     return count_votes
   end

@@ -213,7 +213,11 @@ div#url_id data="{{ url.id }}"
                     img.center-block.img-responsive src="{{ reaction.avatar.url }}"
                   .ds-vc-category-stats ng-repeat="u in url.count_votes"
                     span ng-if="u.reaction_id==reaction.id"
-                      | {{ u.counts }}
+                      p
+                        strong.text-center 
+                          | {{ u.title }}
+                      p
+                        | {{ u.counts }}
 = javascript_include_tag 'graphics'
 
 scss:
