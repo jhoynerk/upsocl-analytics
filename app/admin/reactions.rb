@@ -13,6 +13,7 @@ ActiveAdmin.register Reaction do
       f.input :title
       f.input :avatar
     end
+    f.actions
   end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
