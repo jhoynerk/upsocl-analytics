@@ -119,7 +119,7 @@ div#url_id data="{{ url.id }}"
           h5 Atención
         .ibox-content
           h1.no-margins
-            | {{ (url.totals_stadistics.avgtimeonpage * url.totals_stadistics.pageviews) / 60 | number: 2}}
+            | {{ url.attention | number: 2}}
           small Tiempo de Atención Total (Horas)
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
