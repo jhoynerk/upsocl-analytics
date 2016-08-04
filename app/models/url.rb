@@ -18,6 +18,7 @@ class Url < ActiveRecord::Base
   validates :line_id, :profile_id, presence: true
 
   before_save :set_title
+  before_create :set_facebook
   before_create :set_update_date
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
@@ -29,24 +30,8 @@ class Url < ActiveRecord::Base
     SocialShares.selected data, %w(facebook google twitter)
   end
 
-  def total_count_facebook
-    counts = { likes: 0, comments: 0, shares: 0 }
-    if facebook_posts.any?
-      facebook_posts.each do |fbp|
-        fbc = FacebookConnection.new(fbp.post_id, fbp.account_id)
-        counts[:likes] = counts[:likes] + fbc.count_likes.to_i
-        counts[:comments] = counts[:comments] + fbc.count_comments.to_i
-        counts[:shares] = counts[:shares] + fbc.count_shares.to_i
-      end
-    else
-      info_social = SocialShares.selected data, %w(facebook)
-      unless info_social[:facebook].nil?
-        counts = { likes: info_social[:facebook]["like_count"], comments: info_social[:facebook]["comment_count"], shares: info_social[:facebook]["share_count"] }
-      else
-        counts = { likes: '--', comments: '--', shares: '--' }
-      end
-    end
-    counts
+  def set_facebook
+    self.attributes = AnalyticFacebook.new(self).update
   end
 
   def set_title
@@ -117,11 +102,9 @@ class Url < ActiveRecord::Base
   end
 
   def count_votes
-    count_votes = []
-    Reaction.all.each do |r|
-      count_votes << { title: r.title, reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count }
+    Reaction.all.map do |r| 
+      {title: r.title, reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count} 
     end
-    return count_votes
   end
 
   def remove_vote(reaction_id)
@@ -149,5 +132,9 @@ class Url < ActiveRecord::Base
     else
       Date.today.ago(2.year)..Date.today
     end
+  end
+
+  def has_facebook_post?
+    facebook_posts.any?
   end
 end

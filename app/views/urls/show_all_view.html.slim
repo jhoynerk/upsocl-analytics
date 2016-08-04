@@ -49,11 +49,11 @@
                 td 
                   | {{ url.totals_stadistics.pageviews }}
                 td 
-                  | {{ url.total_count_facebook.shares }}
+                  | {{ url.facebook_shares }}
                 td 
-                  | {{ url.total_count_facebook.likes }}
+                  | {{ url.facebook_likes }}
                 td 
-                  | {{ url.total_count_facebook.comments }}
+                  | {{ url.facebook_comments }}
                 td ng-repeat="reaction in reactions"
                   div ng-repeat="u in url.count_votes"
                     div ng-if="u.reaction_id==reaction.id"

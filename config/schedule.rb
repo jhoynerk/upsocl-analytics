@@ -11,6 +11,10 @@ set :output, "log/cron_log.log"
 every 1.day, :at => '10:00 am' do
   rake "analytics:add_records[day]"
 end
+
+every 1.day, :at => '2:00 am' do
+  rake "facebook:add_data"
+end
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"

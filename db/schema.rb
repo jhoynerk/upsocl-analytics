@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622150210) do
+ActiveRecord::Schema.define(version: 20160804014257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,15 +183,18 @@ ActiveRecord::Schema.define(version: 20160622150210) do
   create_table "urls", force: :cascade do |t|
     t.string   "data"
     t.integer  "campaign_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "title"
     t.integer  "line_id"
     t.string   "screenshot"
-    t.boolean  "publicity",       default: true
+    t.boolean  "publicity",         default: true
     t.datetime "data_updated_at"
-    t.string   "profile_id",      default: "111669814"
-    t.integer  "interval_status", default: 0
+    t.string   "profile_id",        default: "111669814"
+    t.integer  "interval_status",   default: 0
+    t.integer  "facebook_likes",    default: 0
+    t.integer  "facebook_comments", default: 0
+    t.integer  "facebook_shares",   default: 0
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree

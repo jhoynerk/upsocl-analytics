@@ -12,7 +12,7 @@ class CampaignsController < ApplicationController
     @campaign = current_user.campaigns.find(params[:id]).decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaign.as_json(include: { urls: { methods: [ :social_count, :total_count_facebook, :stadistics, :totals_stadistics, :count_votes] }}) }
+      format.json { render :json => @campaign.as_json(include: { urls: { methods: [ :social_count, :stadistics, :totals_stadistics, :count_votes] }}) }
     end
   end
 
@@ -20,7 +20,7 @@ class CampaignsController < ApplicationController
     @campaigns = checked_campaings.decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json(methods: :num_urls, include: [urls: { methods: [ :social_count, :total_count_facebook, :stadistics, :totals_stadistics, :count_votes] }, users: { only: [:name] } ] ) }
+      format.json { render :json => @campaigns.as_json(methods: :num_urls, include: [urls: { methods: [ :social_count, :stadistics, :totals_stadistics, :count_votes] }, users: { only: [:name] } ] ) }
     end
   end
 

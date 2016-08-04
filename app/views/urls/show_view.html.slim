@@ -92,7 +92,7 @@ div#url_id data="{{ url.id }}"
           h5 Shares
         .ibox-content
           h1.no-margins
-            | {{ url.total_count_facebook.shares }}
+            | {{ url.facebook_shares }}
           small Veces Compartido
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
@@ -101,7 +101,7 @@ div#url_id data="{{ url.id }}"
           h5 Likes
         .ibox-content
           h1.no-margins
-            | {{ url.total_count_facebook.likes }}
+            | {{ url.facebook_likes }}
           small Me gusta!
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
@@ -110,7 +110,7 @@ div#url_id data="{{ url.id }}"
           h5 Comments
         .ibox-content
           h1.no-margins
-            | {{ url.total_count_facebook.comments }}
+            | {{ url.facebook_comments }}
           small Veces Comentado
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
