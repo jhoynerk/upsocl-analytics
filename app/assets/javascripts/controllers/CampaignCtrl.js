@@ -1,12 +1,15 @@
 myApp = angular.module('upsocl.controllers', [])
 
-myApp.controller('CampaignListController', function($scope, $state, $window, Campaign) {
+myApp.controller('CampaignListController', function($scope, $state, $window, Campaign, User) {
   $scope.campaigns = Campaign.query();
+  $scope.user = User.get();
+  console.log($scope.user);
 })
 
-myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url) {
+myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, User) {
   $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
   $scope.opts = run_datepicker();
+  $scope.user = User.get();
   $scope.reactions = Reactions.query();
   $scope.$watch('date', function(newDate) {
     var startDate = newDate.startDate.format('YYYY-MM-DD');
@@ -22,8 +25,8 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
 })
 
 
-myApp.controller('CampaignAllUrlViewController', function($scope, $stateParams, CampaignFull, Reactions) {
-  $scope.reactions = Reactions.query();
+myApp.controller('CampaignAllUrlViewController', function($scope, $stateParams, User) {
+  $scope.user = User.get();
 });
 
 
@@ -39,9 +42,12 @@ function WithAjaxCtrl(DTOptionsBuilder, DTColumnBuilder) {
         ]
     };
     vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json')
-        .withPaginationType('full_numbers');
+        .withPaginationType('full_numbers')
     vm.dtColumns = [
-        DTColumnBuilder.newColumn('title').withTitle('Título'),
+        DTColumnBuilder.newColumn('title').withTitle('Título').renderWith(function(data, type, full) {
+            return '<a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a> ';
+        }),
+        DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
         DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
         DTColumnBuilder.newColumn('shares').withTitle('Shares'),
         DTColumnBuilder.newColumn('comments').withTitle('Comments'),
@@ -88,5 +94,9 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
 
   };
 
+});
+
+myApp.controller('MyUser',function($scope, User) {
+    $scope.user = User.get();
 });
 

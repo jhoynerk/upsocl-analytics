@@ -140,12 +140,12 @@ class Url < ActiveRecord::Base
 
   def builder_facebook
     {
+      id: id,
       title: title,
       visitas: totals_stadistics[:pageviews],
       shares: facebook_shares,
       comments: facebook_comments,
-      likes: facebook_likes,
-
+      likes: facebook_likes
     }
   end
 

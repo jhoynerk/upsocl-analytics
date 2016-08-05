@@ -6,4 +6,11 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path
     campaigns_path
   end
+
+  def user
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => current_user }
+    end
+  end
 end

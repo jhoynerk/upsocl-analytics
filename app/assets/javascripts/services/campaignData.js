@@ -4,6 +4,8 @@ myApp.factory('Campaign', function($resource) {
   return $resource('/campaigns/:id.json');
 }).factory('CampaignFull', function($resource) {
   return $resource('/campaigns_full.json');
+}).factory('User', function($resource) {
+  return $resource('/user.json');
 }).factory('Url', function($resource) {
   return $resource('/urls/:id.json');
 }).factory('Reactions', function($resource) {

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     authenticated :user do
       root 'campaigns#index', as: :authenticated_root
+      get 'campaigns_full', to: 'campaigns#full_info'
     end
 
     unauthenticated do
@@ -16,10 +17,7 @@ Rails.application.routes.draw do
   get "home/minor"
 
   resources :campaigns, only: [:index, :show]
-
-
   resources :urls, only: [:show]
-
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
   get 'show_all_view', to: 'urls#show_all_view'
@@ -32,7 +30,7 @@ Rails.application.routes.draw do
   resources :reactions, only: [:index]
   get 'votes', to: 'votes#create'
   get 'change_vote', to: 'votes#change_vote'
-  get 'campaigns_full', to: 'campaigns#full_info'
+  get 'user', to: 'application#user'
 
   resources :analytics do
     collection do
