@@ -21,15 +21,39 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
   }, false);
 })
 
+
 myApp.controller('CampaignAllUrlViewController', function($scope, $stateParams, CampaignFull, Reactions) {
   $scope.reactions = Reactions.query();
-  //$scope.campaign = Campaign.get({ id: $stateParams.id});
-  $scope.campaigns = CampaignFull.query();
-  $scope.sort = {
-      type: 'id',
-      reverse: false
-  };
-})
+});
+
+
+function WithAjaxCtrl(DTOptionsBuilder, DTColumnBuilder) {
+    var vm = this;
+    vm.options = {
+        aoColumnDefs: [
+            {
+              sType: "numeric",
+              aTargets: 0,
+              bSortable: false
+            }
+        ]
+    };
+    vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json')
+        .withPaginationType('full_numbers');
+    vm.dtColumns = [
+        DTColumnBuilder.newColumn('title').withTitle('Título'),
+        DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
+        DTColumnBuilder.newColumn('shares').withTitle('Shares'),
+        DTColumnBuilder.newColumn('comments').withTitle('Comments'),
+        DTColumnBuilder.newColumn('likes').withTitle('Likes'),
+        DTColumnBuilder.newColumn('Divertido').withTitle('Divertido'),
+        DTColumnBuilder.newColumn('Contento').withTitle('Contento'),
+        DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado'),
+        DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente')
+    ];
+};
+
+myApp.controller('WithAjaxCtrl', WithAjaxCtrl);
 
 myApp.controller('ReactionsController', function($scope, $http, $stateParams, Reactions, ReactionData) {
   $scope.reactions = Reactions.query();

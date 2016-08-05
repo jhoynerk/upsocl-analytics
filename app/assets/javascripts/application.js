@@ -24,6 +24,8 @@
 //= require angular-ui-router/release/angular-ui-router
 //= require bootstrap-daterangepicker/daterangepicker.js
 //= require angular-rails-templates
+//= require dataTables/jquery.dataTables
+//= require angular-datatables
 //= require_tree ./services
 //= require_tree ./controllers
 //= require app
