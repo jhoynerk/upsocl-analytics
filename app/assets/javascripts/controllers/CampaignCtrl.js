@@ -47,9 +47,10 @@ function WithAjaxCtrl(DTOptionsBuilder, DTColumnBuilder) {
         DTColumnBuilder.newColumn('comments').withTitle('Comments'),
         DTColumnBuilder.newColumn('likes').withTitle('Likes'),
         DTColumnBuilder.newColumn('Divertido').withTitle('Divertido'),
-        DTColumnBuilder.newColumn('Contento').withTitle('Contento'),
-        DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado'),
-        DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente')
+        DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente'),
+        DTColumnBuilder.newColumn('Sorprendido').withTitle('Sorprendido'),
+        DTColumnBuilder.newColumn('Molesto').withTitle('Molesto'),
+        DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado')
     ];
 };
 
