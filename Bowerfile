@@ -10,3 +10,4 @@ asset "fontawesome"
 asset "slimScroll"
 asset 'angular-resource'
 asset 'angular-daterangepicker'
+asset 'angular-datatables'
