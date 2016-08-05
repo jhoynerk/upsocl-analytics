@@ -17,14 +17,21 @@ class CampaignsController < ApplicationController
   end
 
   def full_info
-    @campaigns = checked_campaings.decorate
+    @urls = Url.all.order(id: :asc)
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json(methods: :num_urls, include: [urls: { methods: [ :social_count, :stadistics, :totals_stadistics, :count_votes] }, users: { only: [:name] } ] ) }
+      format.json { render :json => builder_data }
     end
   end
 
   private
+
+  def builder_data
+    @urls.map do |url|
+      url.builder_facebook.merge!(url.builder_reactions)
+    end
+    #@urls.as_json(methods: [ :totals_stadistics, :count_votes ] )
+  end
 
   def checked_campaings
     if current_user.admin?

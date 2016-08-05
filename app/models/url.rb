@@ -137,4 +137,22 @@ class Url < ActiveRecord::Base
   def has_facebook_post?
     facebook_posts.any?
   end
+
+  def builder_facebook
+    {
+      title: title,
+      visitas: totals_stadistics[:pageviews],
+      shares: facebook_shares,
+      comments: facebook_comments,
+      likes: facebook_likes,
+
+    }
+  end
+
+  def builder_reactions 
+    array = Reaction.all.map do |r|
+      [ "#{r.title}", votes.where("votes.reaction_id": r.id).count ]
+    end
+    Hash[*array.flatten]
+  end
 end
