@@ -17,7 +17,8 @@ class CampaignsController < ApplicationController
   end
 
   def full_info
-    @urls = Url.all.order(id: :asc)
+    @urls = checked_urls
+
     respond_to do |format|
       format.html {}
       format.json { render :json => builder_data }
@@ -30,7 +31,14 @@ class CampaignsController < ApplicationController
     @urls.map do |url|
       url.builder_facebook.merge!(url.builder_reactions)
     end
-    #@urls.as_json(methods: [ :totals_stadistics, :count_votes ] )
+  end
+
+  def checked_urls
+    if current_user.admin?
+      Url.all.order(id: :asc)
+    else
+      return Url.where(campaign_id: current_user.campaigns.each(&:id))
+    end
   end
 
   def checked_campaings
