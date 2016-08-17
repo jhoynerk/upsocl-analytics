@@ -14,4 +14,5 @@
  *= require bootstrap-daterangepicker/daterangepicker.css
  *= require style
  *= require dataTables/jquery.dataTables
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  */

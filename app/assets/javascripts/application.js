@@ -25,6 +25,7 @@
 //= require bootstrap-daterangepicker/daterangepicker.js
 //= require angular-rails-templates
 //= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require angular-datatables
 //= require chosen.jquery.min.js
 //= require angular-chosen-localytics

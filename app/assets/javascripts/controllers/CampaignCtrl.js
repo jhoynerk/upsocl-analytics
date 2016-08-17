@@ -43,6 +43,7 @@ function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
   };
   vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json')
       .withPaginationType('full_numbers')
+      .withLanguageSource('/assets/spanish.json')
   vm.dtColumns = [
       DTColumnBuilder.newColumn('title').withTitle('Título').renderWith(function(data, type, full) {
           return '<a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a> ';
@@ -61,6 +62,7 @@ function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
   $scope.selected = function(tags){
     vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json?tags='+tags)
       .withPaginationType('full_numbers')
+      .withLanguageSource('/assets/spanish.json')
   };
 };
 
