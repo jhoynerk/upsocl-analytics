@@ -26,7 +26,7 @@ class Url < ActiveRecord::Base
   before_destroy { |record| clean_screenshot(record.id) }
 
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(data_updated_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
-
+  scope :with_tags, -> (tags) { where(tags: {id: tags}) }
   def social_count
     SocialShares.selected data, %w(facebook google twitter)
   end

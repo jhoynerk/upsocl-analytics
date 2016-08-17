@@ -18,7 +18,7 @@ class CampaignsController < ApplicationController
 
   def full_info
     @urls = checked_urls
-
+    @urls = @urls.includes('tags').with_tags(params[:tags]) unless params[:tags].nil? or params[:tags] == ''
     respond_to do |format|
       format.html {}
       format.json { render :json => builder_data }
