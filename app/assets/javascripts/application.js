@@ -26,6 +26,8 @@
 //= require angular-rails-templates
 //= require dataTables/jquery.dataTables
 //= require angular-datatables
+//= require chosen.jquery.min.js
+//= require angular-chosen-localytics
 //= require_tree ./services
 //= require_tree ./controllers
 //= require app
