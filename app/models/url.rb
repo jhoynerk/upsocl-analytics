@@ -2,6 +2,7 @@ class Url < ActiveRecord::Base
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
+  has_and_belongs_to_many :tags
   has_many :page_stadistics
   has_many :dfp_stadistics
   has_many :country_stadistics
