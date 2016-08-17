@@ -12,7 +12,8 @@
  *= require font-awesome
  *= require animate/animate.css
  *= require bootstrap-daterangepicker/daterangepicker.css
+//= require dataTables/dataTables.bootstrap.css
+//= require dataTables/dataTables.responsive.css
+//= require dataTables/dataTables.tableTools.min.css
  *= require style
- *= require dataTables/jquery.dataTables
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  */

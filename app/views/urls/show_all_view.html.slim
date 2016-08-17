@@ -6,4 +6,8 @@ link rel="stylesheet" href="assets/chosen.min.css"
       div ng-controller="WithAjaxCtrl as showCase"
         p
           | <select chosen multiple ng-change="selected(tags)" placeholder-text-multiple="'Filtrar por etiquetas'" ng-model="tags" ng-options="s.id as s.title for s in options" style="width:100%;"> </select>
-        table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="row-border hover"
+        .ibox-content
+          .table-responsive
+            table.table.table-hover.issue-tracker.absence-table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="row-border hover"
+
+
