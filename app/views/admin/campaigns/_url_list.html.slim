@@ -11,6 +11,18 @@ ul
         strong Line ID
         span = " = #{u.line_id}"
       p
+        strong Pais
+        span = " = #{u.countries.map(&:name).to_s} "
+      p
+        strong Tags
+        span = " = #{u.tags.map(&:title).to_s} "
+      p
+        strong Account Analytics
+        span = " = #{u.profile_id}"
+      p
+        strong Frecuencia de actualización
+        span = " = #{u.interval_status_humanize}"
+      p
         strong Facebook Post Count
         span = " = #{u.facebook_posts.count}"
         ul
