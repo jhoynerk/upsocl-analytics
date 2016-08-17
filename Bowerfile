@@ -11,3 +11,4 @@ asset "slimScroll"
 asset 'angular-resource'
 asset 'angular-daterangepicker'
 asset 'angular-datatables'
+asset 'angular-chosen-localytics'

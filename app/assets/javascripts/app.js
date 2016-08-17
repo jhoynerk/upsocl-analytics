@@ -4,7 +4,8 @@ var app = angular.module('upsocl',[
   'upsocl.services',
   'daterangepicker',
   'ui.router',
-  'datatables'
+  'datatables',
+  'localytics.directives'
 ])
 
 app.config(function($stateProvider) {
