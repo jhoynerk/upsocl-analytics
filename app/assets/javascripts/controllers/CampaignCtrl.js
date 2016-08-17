@@ -3,7 +3,6 @@ myApp = angular.module('upsocl.controllers', [])
 myApp.controller('CampaignListController', function($scope, $state, $window, Campaign, User) {
   $scope.campaigns = Campaign.query();
   $scope.user = User.get();
-  console.log($scope.user);
 })
 
 myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, User) {
@@ -30,34 +29,39 @@ myApp.controller('CampaignAllUrlViewController', function($scope, $stateParams, 
 });
 
 
-function WithAjaxCtrl(DTOptionsBuilder, DTColumnBuilder) {
-    var vm = this;
-    vm.options = {
-        aoColumnDefs: [
-            {
-              sType: "numeric",
-              aTargets: 0,
-              bSortable: false
-            }
-        ]
-    };
-    vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json')
-        .withPaginationType('full_numbers')
-    vm.dtColumns = [
-        DTColumnBuilder.newColumn('title').withTitle('Título').renderWith(function(data, type, full) {
-            return '<a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a> ';
-        }),
-        DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
-        DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
-        DTColumnBuilder.newColumn('shares').withTitle('Shares'),
-        DTColumnBuilder.newColumn('comments').withTitle('Comments'),
-        DTColumnBuilder.newColumn('likes').withTitle('Likes'),
-        DTColumnBuilder.newColumn('Divertido').withTitle('Divertido'),
-        DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente'),
-        DTColumnBuilder.newColumn('Sorprendido').withTitle('Sorprendido'),
-        DTColumnBuilder.newColumn('Molesto').withTitle('Molesto'),
-        DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado')
-    ];
+function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
+  $scope.options = Tags.query();
+  var vm = this;
+  vm.options = {
+      aoColumnDefs: [
+          {
+            sType: "numeric",
+            aTargets: 0,
+            bSortable: false
+          }
+      ]
+  };
+  vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json')
+      .withPaginationType('full_numbers')
+  vm.dtColumns = [
+      DTColumnBuilder.newColumn('title').withTitle('Título').renderWith(function(data, type, full) {
+          return '<a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a> ';
+      }),
+      DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
+      DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
+      DTColumnBuilder.newColumn('shares').withTitle('Shares'),
+      DTColumnBuilder.newColumn('comments').withTitle('Comments'),
+      DTColumnBuilder.newColumn('likes').withTitle('Likes'),
+      DTColumnBuilder.newColumn('Divertido').withTitle('Divertido'),
+      DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente'),
+      DTColumnBuilder.newColumn('Sorprendido').withTitle('Sorprendido'),
+      DTColumnBuilder.newColumn('Molesto').withTitle('Molesto'),
+      DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado')
+  ];
+  $scope.selected = function(tags){
+    vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json?tags='+tags)
+      .withPaginationType('full_numbers')
+  };
 };
 
 myApp.controller('WithAjaxCtrl', WithAjaxCtrl);
