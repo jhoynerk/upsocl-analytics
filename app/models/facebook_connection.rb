@@ -26,7 +26,7 @@ class FacebookConnection
   end
 
   def count_likes
-    consult_likes["likes"]["summary"]["total_count"]
+    consult_likes["reactions"]["summary"]["total_count"]
   end
 
   def count_comments
