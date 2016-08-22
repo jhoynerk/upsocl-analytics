@@ -14,7 +14,7 @@ class FacebookConnection
   end
 
   def consult_likes
-    object(user_post, "likes.summary(true)")
+    object(user_post, "reactions.summary(true)")
   end
 
   def consult_comments
