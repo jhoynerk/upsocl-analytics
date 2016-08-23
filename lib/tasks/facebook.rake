@@ -2,7 +2,7 @@ namespace :facebook do
   desc "Call Facebook Api for get data of url"
   task :add_data, [:url_id] => :environment do |t, args|
     if args.url_id.nil?
-      urls = Url.all
+      urls = Url.all.order(id: :desc)
     else
       urls = [Url.find(args.url_id)]
     end
