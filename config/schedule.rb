@@ -7,9 +7,9 @@
 #
 set :environment, "production"
 set :output, "log/cron_log.log"
-#
+
 every 1.day, :at => '10:00 am' do
-  rake "analytics:add_records[day]"
+  rake "analytics:add_records[month, day]"
 end
 
 every 1.day, :at => '2:00 am' do
