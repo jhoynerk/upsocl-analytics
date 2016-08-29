@@ -9,8 +9,17 @@ set :environment, "production"
 set :output, "log/cron_log.log"
 
 every 1.day, :at => '10:00 am' do
-  rake "analytics:add_records[month, day]"
+  rake "analytics:add_records[week, day]"
 end
+
+every 1.day, :at => '10:00 am' do
+  rake "analytics:add_records[week, month]"
+end
+
+every 1.day, :at => '10:00 am' do
+  rake "analytics:add_records[week, 6month]"
+end
+
 
 every 1.day, :at => '2:00 am' do
   rake "facebook:add_data"
