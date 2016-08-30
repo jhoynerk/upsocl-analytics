@@ -1,5 +1,5 @@
 class FacebookConnection
-  def initialize(post_id, user_id)
+  def initialize(user_id, post_id = nil)
     @graph = Koala::Facebook::API.new(oauth_access_token, ENV['FB_APP_SECRET'])
     @post_id = post_id
     @user_id = user_id
@@ -7,6 +7,14 @@ class FacebookConnection
 
   def object(id, fields)
     @graph.get_object(id, fields: fields)
+  end
+
+  def consult_url
+    @graph.get_object('', { id: @user_id })
+  end
+
+  def consult_shares_by_url
+    consult_url['share']["share_count"]
   end
 
   def user_post
