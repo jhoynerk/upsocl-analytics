@@ -1,49 +1,55 @@
 namespace :analytics do
   desc "Call Google Analytics Api for get data of url"
   task :add_records, [:time, :interval, :url_id] => :environment do |t, args|
-    time_range(args.time)
-    arg_interval = args.interval
-    interval_range(arg_interval)
-    if args.url_id.nil?
-      interval = interval_status(arg_interval)
-      urls = Url.all.update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc)
-    else
-      urls = [Url.find(args.url_id)]
+    begin
+      time_range(args.time)
+      arg_interval = args.interval
+      interval_range(arg_interval)
+      if args.url_id.nil?
+        interval = interval_status(arg_interval)
+        urls = Url.all.update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc)
+      else
+        urls = [Url.find(args.url_id)]
+      end
+      Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada. Se van a actualizar #{urls.count} urls", status: 1)
+
+      urls.each do |url|
+        puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
+
+        page_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Page', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
+
+        page_stadistics.each do |data|
+          PageStadistic.create(url: url, date: data.date.to_date, avgtimeonpage: data.avgtimeonpage.to_f, pageviews: data.pageviews.to_i, sessions: data.sessions.to_i, users: data.users.to_i)
+        end
+
+        country_stadistics.each do |data|
+          CountryStadistic.create(url: url, date: data.date.to_date, country_code: data.countryIsoCode, country_name: data.country, pageviews: data.pageviews.to_i, users: data.users.to_i, avgtimeonpage: data.avgtimeonpage.to_f)
+        end
+
+        traffic_stadistics.each do |data|
+          TrafficStadistic.create(url: url, date: data.date.to_date, traffic_type: data.traffictype, pageviews: data.pageviews.to_i)
+        end
+
+        device_stadistics.each do |data|
+          DeviceStadistic.create(url: url, date: data.date.to_date, device_type: data.deviceCategory, pageviews: data.pageviews.to_i)
+        end
+
+        dfp_stadistics.each do |data|
+          DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
+        end
+        url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
+        url.update(data_updated_at: Time.now)
+      end
+
+      puts "Task complete... Updated #{urls.count} urls"
+      Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{urls.count} urls", status: 2)
+    rescue Exception => e
+      Message.create(type_update: 1, message: "#{Time.now} Ocurrio un problema en la tarea programada. Error: #{e}", status: 3)
     end
-
-    urls.each do |url|
-      puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
-
-      page_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Page', url: url.only_path, start_date: @start_date, end_date: @end_date)
-      country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
-      traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
-      device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
-      dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
-
-      page_stadistics.each do |data|
-        PageStadistic.create(url: url, date: data.date.to_date, avgtimeonpage: data.avgtimeonpage.to_f, pageviews: data.pageviews.to_i, sessions: data.sessions.to_i, users: data.users.to_i)
-      end
-
-      country_stadistics.each do |data|
-        CountryStadistic.create(url: url, date: data.date.to_date, country_code: data.countryIsoCode, country_name: data.country, pageviews: data.pageviews.to_i, users: data.users.to_i, avgtimeonpage: data.avgtimeonpage.to_f)
-      end
-
-      traffic_stadistics.each do |data|
-        TrafficStadistic.create(url: url, date: data.date.to_date, traffic_type: data.traffictype, pageviews: data.pageviews.to_i)
-      end
-
-      device_stadistics.each do |data|
-        DeviceStadistic.create(url: url, date: data.date.to_date, device_type: data.deviceCategory, pageviews: data.pageviews.to_i)
-      end
-
-      dfp_stadistics.each do |data|
-        DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
-      end
-      url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
-      url.update(data_updated_at: Time.now)
-    end
-
-    puts "Task complete... Updated #{urls.count} urls"
   end
 
   def time_range(time)
