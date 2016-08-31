@@ -46,7 +46,11 @@ function make_pie_charts(info, legend_id, canvas_id, label){
   var arr = [];
   var traffic_type = {
     Referral: 'Facebook',
+    referral: 'Facebook',
+    facebook: 'Facebook',
+    Facebook: 'Facebook',
     Pagina: 'Upsocl',
+    UPSOCL: 'Upsocl',
     Organic: 'Buscadores de Google',
     Direct: 'Directo',
     Tablet: 'Tablet',
@@ -54,7 +58,7 @@ function make_pie_charts(info, legend_id, canvas_id, label){
     Mobile: 'Mobile'
   };
   $.each(info, function(index, i){
-    if(i[label] != 'Facebook' ) {
+    if (traffic_type[i[label]] != undefined) {
       arr.push({
         value: parseInt(i.pageviews),
         color: colors[index],

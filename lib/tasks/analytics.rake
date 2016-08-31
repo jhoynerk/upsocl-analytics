@@ -11,7 +11,7 @@ namespace :analytics do
       else
         urls = [Url.find(args.url_id)]
       end
-      Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada. Se van a actualizar #{urls.count} urls", status: 1)
+      Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
 
       urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
