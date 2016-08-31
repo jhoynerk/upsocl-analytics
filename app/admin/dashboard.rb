@@ -3,13 +3,6 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
-    end
-
     columns do
       column do
         panel "Ultimos 10 Mensajes de Actualización del Servidor Analytics" do
@@ -32,6 +25,8 @@ ActiveAdmin.register_page "Dashboard" do
             end
           end
         end
+      end
+      column do
         panel "Ultimos 10 Mensajes de Actualización del Servidor Facebook" do
           ul do
             Message.where(type_update: 2).order(:id => :asc).limit(10).reverse.map do |message|
