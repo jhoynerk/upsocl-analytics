@@ -5,9 +5,9 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
     columns do
       column do
-        panel "Ultimos 10 Mensajes de Actualización del Servidor Analytics" do
+        panel "Ultimos 15 Mensajes de Actualización del Servidor Analytics" do
           ul do
-            Message.where(type_update: 1).order(:id => :asc).limit(10).reverse.map do |message|
+            Message.where(type_update: 1).order(:id => :desc).limit(15).map do |message|
               case message.status
               when 1
                 li class: 'flash flash_warning' do
@@ -27,9 +27,9 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
       column do
-        panel "Ultimos 10 Mensajes de Actualización del Servidor Facebook" do
+        panel "Ultimos 15 Mensajes de Actualización del Servidor Facebook" do
           ul do
-            Message.where(type_update: 2).order(:id => :asc).limit(10).reverse.map do |message|
+            Message.where(type_update: 2).order(:id => :desc).limit(15).map do |message|
               case message.status
               when 1
                 li class: 'flash flash_warning' do
