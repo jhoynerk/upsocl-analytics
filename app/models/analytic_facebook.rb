@@ -16,12 +16,18 @@ class AnalyticFacebook
   end
 
   def facebook_connection
+    likes = 0
+    comments = 0
+    shares = 0
     @url.facebook_posts.each do |fbp|
       fbc = FacebookConnection.new(fbp.account_id, fbp.post_id)
-      @likes += fbc.count_likes.to_i
-      @comments += fbc.count_comments.to_i
-      @shares += fbc.count_shares.to_i
+      likes += fbc.count_likes.to_i
+      comments += fbc.count_comments.to_i
+      shares += fbc.count_shares.to_i
     end
+    @likes = (likes >= @likes) ? likes : @likes
+    @comments = (comments >= @comments) ? comments : @comments
+    @shares = (shares >= @shares) ? shares : @shares
   end
 
   def social_shares
