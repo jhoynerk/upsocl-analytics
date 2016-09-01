@@ -27,7 +27,7 @@ class AnalyticFacebook
     end
     @likes = likes
     @comments = comments
-    @shares = comments
+    @shares = shares
     #@likes = (likes >= @likes) ? likes : @likes
     #@comments = (comments >= @comments) ? comments : @comments
     #@shares = (shares >= @shares) ? shares : @shares
