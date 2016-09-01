@@ -25,9 +25,12 @@ class AnalyticFacebook
       comments += fbc.count_comments.to_i
       shares += fbc.count_shares.to_i
     end
-    @likes = (likes >= @likes) ? likes : @likes
-    @comments = (comments >= @comments) ? comments : @comments
-    @shares = (shares >= @shares) ? shares : @shares
+    @likes = likes
+    @comments = comments
+    @shares = comments
+    #@likes = (likes >= @likes) ? likes : @likes
+    #@comments = (comments >= @comments) ? comments : @comments
+    #@shares = (shares >= @shares) ? shares : @shares
   end
 
   def social_shares
