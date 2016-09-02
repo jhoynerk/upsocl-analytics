@@ -143,6 +143,7 @@ class Url < ActiveRecord::Base
     {
       id: id,
       title: title,
+      link: data,
       visitas: totals_stadistics[:pageviews],
       shares: facebook_shares,
       comments: facebook_comments,

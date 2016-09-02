@@ -46,7 +46,7 @@ function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
       .withLanguageSource('/assets/spanish.json')
   vm.dtColumns = [
       DTColumnBuilder.newColumn('title').withTitle('Título').renderWith(function(data, type, full) {
-          return '<a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a> ';
+          return '[<a target="_blank" href="'+ full.link +'">Sitio</a>] <a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a>';
       }),
       DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
       DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
