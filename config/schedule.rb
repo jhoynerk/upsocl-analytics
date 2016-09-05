@@ -8,10 +8,26 @@
 set :environment, "production"
 set :output, "log/cron_log.log"
 
+every 1.day, :at => '1:30 am' do
+  command "backup perform -t db_backup"
+end
 
 every 1.day, :at => '2:00 am' do
   rake "facebook:add_data"
 end
+
+every 1.day, :at => '2:30 am' do
+  rake '"analytics:add_records[week, day]"'
+end
+
+every 1.week, :at => '3:30 am' do
+  rake '"analytics:add_records[week, month]"'
+end
+
+every 1.week, :at => '4:30 am' do
+  rake '"analytics:add_records[week, 6month]"'
+end
+
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
