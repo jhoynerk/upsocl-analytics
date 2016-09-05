@@ -1,6 +1,7 @@
 namespace :analytics do
   desc "Call Google Analytics Api for get data of url"
   task :add_records, [:time, :interval, :url_id] => :environment do |t, args|
+    Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
     begin
       time_range(args.time)
       arg_interval = args.interval
@@ -11,7 +12,6 @@ namespace :analytics do
       else
         urls = [Url.find(args.url_id)]
       end
-      Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
 
       urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
