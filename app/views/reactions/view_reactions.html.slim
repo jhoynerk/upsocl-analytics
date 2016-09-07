@@ -3,7 +3,7 @@ h2.ds-vc-feelback-title ¿Cuál es tu reacción?
 .ds-vc-widget.tag-list ng-repeat="reaction in reactions"
   .ds-vc-category.grow ng-click="addVote(reaction.id, url_path)"
     a.ds-vc-category-icon
-      img.center-block.img-responsive src="{{ reaction.avatar.url }}"
+      img.center-block.img-responsive ng-src="{{ reaction.avatar.url }}"
     .ds-vc-category-stats ng-repeat="url in reactions_url"
       span ng-if="url.reaction_id==reaction.id"
         | {{ url.counts }}
