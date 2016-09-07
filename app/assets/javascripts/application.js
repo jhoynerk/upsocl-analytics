@@ -49,3 +49,4 @@
 //= require jvectormap/jquery-jvectormap-2.0.2.min.js
 //= require jvectormap/jquery-jvectormap-world-mill-en.js
 //= require toastr/toastr.min.js
+//# sourceMappingURL=/assets/toastr/toastr.js.map
