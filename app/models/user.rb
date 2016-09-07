@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates :password, :password_confirmation, presence: true, on: :create
 
   validates_presence_of :password_confirmation, if: -> { password.present? }
+  validates_confirmation_of :password
 
   def join_campaigns
     campaigns.map(&:name).join(', ')
