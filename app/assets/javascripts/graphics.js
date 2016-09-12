@@ -64,6 +64,12 @@ function make_pie_charts(info, legend_id, canvas_id, label){
         color: colors[index],
         label: traffic_type[i[label]]
       });
+    }else{
+      arr.push({
+        value: parseInt(i.pageviews),
+        color: colors[index],
+        label: 'Otros'
+      });
     }
   });
   var total = totalize(info, 'pageviews');
