@@ -3,7 +3,7 @@ namespace :facebook do
   task :add_data, [:url_id] => :environment do |t, args|
     begin
       if args.url_id.nil?
-        urls = Url.all.order(id: :desc)
+        urls = Url.all.order(id: :desc).where(publico: false)
       else
         urls = [Url.find(args.url_id)]
       end

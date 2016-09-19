@@ -32,7 +32,7 @@ class Url < ActiveRecord::Base
   end
 
   def set_facebook
-    self.attributes = AnalyticFacebook.new(self).update
+    self.attributes = AnalyticFacebook.new(self).update if publico == false
   end
 
   def set_title
