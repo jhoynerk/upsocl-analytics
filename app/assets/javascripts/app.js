@@ -22,7 +22,7 @@ app.config(function($stateProvider) {
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
   }).state('viewReactions', {
-    url: '/reactions?url&post_id',
+    url: '/reactions?url&post_id&publico',
     params: {
         url: null,
         post_id: null

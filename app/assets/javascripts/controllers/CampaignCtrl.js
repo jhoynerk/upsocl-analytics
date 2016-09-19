@@ -72,7 +72,7 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
   $scope.reactions = Reactions.query();
   $scope.url_path = $stateParams.url;
   if ($stateParams.url != null) {
-    $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id } );
+    $scope.reactions_url = ReactionData.query( { url: $stateParams.url, post_id: $stateParams.post_id, publico: $stateParams.publico } );
   }
   $scope.new_vote = true;
   $scope.vote = null;
