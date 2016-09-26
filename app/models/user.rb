@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   validates :password, :password_confirmation, presence: true, on: :create
+  validates :email, uniqueness: true
 
   validates_presence_of :password_confirmation, if: -> { password.present? }
   validates_confirmation_of :password
