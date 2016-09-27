@@ -14,7 +14,7 @@ class ReactionsController < ApplicationController
     if(@url.nil?)
       if(params[:publico].present?)
         url = Url.create(line_id: 0, data: params[:url], publico: true)
-        response = @url.count_votes
+        response = url.count_votes
       else
         response = { msg: 'No existe esta ruta'} 
       end
