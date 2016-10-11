@@ -49,7 +49,7 @@ function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
           return '[<a target="_blank" href="'+ full.link +'">Sitio</a>] <a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a>';
       }),
       DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
-      DTColumnBuilder.newColumn('visitas').withTitle('visitas'),
+      DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
       DTColumnBuilder.newColumn('shares').withTitle('Shares'),
       DTColumnBuilder.newColumn('comments').withTitle('Comments'),
       DTColumnBuilder.newColumn('likes').withTitle('Likes'),
