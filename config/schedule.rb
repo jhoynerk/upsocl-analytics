@@ -21,11 +21,11 @@ every 1.day, :at => '2:30 am' do
 end
 
 every 1.week, :at => '3:30 am' do
-  rake '"analytics:add_records[week, month]"'
+  rake '"analytics:add_records[year, month]"'
 end
 
 every 1.week, :at => '4:30 am' do
-  rake '"analytics:add_records[week, 6month]"'
+  rake '"analytics:add_records[year, 6month]"'
 end
 
 #

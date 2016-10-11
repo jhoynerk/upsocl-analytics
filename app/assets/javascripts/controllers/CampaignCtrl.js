@@ -49,15 +49,18 @@ function WithAjaxCtrl($scope, DTOptionsBuilder, DTColumnBuilder, Tags) {
           return '[<a target="_blank" href="'+ full.link +'">Sitio</a>] <a href="/#/campaign/urls/'+ full.id +'" target="_blank" >' + full.title + '</a>';
       }),
       DTColumnBuilder.newColumn('id').withTitle('id').notVisible(),
-      DTColumnBuilder.newColumn('visitas').withTitle('Visitas'),
+      DTColumnBuilder.newColumn('visitas').withTitle('visitas'),
       DTColumnBuilder.newColumn('shares').withTitle('Shares'),
       DTColumnBuilder.newColumn('comments').withTitle('Comments'),
       DTColumnBuilder.newColumn('likes').withTitle('Likes'),
-      DTColumnBuilder.newColumn('Divertido').withTitle('Divertido'),
-      DTColumnBuilder.newColumn('Indiferente').withTitle('Indiferente'),
-      DTColumnBuilder.newColumn('Sorprendido').withTitle('Sorprendido'),
-      DTColumnBuilder.newColumn('Molesto').withTitle('Molesto'),
-      DTColumnBuilder.newColumn('Entusiasmado').withTitle('Entusiasmado')
+      DTColumnBuilder.newColumn('Divertido').withTitle('<a class="title-link" href="#" data-title="Divertido"><img width="20px" src="/uploads/reaction/avatar/5/risa.png"></a>'),
+      DTColumnBuilder.newColumn('Indiferente').withTitle('<a class="title-link" href="#" data-title="Indiferente"> <img width="20px" src="/uploads/reaction/avatar/4/normal.png"></a>'),
+      DTColumnBuilder.newColumn('Sorprendido').withTitle('<a class="title-link" href="#" data-title="Sorprendido"> <img width="20px" src="/uploads/reaction/avatar/3/sorprende.png"></a>'),
+      DTColumnBuilder.newColumn('Molesto').withTitle('<a class="title-link" href="#" data-title="Molesto"> <img width="20px" src="/uploads/reaction/avatar/2/molesta.png"></a>'),
+      DTColumnBuilder.newColumn('Entusiasmado').withTitle('<a class="title-link" href="#" data-title="Entusiasmado"> <img width="20px" src="/uploads/reaction/avatar/1/enamora.png"></a>'),
+      DTColumnBuilder.newColumn('Total').withTitle('Total').renderWith(function(data, type, full) {
+          return full.Divertido + full.Indiferente + full.Sorprendido + full.Molesto + full.Entusiasmado ;
+      }),
   ];
   $scope.selected = function(tags){
     vm.dtOptions = DTOptionsBuilder.fromSource('/campaigns_full.json?tags='+tags)
