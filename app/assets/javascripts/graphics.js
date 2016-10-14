@@ -72,6 +72,7 @@ function make_pie_charts(info, legend_id, canvas_id, label){
       });
     }
   });
+  console.log(arr);
   var total = totalize(info, 'pageviews');
 
   var myPieChart = new Chart(ctx).Pie(arr, {
