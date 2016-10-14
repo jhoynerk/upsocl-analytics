@@ -80,11 +80,12 @@ class Url < ActiveRecord::Base
   end
 
   def stadistics
-    objects = ['dfp_stadistics','device_stadistics','traffic_stadistics']
+    objects = ['dfp_stadistics','device_stadistics']
     result = {}
     objects.each do |obj|
       result[obj] = self.send(obj).where( date: datetime ).totals
     end
+    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.where( date: datetime ).totals)
     result['country_stadistics'] = country_stadistics.where( date: datetime ).totals(associated_countries)
     result['page_stadistics'] = country_stadistics.where( date: datetime ).totals_by_date(associated_countries)
     result
@@ -157,4 +158,62 @@ class Url < ActiveRecord::Base
     end
     Hash[*array.flatten]
   end
+
+  def orden_traffic_stadistics( data )
+    traffic_type = { referral: 'Facebook', 
+      facebook: 'Facebook', 
+      pagina: 'Upsocl',
+      organic: 'Buscadores de Google'
+    }
+    data.each do |v|
+      v[:traffic_type] = traffic_type[:"#{v[:traffic_type].downcase}"]
+      v[:traffic_type] = 'Otros' if v[:traffic_type].nil?
+    end
+    sum_traffic(traffic_type, data)
+  end
+
+  def sum_traffic(traffic, data)
+    facebook = 0
+    upsocl = 0
+    buscadores = 0
+    otros = 0
+    data.each do |d|
+      case d[:traffic_type]
+        when 'Facebook'
+          facebook += 1
+        when 'Upsocl'
+          upsocl += 1
+        when 'Buscadores de Google'
+          buscadores += 1
+        when 'Otros'
+          otros += 1
+      end
+    end
+    puts "error"*140
+    data = group_traffic(data, 'Facebook') if (facebook > 1)
+    data = group_traffic(data, 'Upsocl') if (upsocl > 1)
+    data = group_traffic(data, 'Buscadores de Google') if (buscadores > 1)
+    data = group_traffic(data, 'Otros') if (otros > 1)
+    return data
+  end
+
+  def group_traffic(data, group)
+    last = nil
+    copy_data = []
+    data.each do |d|
+      if d[:traffic_type] == group
+        if (last.nil?)
+          last = d
+        else
+          sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
+          copy_data << sum
+          last = nil?
+        end
+      else
+        copy_data << d
+      end
+    end
+    return copy_data
+  end
+
 end
