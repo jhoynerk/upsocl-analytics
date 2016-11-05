@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'render_xls', to: 'campaigns#render_xls', as: :to_xls
   get "home/index"
   get "home/minor"
 

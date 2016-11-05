@@ -48,6 +48,11 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
+      column do
+        panel "Exportar a XLS" do
+          render 'consult_data'
+        end
+      end
     end
 
     # Here is an example of a simple dashboard with columns and panels.

@@ -52,6 +52,13 @@ class Url < ActiveRecord::Base
     end
   end
 
+  def self.by_year_to_month(year ,month)
+    dt = DateTime.new(year ,month)
+    bom = dt.beginning_of_month
+    eom = dt.end_of_month
+    where("created_at >= ? and created_at <= ?", bom, eom)
+  end
+
   def run_analytics_task
     Rake::Task["analytics:add_records"].invoke('week', 'day', id)
   end
@@ -215,5 +222,4 @@ class Url < ActiveRecord::Base
     end
     return copy_data
   end
-
 end

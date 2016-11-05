@@ -25,6 +25,16 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def render_xls
+    @urls = Url.by_year_to_month(params[:date][:year].to_i, params[:date][:month].to_i)
+    @urls = builder_data
+    respond_to do |format|
+      format.csv { @urls.to_csv }
+      format.json { render :json => builder_data }
+      format.xls { }
+    end
+  end
+
   private
 
   def builder_data
@@ -47,7 +57,5 @@ class CampaignsController < ApplicationController
     else
       current_user.campaigns
     end
-
   end
-
 end
