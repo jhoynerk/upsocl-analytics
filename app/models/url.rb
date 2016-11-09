@@ -159,6 +159,13 @@ class Url < ActiveRecord::Base
     }
   end
 
+  def builder_to_xls
+    {
+      name_campaign: campaign.name,
+      ids_facebooks: facebook_posts.map(& :id).join(' ,')
+    }
+  end
+
   def builder_reactions 
     array = Reaction.all.map do |r|
       [ "#{r.title}", votes.where("votes.reaction_id": r.id).count ]

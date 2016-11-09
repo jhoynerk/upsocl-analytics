@@ -27,7 +27,7 @@ class CampaignsController < ApplicationController
 
   def render_xls
     @urls = Url.by_year_to_month(params[:date][:year].to_i, params[:date][:month].to_i)
-    @urls = builder_data
+    @urls = builder_data_to_xls
     respond_to do |format|
       format.csv { @urls.to_csv }
       format.json { render :json => builder_data }
@@ -40,6 +40,14 @@ class CampaignsController < ApplicationController
   def builder_data
     @urls.map do |url|
       url.builder_facebook.merge!(url.builder_reactions)
+    end
+  end
+
+  def builder_data_to_xls
+    @urls.map do |url|
+      url.builder_facebook.merge!(url.builder_reactions).merge!(url.builder_to_xls)
+      #url.merge(url.campaign.name) unless url.campaign.nil?
+      #url[:ids_facebooks] = url.facebook_posts.map(& :id)
     end
   end
 
