@@ -92,7 +92,7 @@ class Url < ActiveRecord::Base
     objects.each do |obj|
       result[obj] = self.send(obj).where( date: datetime ).totals
     end
-    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.where( date: datetime ).totals)
+    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.where( date: datetime ).totals) unless traffic_stadistics.where( date: datetime ).totals == nil
     result['country_stadistics'] = country_stadistics.where( date: datetime ).totals(associated_countries)
     result['page_stadistics'] = country_stadistics.where( date: datetime ).totals_by_date(associated_countries)
     result
@@ -203,7 +203,6 @@ class Url < ActiveRecord::Base
           otros += 1
       end
     end
-    puts "error"*140
     data = group_traffic(data, 'Facebook') if (facebook > 1)
     data = group_traffic(data, 'Upsocl') if (upsocl > 1)
     data = group_traffic(data, 'Buscadores de Google') if (buscadores > 1)
