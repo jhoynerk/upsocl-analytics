@@ -92,7 +92,7 @@ class Url < ActiveRecord::Base
     objects.each do |obj|
       result[obj] = self.send(obj).where( date: datetime ).totals
     end
-    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.where( date: datetime ).totals) unless traffic_stadistics.where( date: datetime ).totals == nil
+    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.totals)
     result['country_stadistics'] = country_stadistics.where( date: datetime ).totals(associated_countries)
     result['page_stadistics'] = country_stadistics.where( date: datetime ).totals_by_date(associated_countries)
     result
