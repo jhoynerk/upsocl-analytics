@@ -203,7 +203,6 @@ class Url < ActiveRecord::Base
           otros += 1
       end
     end
-    puts data
     data = group_traffic(data, 'Facebook') if (facebook > 1)
     data = group_traffic(data, 'Upsocl') if (upsocl > 1)
     data = group_traffic(data, 'Buscadores de Google') if (buscadores > 1)
@@ -218,6 +217,7 @@ class Url < ActiveRecord::Base
       if d[:traffic_type] == group
         if (last.nil?)
           last = d
+          sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
         else
           sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
           copy_data << sum
