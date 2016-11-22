@@ -217,11 +217,14 @@ class Url < ActiveRecord::Base
       if d[:traffic_type] == group
         if (last.nil?)
           last = d
-          sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
         else
           sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
           copy_data << sum
-          last = nil?
+          last = nil
+        end
+        if copy_data.count == 0
+          sum = { traffic_type: group ,pageviews: last[:pageviews] }
+          copy_data << sum
         end
       else
         copy_data << d
