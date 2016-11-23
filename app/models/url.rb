@@ -214,23 +214,20 @@ class Url < ActiveRecord::Base
   def group_traffic(data, group)
     last = nil
     copy_data = []
+    sum = {}
     data.each do |d|
       if d[:traffic_type] == group
         if (last.nil?)
           last = d
+          sum = { traffic_type: group ,pageviews: d[:pageviews]}
         else
-          sum = { traffic_type: group ,pageviews: last[:pageviews] + d[:pageviews]}
-          copy_data << sum
-          last = nil?
-        end
-        if copy_data.count == 0
-          sum = { traffic_type: group ,pageviews: last[:pageviews] }
-          copy_data << sum
+          sum = { traffic_type: group ,pageviews: sum[:pageviews] + d[:pageviews]}
         end
       else
         copy_data << d
       end
     end
+    copy_data << sum
     return copy_data
   end
 end
