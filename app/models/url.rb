@@ -162,7 +162,7 @@ class Url < ActiveRecord::Base
   def builder_to_xls
     {
       name_campaign: campaign.name,
-      ids_facebooks: facebook_posts.map(& :id).join(' ,')
+      ids_facebooks: facebook_posts.map(& :post_id).join(' ,')
     }
   end
 
