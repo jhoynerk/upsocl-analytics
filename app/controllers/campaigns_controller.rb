@@ -26,7 +26,7 @@ class CampaignsController < ApplicationController
   end
 
   def render_xls
-    @urls = Url.by_year_to_month(params[:date][:year].to_i, params[:date][:month].to_i)
+    @urls = Url.by_year_to_month(params[:date][:year].to_i, params[:date][:month].to_i).where.not(campaign_id: nil)
     @urls = builder_data_to_xls
     respond_to do |format|
       format.csv { @urls.to_csv }
