@@ -3,7 +3,7 @@ class DfpConnection
   require 'dfp_api'
   require 'open-uri'
 
-  API_VERSION = :v201508
+  API_VERSION = :v201609
   MAX_RETRIES = 10
   RETRY_INTERVAL = 30
 
