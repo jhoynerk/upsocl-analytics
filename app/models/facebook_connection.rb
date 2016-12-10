@@ -45,6 +45,23 @@ class FacebookConnection
     (consult_shares["shares"].nil?) ? 0 : consult_shares["shares"]["count"]
   end
 
+  def test
+    @user_id = '219769364857951'
+    @post_id = '529310477237170'
+    upsoclsabores = '1922865171271266'
+    parameters = {
+    fields: ['video_insights' ],
+    data_columns: ['campaign_name', 'reach', 'frequency', 'impressions', 'social_reach',
+        'social_impressions', 'unique_impressions', 'cpm', 'cpp', 'spend']
+    }
+    #object(user_post, "video")
+    #@graph.get_object(user_post, parameters)
+    @graph.get_object(@user_id, fields: 'video_lists' )
+    #object(user_post, "video_insights")
+
+    #FacebookConnection.new(219769364857951, 674076472760569).test
+  end
+
   private
 
   def oauth_access_token
