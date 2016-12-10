@@ -1,27 +1,19 @@
 class DfpConnection
-  require 'dfp_api_statement'
+  #require 'dfp_api_statement'
   require 'dfp_api'
   require 'open-uri'
 
-  API_VERSION = :v201609
+  API_VERSION = :v201608
   MAX_RETRIES = 10
   RETRY_INTERVAL = 30
 
   def initialize
+    dfp_authentication = GoogleOauth2Installed.credentials.merge(
+      application_name: ENV['DFP_APPLICATION_NAME'],
+      network_code: ENV['DFP_NETWORK_CODE'],
+    )
     @dfp = DfpApi::Api.new({
-      authentication: {
-          method: 'OAuth2',
-          oauth2_client_id: ENV['DFP_CLIENT_ID'],
-          oauth2_client_secret: ENV['DFP_CLIENT_SECRET'],
-          application_name: ENV['DFP_APPLICATION_NAME'],
-          network_code: 100064084,
-          oauth2_token: {
-            access_token: ENV['DFP_ACCESS_TOKEN'],
-            refresh_token: ENV['DFP_REFRESH_TOKEN'],
-            issued_at: ENV['DFP_ISSUE_AT'].to_time,
-            expires_in: 3600
-          }
-      },
+      authentication: dfp_authentication,
       service: { environment: 'PRODUCTION' },
       connection: { enable_gzip: false },
       library: { log_level: 'INFO' }
