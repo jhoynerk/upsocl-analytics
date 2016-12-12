@@ -14,7 +14,13 @@ class DfpConnection
           oauth2_client_id: ENV['DFP_CLIENT_ID'],
           oauth2_client_secret: ENV['DFP_CLIENT_SECRET'],
           application_name: ENV['DFP_APPLICATION_NAME'],
-          network_code: 100064084
+          network_code: 100064084,
+          oauth2_token: {
+            access_token: ENV['DFP_ACCESS_TOKEN'],
+            refresh_token: ENV['DFP_REFRESH_TOKEN'],
+            issued_at: ENV['DFP_ISSUE_AT'].to_time,
+            expires_in: 3600
+          }
       },
       service: { environment: 'PRODUCTION' },
       connection: { enable_gzip: false },
