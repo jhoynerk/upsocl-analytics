@@ -1,14 +1,12 @@
 ActiveAdmin.register Campaign do
   permit_params :name, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
-  analytics = 
-    [ "www.cutypaste.com" = "41995195",
-      "All Web Site Data" = "70319478",
-      "Cutypaste Vitrina" = "95335599",
-      "Upsocl Network"    = "92974712",
-      "Upsocl Branded"    = "111669814",
-      "Upsocl + CK2"      = "118766523"
-    ]
+  analytics = [ "www.cutypaste.com": "41995195",
+      "All Web Site Data": "70319478",
+      "Cutypaste Vitrina": "95335599",
+      "Upsocl Network": "92974712",
+      "Upsocl Branded": "111669814",
+      "Upsocl + CK2": "118766523" ]
 
   show do
     panel 'Detalles de la Camapaña' do
