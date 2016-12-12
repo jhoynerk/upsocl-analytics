@@ -8,12 +8,14 @@ class DfpConnection
   RETRY_INTERVAL = 30
 
   def initialize
-    dfp_authentication = GoogleOauth2Installed.credentials.merge(
-      application_name: ENV['DFP_APPLICATION_NAME'],
-      network_code: ENV['DFP_NETWORK_CODE'],
-    )
     @dfp = DfpApi::Api.new({
-      authentication: dfp_authentication,
+      authentication: {
+          method: 'OAuth2',
+          oauth2_client_id: ENV['DFP_CLIENT_ID'],
+          oauth2_client_secret: ENV['DFP_CLIENT_SECRET'],
+          application_name: ENV['DFP_APPLICATION_NAME'],
+          network_code: 100064084
+      },
       service: { environment: 'PRODUCTION' },
       connection: { enable_gzip: false },
       library: { log_level: 'INFO' }

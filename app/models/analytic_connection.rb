@@ -1,10 +1,6 @@
 class AnalyticConnection
   def initialize(profile_id = "92974712")
-    dfp_authentication = GoogleOauth2Installed.credentials.merge(
-      application_name: ENV['DFP_APPLICATION_NAME'],
-      network_code: ENV['DFP_NETWORK_CODE'],
-    )
-    @user = Legato::User.new dfp_authentication
+    @user = Legato::User.new GoogleOauth2Installed.access_token
     @profile = search_profile(profile_id)
   end
 
