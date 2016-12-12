@@ -1,6 +1,15 @@
 ActiveAdmin.register Campaign do
   permit_params :name, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
+  analytics = 
+    [ "www.cutypaste.com" = "41995195",
+      "All Web Site Data" = "70319478",
+      "Cutypaste Vitrina" = "95335599",
+      "Upsocl Network"    = "92974712",
+      "Upsocl Branded"    = "111669814",
+      "Upsocl + CK2"      = "118766523"
+    ]
+
   show do
     panel 'Detalles de la Camapaña' do
       attributes_table_for campaign do
@@ -41,7 +50,8 @@ ActiveAdmin.register Campaign do
         a.input :publicity, label: 'Con publicidad'
         a.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'
         a.input :tags, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Etiquetas'
-        a.input :profile_id, label: 'Account Analytics', as: :select, collection: AnalyticConnection.new.all_profiles{|u| ["#{u.name}", u.id]}, input_html: { class: 'chosen-input'}
+        #a.input :profile_id, label: 'Account Analytics', as: :select, collection: AnalyticConnection.new.all_profiles{|u| ["#{u.name}", u.id]}, input_html: { class: 'chosen-input'}
+        a.input :profile_id, label: 'Account Analytics', as: :select, collection: analytics, input_html: { class: 'chosen-input'}
         a.input :interval_status, label: 'Frecuencia de actualización', as: :select, collection: IntervalStatus.to_a, input_html: { class: 'chosen-input' }
         a.has_many :facebook_posts, heading: 'Post Facebook asociados', allow_destroy: true, new_record: 'Añadir Post Facebook' do |e|
           e.input :post_id, label: 'ID del post de facebook'
