@@ -11,6 +11,8 @@ namespace :analytics do
       else
         urls = [Url.find(args.url_id)]
       end
+      count = urls.count 
+      puts "|||| Se van a actualizar #{count} Urls ||||"
       Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
       urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
@@ -44,8 +46,8 @@ namespace :analytics do
         url.update(data_updated_at: Time.now)
       end
 
-      puts "Task complete... Updated #{urls.count} urls"
-      Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{urls.count} urls", status: 2)
+      puts "Task complete... Updated #{count} urls"
+      Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{count} urls", status: 2)
     rescue Exception => e
       Message.create(type_update: 1, message: "#{Time.now} Ocurrio un problema en la tarea programada. Error: #{e}", status: 3)
     end
