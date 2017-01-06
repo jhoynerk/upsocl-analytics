@@ -111,8 +111,8 @@ class Url < ActiveRecord::Base
   end
 
   def count_votes
-    Reaction.all.map do |r| 
-      {title: r.title, reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count} 
+    Reaction.all.map do |r|
+      {title: r.title, reaction_id: r.id, counts: votes.where("votes.reaction_id": r.id).count}
     end
   end
 
@@ -166,7 +166,7 @@ class Url < ActiveRecord::Base
     }
   end
 
-  def builder_reactions 
+  def builder_reactions
     array = Reaction.all.map do |r|
       [ "#{r.title}", votes.where("votes.reaction_id": r.id).count ]
     end
@@ -174,19 +174,23 @@ class Url < ActiveRecord::Base
   end
 
   def orden_traffic_stadistics( data )
-    traffic_type = { referral: 'Facebook', 
-      facebook: 'Facebook', 
-      pagina: 'Upsocl',
+    site = name_site
+    traffic_type = { referral: 'Facebook',
+      facebook: 'Facebook',
+      pagina: site,
       organic: 'Buscadores de Google'
     }
     data.each do |v|
       v[:traffic_type] = traffic_type[:"#{v[:traffic_type].downcase}"]
       v[:traffic_type] = 'Otros' if v[:traffic_type].nil?
     end
-    sum_traffic(traffic_type, data)
+    sum_traffic(traffic_type, data, site)
   end
 
-  def sum_traffic(traffic, data)
+  def name_site
+    (profile_id == "41995195")? "C&P" : "Upsocl"
+  end
+  def sum_traffic(traffic, data, site)
     facebook = 0
     upsocl = 0
     buscadores = 0
@@ -195,7 +199,7 @@ class Url < ActiveRecord::Base
       case d[:traffic_type]
         when 'Facebook'
           facebook += 1
-        when 'Upsocl'
+        when site
           upsocl += 1
         when 'Buscadores de Google'
           buscadores += 1
@@ -205,7 +209,7 @@ class Url < ActiveRecord::Base
     end
     puts data
     data = group_traffic(data, 'Facebook') if (facebook > 1)
-    data = group_traffic(data, 'Upsocl') if (upsocl > 1)
+    data = group_traffic(data, site) if (upsocl > 1)
     data = group_traffic(data, 'Buscadores de Google') if (buscadores > 1)
     data = group_traffic(data, 'Otros') if (otros > 1)
     return data
