@@ -178,6 +178,7 @@ class Url < ActiveRecord::Base
     traffic_type = { referral: 'Facebook',
       facebook: 'Facebook',
       pagina: site,
+      direct: site,
       organic: 'Buscadores de Google'
     }
     data.each do |v|
