@@ -11,7 +11,7 @@ namespace :analytics do
       else
         urls = [Url.find(args.url_id)]
       end
-      count = urls.count 
+      count = urls.count
       puts "|||| Se van a actualizar #{count} Urls ||||"
       Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
       urls.each do |url|
@@ -23,22 +23,27 @@ namespace :analytics do
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
 
+        url.page_stadistics.delete_all
         page_stadistics.each do |data|
           PageStadistic.create(url: url, date: data.date.to_date, avgtimeonpage: data.avgtimeonpage.to_f, pageviews: data.pageviews.to_i, sessions: data.sessions.to_i, users: data.users.to_i)
         end
 
+        url.country_stadistics.delete_all
         country_stadistics.each do |data|
           CountryStadistic.create(url: url, date: data.date.to_date, country_code: data.countryIsoCode, country_name: data.country, pageviews: data.pageviews.to_i, users: data.users.to_i, avgtimeonpage: data.avgtimeonpage.to_f)
         end
 
+        url.traffic_stadistics.delete_all
         traffic_stadistics.each do |data|
           TrafficStadistic.create(url: url, date: data.date.to_date, traffic_type: data.traffictype, pageviews: data.pageviews.to_i)
         end
 
+        url.device_stadistics.delete_all
         device_stadistics.each do |data|
           DeviceStadistic.create(url: url, date: data.date.to_date, device_type: data.deviceCategory, pageviews: data.pageviews.to_i)
         end
 
+        url.dfp_stadistics.delete_all
         dfp_stadistics.each do |data|
           DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
         end
@@ -88,9 +93,9 @@ namespace :analytics do
   end
 
   def attention(url)
-    unless url.totals_stadistics.nil? 
+    unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:avgtimeonpage].nil? && url.totals_stadistics[:pageviews].nil?
-        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60 
+        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
       end
     end
   end
