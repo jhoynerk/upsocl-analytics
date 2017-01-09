@@ -23,27 +23,27 @@ namespace :analytics do
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
 
-        url.page_stadistics.where("created_at >= ? AND created_at <= ?", @start_date, @end_date ).delete_all
+        url.page_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
         page_stadistics.each do |data|
           PageStadistic.create(url: url, date: data.date.to_date, avgtimeonpage: data.avgtimeonpage.to_f, pageviews: data.pageviews.to_i, sessions: data.sessions.to_i, users: data.users.to_i)
         end
 
-        url.country_stadistics.where("created_at >= ? AND created_at <= ?", @start_date, @end_date ).delete_all
+        url.country_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
         country_stadistics.each do |data|
           CountryStadistic.create(url: url, date: data.date.to_date, country_code: data.countryIsoCode, country_name: data.country, pageviews: data.pageviews.to_i, users: data.users.to_i, avgtimeonpage: data.avgtimeonpage.to_f)
         end
 
-        url.traffic_stadistics.where("created_at >= ? AND created_at <= ?", @start_date, @end_date ).delete_all
+        url.traffic_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
         traffic_stadistics.each do |data|
           TrafficStadistic.create(url: url, date: data.date.to_date, traffic_type: data.traffictype, pageviews: data.pageviews.to_i)
         end
 
-        url.device_stadistics.where("created_at >= ? AND created_at <= ?", @start_date, @end_date ).delete_all
+        url.device_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
         device_stadistics.each do |data|
           DeviceStadistic.create(url: url, date: data.date.to_date, device_type: data.deviceCategory, pageviews: data.pageviews.to_i)
         end
 
-        url.dfp_stadistics.where("created_at >= ? AND created_at <= ?", @start_date, @end_date ).delete_all
+        url.dfp_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
         dfp_stadistics.each do |data|
           DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
         end
@@ -81,7 +81,7 @@ namespace :analytics do
       @end_interval = 3.month.ago
     when 'month'
       @start_interval = 3.month.ago
-      @end_interval = 2.week.ago
+      @end_interval = 3.week.ago
     when 'day'
       @start_interval = 3.week.ago
       @end_interval = Time.now
