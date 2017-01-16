@@ -4,7 +4,7 @@ class CampaignsController < ApplicationController
     @campaigns = checked_campaings.decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json(methods: :num_urls, include: [:urls, users: { only: [:name] } ] ) }
+      format.json { render :json => @campaigns.as_json(methods: :num_urls, :ordered_by_url_created, include: [:urls, users: { only: [:name] } ] ) }
     end
   end
 

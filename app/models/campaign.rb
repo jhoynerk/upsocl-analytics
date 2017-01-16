@@ -6,6 +6,10 @@ class Campaign < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def ordered_by_url_created
+  	urls.order('urls.created_at DESC')
+  end
+
   def join_users
     users.map(&:name).join(', ')
   end
