@@ -30,9 +30,9 @@ ul
             li
               p
                 strong User facebook
-                - unless fb.facebook_account.nil?
-                  span = " = #{fb.facebook_account.name}  "
-                - else
+                - if fb.facebook_account.nil?
                   span No selecciono el facebook.
+                - else
+                  span = " = #{fb.facebook_account.name}  "
                 strong Post ID facebook
                 span = " = #{fb.post_id}"
