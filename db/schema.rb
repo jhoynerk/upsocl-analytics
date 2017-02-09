@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919134320) do
+ActiveRecord::Schema.define(version: 20170208175710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,16 @@ ActiveRecord::Schema.define(version: 20160919134320) do
   add_index "facebook_posts", ["facebook_account_id"], name: "index_facebook_posts_on_facebook_account_id", using: :btree
   add_index "facebook_posts", ["url_id"], name: "index_facebook_posts_on_url_id", using: :btree
 
+  create_table "forms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "address"
+    t.string   "path_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string   "message",                 null: false
     t.integer  "status",      default: 0, null: false
@@ -169,13 +179,10 @@ ActiveRecord::Schema.define(version: 20160919134320) do
   add_index "page_stadistics", ["url_id"], name: "index_page_stadistics_on_url_id", using: :btree
 
   create_table "reactions", force: :cascade do |t|
-    t.string  "title",               null: false
-    t.integer "order",               null: false
-    t.string  "avatar",              null: false
-    t.integer "facebook_account_id"
+    t.string  "title",  null: false
+    t.integer "order",  null: false
+    t.string  "avatar", null: false
   end
-
-  add_index "reactions", ["facebook_account_id"], name: "index_reactions_on_facebook_account_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string "title"
