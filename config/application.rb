@@ -20,6 +20,9 @@ module UpsoclAnalytics
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :es
     config.active_job.queue_adapter = :delayed_job
+
+    config.web_console.whitelisted_ips = '192.168.0.105/07'
+    config.web_console.whiny_requests = false
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.action_dispatch.default_headers = {

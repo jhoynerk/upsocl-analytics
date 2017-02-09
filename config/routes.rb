@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
   get 'show_all_view', to: 'urls#show_all_view'
-  
+
   get 'template', to: 'template#reactions'
   get 'template/index_view', to: 'reactions#index_view'
   get 'template/view_reactions', to: 'reactions#view_reactions'
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   get 'votes', to: 'votes#create'
   get 'change_vote', to: 'votes#change_vote'
   get 'user', to: 'application#user'
+
+  resources :forms
 
   resources :analytics do
     collection do
