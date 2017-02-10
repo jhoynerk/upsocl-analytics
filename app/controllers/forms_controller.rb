@@ -24,10 +24,6 @@ class FormsController < InheritedResources::Base
   # POST /activities
   # POST /activities.json
   def create
-    respond_to do |format|
-      format.json { render json: params }
-    end
-=begin
     @form = Form.new(form_params)
     respond_to do |format|
       if @form.save
@@ -38,7 +34,6 @@ class FormsController < InheritedResources::Base
         format.json { render json: @form.errors, status: :unprocessable_entity }
       end
     end
-=end
   end
 
   # PATCH/PUT /activities/1
