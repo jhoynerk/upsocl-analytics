@@ -65,7 +65,7 @@ class FormsController < InheritedResources::Base
     end
 
     def form_params
-      #params.require(:form).permit(:name, :last_name, :email, :address, :path_url)
+      params.require(:form).permit(:name, :last_name, :email, :address, :path_url)
     end
 end
 
