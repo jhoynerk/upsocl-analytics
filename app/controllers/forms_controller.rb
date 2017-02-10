@@ -24,6 +24,8 @@ class FormsController < InheritedResources::Base
   # POST /activities
   # POST /activities.json
   def create
+    p "AQUIIIIII"
+    p params
     respond_to do |format|
       format.json { render :show, data: params }
     end
