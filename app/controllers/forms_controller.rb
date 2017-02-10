@@ -24,8 +24,6 @@ class FormsController < InheritedResources::Base
   # POST /activities
   # POST /activities.json
   def create
-    p "AQUIIIIII"
-    p params
     respond_to do |format|
       format.json { render :show, data: params }
     end
@@ -72,7 +70,7 @@ class FormsController < InheritedResources::Base
     end
 
     def form_params
-      params.require(:form).permit(:name, :last_name, :email, :address, :path_url)
+      #params.require(:form).permit(:name, :last_name, :email, :address, :path_url)
     end
 end
 
