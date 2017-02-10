@@ -28,7 +28,7 @@ class FormsController < InheritedResources::Base
     respond_to do |format|
       if @form.save
         format.html { redirect_to @form, notice: 'La actividad fue creada éxitosamente. ' }
-        format.json { render :show, status: :created, location: @form }
+        format.json { render json: {status: 'OK'} }
       else
         format.html { render :new }
         format.json { render json: @form.errors, status: :unprocessable_entity }
