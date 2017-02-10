@@ -25,7 +25,7 @@ class FormsController < InheritedResources::Base
   # POST /activities.json
   def create
     respond_to do |format|
-      format.json { render :show, data: params }
+      format.json { render json: params }
     end
 =begin
     @form = Form.new(form_params)
