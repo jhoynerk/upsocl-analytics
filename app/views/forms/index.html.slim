@@ -1,0 +1,29 @@
+h1 Listing forms
+
+table
+  thead
+    tr
+      th Name
+      th Last name
+      th Email
+      th Address
+      th Url
+      th
+      th
+      th
+
+  tbody
+    - @forms.each do |form|
+      tr
+        td = form.name
+        td = form.last_name
+        td = form.email
+        td = form.address
+        td = form.url_id
+        td = link_to 'Show', form
+        td = link_to 'Edit', edit_form_path(form)
+        td = link_to 'Destroy', form, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Form', new_form_path
