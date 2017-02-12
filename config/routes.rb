@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get 'user', to: 'application#user'
 
   resources :forms
-  get 'register_form', to: 'form#register_form'
+  get 'register_form', to: 'forms#register_form'
 
   resources :analytics do
     collection do
