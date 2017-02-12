@@ -12,6 +12,19 @@ class FormsController < InheritedResources::Base
   def show
   end
 
+  def register_form
+    @form = Form.new(form_params)
+    respond_to do |format|
+      if @form.save
+        format.html { redirect_to @form, notice: 'La actividad fue creada éxitosamente. ' }
+        format.json { render json: {status: 'OK'} }
+      else
+        format.html { render :new }
+        format.json { render json: @form.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /activities/new
   def new
     @form = Form.new
