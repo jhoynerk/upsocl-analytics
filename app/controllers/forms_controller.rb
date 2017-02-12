@@ -1,5 +1,6 @@
 class FormsController < InheritedResources::Base
   before_action :set_form, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
   layout false
 
   def index
