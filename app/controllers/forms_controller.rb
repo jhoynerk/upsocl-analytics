@@ -4,9 +4,9 @@ class FormsController < InheritedResources::Base
   layout false
 
   def index
-    forms = Form.all
+    @forms = Form.all
     respond_to do |format|
-      format.json { render json: forms}
+      format.json { render json: @forms}
       format.xls
     end
   end
