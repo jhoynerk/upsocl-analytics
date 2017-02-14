@@ -7,6 +7,7 @@ class FormsController < InheritedResources::Base
     forms = Form.all
     respond_to do |format|
       format.json { render json: forms}
+      format.xls
     end
   end
 
