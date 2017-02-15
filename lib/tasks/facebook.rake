@@ -1,9 +1,12 @@
 namespace :facebook do
   desc "Call Facebook Api for get data of url"
   task :add_data, [:url_id] => :environment do |t, args|
+    @start_interval = 4.week.ago
+    @end_interval = Time.now
+    interval = "month"
     begin
       if args.url_id.nil?
-        urls = Url.all.order(id: :desc).where(publico: false)
+        urls = Url.where("id > ? ", 4100).update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc).where(publico: false)
       else
         urls = [Url.find(args.url_id)]
       end
