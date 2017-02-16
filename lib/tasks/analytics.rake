@@ -46,9 +46,9 @@ namespace :analytics do
         end
 
         #url.dfp_stadistics.where("date >= ? AND date <= ?", @start_date, @end_date ).delete_all
-        #dfp_stadistics.each do |data|
-        #  DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
-        #end
+        dfp_stadistics.each do |data|
+          DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
+        end
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         url.update(data_updated_at: Time.now)
       end
