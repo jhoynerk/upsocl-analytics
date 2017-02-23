@@ -65,7 +65,7 @@ String.prototype.capitalize = function() {
 }
 
 function get_report(){
-  var pdf = new jsPDF('p', 'in', [17,36]);
+  var pdf = new jsPDF('p', 'in', [17,42]);
    var options = {
       pagesplit: false
   };
