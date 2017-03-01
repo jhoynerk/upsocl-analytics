@@ -16,8 +16,8 @@
   .col-sm-offset-4.col-sm-4
     div ng-if="url.next_url != nil"
       a.btn.btn-outline.btn-info.pull-right ui-sref='viewCampaignUrl({ id: url.next_url.id })'
-        | Siguiente 
-        i.fa.fa-arrow-right 
+        | Siguiente
+        i.fa.fa-arrow-right
     div ng-if="url.previous_url != nil"
       a.btn.btn-outline.btn-info.pull-left ui-sref='viewCampaignUrl({ id: url.previous_url.id })'
         i.fa.fa-arrow-left  Anterior
@@ -137,7 +137,7 @@ div#url_id data="{{ url.id }}"
           h5 Tiempo Promedio
         .ibox-content
           h1.no-margins
-            | {{ url.totals_stadistics.avgtimeonpage }}
+            | {{ toClock(url.totals_stadistics.avgtimeonpage) }}
           small Tiempo promedio (Min)
   .row
     .col-lg-6.col-md-6.col-sm-6
@@ -214,7 +214,7 @@ div#url_id data="{{ url.id }}"
                   .ds-vc-category-stats ng-repeat="u in url.count_votes"
                     span ng-if="u.reaction_id==reaction.id"
                       p
-                        strong.text-center 
+                        strong.text-center
                           | {{ u.title }}
                       p
                         | {{ u.counts }}

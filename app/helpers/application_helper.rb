@@ -6,4 +6,9 @@ module ApplicationHelper
     def is_active_action(action_name)
         params[:action] == action_name ? "active" : nil
     end
+
+    def toClock(secs)
+      t = Time.gm(2000,1,1) + secs
+      return t.strftime("%M%S")
+    end
 end

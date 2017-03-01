@@ -100,10 +100,16 @@ class Url < ActiveRecord::Base
 
   def totals_stadistics
     if countries.any?
-      country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)[0]
+      data = country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)[0]
+      data[:avgtimeonpage] = compute_avg(data[:avgtimeonpage], country_stadistics.where( date: datetime ).totals_filtered_count(associated_countries))
+      data
     else
       page_stadistics.where( date: datetime ).totals_in_range
     end
+  end
+
+  def compute_avg(sum, count)
+    count.zero? ? 0.0 : (((sum / count)) rescue 0)
   end
 
   def associated_countries

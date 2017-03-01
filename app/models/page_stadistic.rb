@@ -9,6 +9,6 @@ class PageStadistic < ActiveRecord::Base
   scope :totals_in_range, -> { { pageviews: sum(:pageviews), users: sum(:users), avgtimeonpage: compute_avg(sum(:avgtimeonpage), count) } }
 
   def self.compute_avg(sum, count)
-    count.zero? ? 0.0 : (((sum / count) /60) rescue 0).round(2)
+    count.zero? ? 0.0 : (((sum / count)) rescue 0)
   end
 end
