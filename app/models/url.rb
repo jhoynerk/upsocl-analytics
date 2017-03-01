@@ -104,8 +104,15 @@ class Url < ActiveRecord::Base
       data[:avgtimeonpage] = compute_avg(data[:avgtimeonpage], country_stadistics.where( date: datetime ).totals_filtered_count(associated_countries))
       data
     else
-      page_stadistics.where( date: datetime ).totals_in_range
+      data = page_stadistics.where( date: datetime ).totals_in_range
     end
+    data[:avgtimeonpage] = toClock(data[:avgtimeonpage])
+    return data
+  end
+
+  def toClock(secs)
+    t = Time.gm(2000,1,1) + secs.to_i
+    return "#{t.strftime("%M.%S")}"
   end
 
   def compute_avg(sum, count)
