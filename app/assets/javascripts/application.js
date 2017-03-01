@@ -12,6 +12,8 @@
 //
 //= require jquery/jquery-2.1.1
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery-ui/datepicker-ru
 //= require bootstrap-sprockets
 //= require moment
 //= require metisMenu/jquery.metisMenu

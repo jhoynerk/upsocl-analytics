@@ -8,7 +8,7 @@ gem 'font-awesome-rails', '4.3.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -64,10 +64,10 @@ gem 'social_shares', :github => "xleninx/social_shares"
 gem 'cloudinary'
 
 # ActiveAdmin
-gem 'activeadmin', '~> 1.0.0.pre1'
+gem 'activeadmin', '~> 1.0.0.pre4'
 
 # Slim html
-gem 'slim'
+gem 'slim-rails'
 
 # Devise
 gem 'devise'
@@ -77,7 +77,8 @@ gem 'dotenv-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'jquery-datatables-rails'
+gem 'jquery-ui-rails', '5.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
