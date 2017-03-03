@@ -21,8 +21,8 @@ namespace :analytics do
         country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
-        #dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
-=begin
+        dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
+
         page_stadistics.each do |data|
           page = PageStadistic.where(url: url, date: data.date.to_date).first
           unless (page.nil?)
@@ -79,14 +79,8 @@ namespace :analytics do
             DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
           end
         end
-=end
-        puts "aca update 1"
-        puts url.totals_stadistics.inspect
-        puts attention(url)
-        puts "#"*100
+
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
-        puts "aca update 2"
-        puts url.inspect
         url.update(data_updated_at: Time.now)
       end
       puts "Task complete... Updated #{count} urls"
@@ -131,8 +125,6 @@ namespace :analytics do
   end
 
   def attention(url)
-    puts "atencion"*100
-    puts url.totals_stadistics.inspect
     unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
