@@ -131,6 +131,8 @@ namespace :analytics do
   end
 
   def attention(url)
+    puts "atencion"*100
+    puts url.totals_stadistics.inspect
     unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:avgtimeonpage].nil? && url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
