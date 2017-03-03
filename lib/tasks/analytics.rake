@@ -81,10 +81,10 @@ namespace :analytics do
         end
 =end
         puts "aca update 1"
-        puts url
+        puts url.inspect
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         puts "aca update 2"
-        puts url
+        puts url.inspect
         url.update(data_updated_at: Time.now)
       end
       puts "Task complete... Updated #{count} urls"
