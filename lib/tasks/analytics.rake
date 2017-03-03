@@ -82,8 +82,8 @@ namespace :analytics do
 =end
         puts "aca update 1"
         puts url.inspect
-        puts url.page_stadistics.inspect
-        puts url.country_stadistics.inspect
+        puts attention(url)
+
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         puts "aca update 2"
         puts url.inspect
