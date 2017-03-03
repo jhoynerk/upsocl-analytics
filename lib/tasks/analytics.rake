@@ -79,10 +79,10 @@ namespace :analytics do
             DfpStadistic.create(url: url, date: data[:date], line_id: data[:line_id], line_name: data[:line_name], impressions: data[:impressions], clicks: data[:clicks], ctr: data[:ctr])
           end
         end
+=end
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         url.update(data_updated_at: Time.now)
       end
-=end
       puts "Task complete... Updated #{count} urls"
       Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{count} urls", status: 2)
     rescue Exception => e
