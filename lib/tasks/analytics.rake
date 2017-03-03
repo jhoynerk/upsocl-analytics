@@ -21,7 +21,7 @@ namespace :analytics do
         country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
-        dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
+        #dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
 
         page_stadistics.each do |data|
           page = PageStadistic.where(url: url, date: data.date.to_date).first
@@ -67,7 +67,7 @@ namespace :analytics do
             DeviceStadistic.create(url: url, date: data.date.to_date, device_type: data.deviceCategory, pageviews: data.pageviews.to_i)
           end
         end
-
+=begin
         dfp_stadistics.each do |data|
           page = DfpStadistic.where(url: url, date: data[:date], line_id: data[:line_id]).first
           unless (page.nil?)
@@ -82,7 +82,7 @@ namespace :analytics do
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         url.update(data_updated_at: Time.now)
       end
-
+=end
       puts "Task complete... Updated #{count} urls"
       Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{count} urls", status: 2)
     rescue Exception => e
