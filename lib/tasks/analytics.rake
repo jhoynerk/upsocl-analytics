@@ -134,7 +134,7 @@ namespace :analytics do
     puts "atencion"*100
     puts url.totals_stadistics.inspect
     unless url.totals_stadistics.nil?
-      unless url.totals_stadistics[:avgtimeonpage].nil? && url.totals_stadistics[:pageviews].nil?
+      unless url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
       end
     end
