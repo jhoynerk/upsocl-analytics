@@ -17,9 +17,15 @@ namespace :analytics do
       urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
 
+        puts "#{url.profile_id}"
+        puts "#{url.only_path}"
+        puts "aca 1"
         page_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Page', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        puts "aca 2"
         country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        puts "aca 3"
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
+        puts "aca 4"
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         #dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
 =begin
