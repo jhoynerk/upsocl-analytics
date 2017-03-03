@@ -102,9 +102,8 @@ class Url < ActiveRecord::Base
     if countries.any?
       data = country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)[0]
       puts "$"*50
-      puts data.nil?
-      puts data.inspect
-      data[:avgtimeonpage] = compute_avg(data[:avgtimeonpage], country_stadistics.where( date: datetime ).totals_filtered_count(associated_countries)) unless data.nil?
+      puts data[:avgtimeonpage].nil?
+      data[:avgtimeonpage] = compute_avg(data[:avgtimeonpage], country_stadistics.where( date: datetime ).totals_filtered_count(associated_countries)) unless data[:avgtimeonpage].nil?
       data
     else
       data = page_stadistics.where( date: datetime ).totals_in_range
