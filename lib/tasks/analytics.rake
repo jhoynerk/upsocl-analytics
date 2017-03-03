@@ -83,7 +83,7 @@ namespace :analytics do
         puts "aca update 1"
         puts url.inspect
         puts attention(url)
-
+        puts "#"*100
         url.update(attention: attention(url))if attention(url).to_i > url.attention.to_i
         puts "aca update 2"
         puts url.inspect
@@ -135,8 +135,7 @@ namespace :analytics do
       unless url.totals_stadistics[:avgtimeonpage].nil? && url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
       end
-    else
-      0
     end
+    return 0
   end
 end
