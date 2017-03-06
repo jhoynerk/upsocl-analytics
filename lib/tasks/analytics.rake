@@ -16,7 +16,10 @@ namespace :analytics do
       Message.create(type_update: 1, message: "#{Time.now} Se inicio la tarea programada Con Argumentos (#{args.time}, #{args.interval}) . Se van a actualizar #{urls.count} urls", status: 1)
       urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
-
+        puts "*"*100
+        puts "Fecha de inicio: #{@start_date}"
+        puts "Fecha de Final: #{@end_date}"
+        puts "*"*100
         page_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Page', url: url.only_path, start_date: @start_date, end_date: @end_date)
         country_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Country', url: url.only_path, start_date: @start_date, end_date: @end_date)
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
