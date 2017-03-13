@@ -94,7 +94,7 @@ namespace :analytics do
   end
 
   def time_range(time)
-    @end_date = 0.day.ago
+    @end_date = 1.day.ago
     case time
       when 'year'
         @start_date = 1.year.ago
