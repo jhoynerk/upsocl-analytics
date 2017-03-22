@@ -21,7 +21,7 @@
 
 require 'dfp_api'
 
-API_VERSION = :v201508
+API_VERSION = :v201608
 
 def setup_oauth2()
   # DfpApi::Api will read a config file from ENV['HOME']/dfp_api.yml
