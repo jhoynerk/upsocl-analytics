@@ -10,7 +10,7 @@ every 1.day, :at => '1:30 am' do
 end
 
 set :environment, "production"
-set :output, "log/cron_log.log"
+set :output, "/data/log_upsocl/cron_log.log"
 
 
 every 1.day, :at => '2:00 am' do
