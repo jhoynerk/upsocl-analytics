@@ -6,15 +6,15 @@
         a href="" ui-sref='campaigns()'  Inicio
       li.active
         strong Lista de Campa&ntilde;as
-        
+
 .wrapper.wrapper-content.animated.fadeInRight
   .ibox-content.m-b-sm.border-bottom
     .text-center.p-lg
-      h2 LISTA DE CAMPA&Ntilde;AS 
+      h2 LISTA DE CAMPA&Ntilde;AS
   .faq-item ng-repeat="campaign in campaigns"
     .row
       .col-md-7
-        div.pointer.faq-question data-toggle="collapse" href="#camp{{campaign.id}}" 
+        div.pointer.faq-question data-toggle="collapse" href="#camp{{campaign.id}}"
           | {{ campaign.name }}
         small
           i.fa.fa-clock-o
@@ -22,7 +22,7 @@
       .col-md-3
         span.small.font-bold Usuarios en esta Campa&ntilde;a
         .tag-list ng-repeat="user in campaign.users"
-          span.tag-item 
+          span.tag-item
             | {{ user.name }}
       .col-md-2.text-right
         span.small.font-bold # de URLS
@@ -30,14 +30,14 @@
         | {{ campaign.num_urls }}
     .row
       .col-lg-12
-        .panel-collapse.collapse id="camp{{campaign.id}}" 
+        .panel-collapse.collapse id="camp{{campaign.id}}"
           .list-group
-            span.list-group-item ng-repeat="url in campaign.urls"
+            span.list-group-item ng-repeat="url in campaign.ordered_by_url_created"
               .col-lg-2
                 a.btn.btn-outline.btn-info ui-sref='viewCampaignUrl({ id: url.id })'
                   i.fa.fa-eye  Ver Campa&ntilde;a
               .col-lg-10
-                a href="{{ url.data }}" target='_blank' 
+                a href="{{ url.data }}" target='_blank'
                   | {{ url.title }}
-              .clearfix    
-              
+              .clearfix
+

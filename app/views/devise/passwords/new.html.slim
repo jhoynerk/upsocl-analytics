@@ -6,7 +6,7 @@
     p
       | Ingresa tu correo electronico y te enviaremos un email con las instrucciones para recuperar tu contraseña
     = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-      = devise_error_messages! 
+      = devise_error_messages!
       .form-group
         = f.email_field :email, autofocus: true, class:"form-control", placeholder:'Email'
 

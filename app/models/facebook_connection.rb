@@ -5,16 +5,18 @@ class FacebookConnection
     @user_id = user_id
   end
 
-  def object(id, fields)
-    @graph.get_object(id, fields: fields)
-  end
-
+  # Old connection
   def consult_url
     @graph.get_object('', { id: @user_id })
   end
 
   def consult_shares_by_url
     consult_url['share']["share_count"]
+  end
+
+  # new connection
+  def object(id, fields)
+    @graph.get_object(id, fields: fields)
   end
 
   def user_post
