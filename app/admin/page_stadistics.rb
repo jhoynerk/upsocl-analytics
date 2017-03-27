@@ -1,5 +1,6 @@
 ActiveAdmin.register PageStadistic do
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :sessions
+  menu parent: "Estadisticas URL"
 
   index do
     selectable_column

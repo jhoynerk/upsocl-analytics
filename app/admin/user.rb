@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   permit_params :email, :name, :admin,:password, :password_confirmation, campaign_ids: []
-
+  menu parent: "Cuentas"
   show do
     panel 'Detalles de Usuario' do
       attributes_table_for user do
@@ -37,8 +37,8 @@ ActiveAdmin.register User do
       f.input :name
       f.input :campaigns, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}
       f.input :admin
-      f.input :password 
-      f.input :password_confirmation 
+      f.input :password
+      f.input :password_confirmation
     end
     f.actions
   end

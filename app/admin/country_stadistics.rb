@@ -1,5 +1,6 @@
 ActiveAdmin.register CountryStadistic do
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :country_code, :country_name
+  menu parent: "Estadisticas URL"
 
   index do
     selectable_column
