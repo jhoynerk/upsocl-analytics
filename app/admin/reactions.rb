@@ -1,5 +1,6 @@
 ActiveAdmin.register Reaction do
   permit_params :title, :avatar
+  menu parent: "Ajustes"
 
   index do
     selectable_column

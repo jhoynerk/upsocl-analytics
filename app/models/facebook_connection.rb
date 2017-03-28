@@ -48,17 +48,17 @@ class FacebookConnection
   end
 
   def test
+    # text graph 219769364857951_825943334240548?fields=shares,reactions.summary(true)
+    # text graph 219769364857951_674076472760569/video_insights
     @user_id = '219769364857951'
-    @post_id = '529310477237170'
-    upsoclsabores = '1922865171271266'
+    @post_id = '674076472760569'
+    #upsoclsabores = '1922865171271266'
     parameters = {
-    fields: ['video_insights' ],
-    data_columns: ['campaign_name', 'reach', 'frequency', 'impressions', 'social_reach',
-        'social_impressions', 'unique_impressions', 'cpm', 'cpp', 'spend']
+    fields: ['insights' ]
     }
     #object(user_post, "video")
-    #@graph.get_object(user_post, parameters)
-    @graph.get_object(@user_id, fields: 'video_lists' )
+    @graph.get_object(user_post, parameters)
+    #@graph.get_object(user_post, fields: 'video_lists' )
     #object(user_post, "video_insights")
 
     #FacebookConnection.new(219769364857951, 674076472760569).test
@@ -67,7 +67,8 @@ class FacebookConnection
   private
 
   def oauth_access_token
-    @oauth_access_token ||= Koala::Facebook::OAuth.new(ENV['FB_APP_ID'], ENV['FB_APP_SECRET']).get_app_access_token
+    #@oauth_access_token ||= Koala::Facebook::OAuth.new(ENV['FB_APP_ID'], ENV['FB_APP_SECRET']).get_app_access_token
+    @oauth_access_token = ENV['FB_ACCESS_TOKEN'];
   end
 end
 

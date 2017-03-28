@@ -1,5 +1,5 @@
 ActiveAdmin.register FacebookAccount do
-
+  menu parent: "Ajustes"
   permit_params :name, :facebook_id
 
   form do |f|
