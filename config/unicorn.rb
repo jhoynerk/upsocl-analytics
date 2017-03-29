@@ -1,4 +1,5 @@
 # set path to application
+require 'dotenv/load'
 app_dir = File.expand_path("../..", __FILE__)
 shared_dir = "#{app_dir}/shared"
 working_directory app_dir
