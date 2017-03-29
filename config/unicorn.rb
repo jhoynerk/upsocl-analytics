@@ -1,10 +1,11 @@
 # set path to application
 require 'dotenv'
-Dotenv.load("../.env.production")
+env = Dotenv.load("../.env.production")
 app_dir = File.expand_path("../..", __FILE__)
 shared_dir = "#{app_dir}/shared"
 working_directory app_dir
-
+puts "HOLA"
+puts env
 
 # Set unicorn options
 worker_processes 2
