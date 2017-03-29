@@ -13,8 +13,8 @@ timeout 90
 listen "#{shared_dir}/sockets/unicorn.sock", :backlog => 64
 
 # Logging
-stderr_path "/data/log_upsocl/unicorn.stderr.log"
-stdout_path "/data/log_upsocl/unicorn.stdout.log"
+stderr_path "#{ENV['LOCAL_PATH_BACKUP']}/unicorn.stderr.log"
+stdout_path "#{ENV['LOCAL_PATH_BACKUP']}/unicorn.stdout.log"
 
 # Set master PID location
 pid "#{shared_dir}/pids/unicorn.pid"
