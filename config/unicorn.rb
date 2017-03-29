@@ -5,10 +5,6 @@ app_dir = File.expand_path("../..", __FILE__)
 variables = Dotenv.load("#{app_dir}/.env.production")
 shared_dir = "#{app_dir}/shared"
 working_directory app_dir
-puts "HOLA"
-puts "#{app_dir}/.env.production"
-puts variables
-puts ENV
 
 # Set unicorn options
 worker_processes 2
