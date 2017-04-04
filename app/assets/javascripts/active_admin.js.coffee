@@ -13,7 +13,7 @@ $ ->
       no_results_text: 'Sin resultados'
       width: "50%"
 
-  $('.has_many_add').on 'click', ->
+  $('.inputs').delegate '.has_many_add', 'click', ->
     setTimeout load_chosen, 100
 
   $("#page_stadistic_url_id, #country_stadistic_url_id").chosen
