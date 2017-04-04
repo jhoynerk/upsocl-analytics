@@ -16,3 +16,26 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+
+.has_many_add{
+  background-image: none!important;
+  background-color: #5cb85c!important;
+  border-color: #4cae4c!important;
+}
+
+.has_many_remove{
+  background-image: none!important;
+  background-color: #d9534f!important;
+  border-color: #d43f3a!important;
+  float: right;
+  top: 5px;
+  position: absolute;
+  right: 5px;
+}
+
+.agencies_countries_marks{
+  fieldset{
+    background: #ddd!important;
+  }
+}
