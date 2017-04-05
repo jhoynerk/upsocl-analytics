@@ -3,6 +3,22 @@ ActiveAdmin.register Mark do
   menu parent: "Utilidad"
   agencies = Agency.all.select(:name, :id )
   campaigns = Campaign.all.select(:name, :id)
+
+
+  # show
+  show do |marks|
+    panel 'Detalles del Cliente / Marca' do
+      attributes_table_for marks do
+        row :id
+        row :name
+        row :paises do
+          render 'countries_marks', countries_marks: marks.countries_marks
+        end
+      end
+    end
+  end
+
+  # create and update
   form do |f|
     f.inputs "Cliente / Marcas" do
       f.input :name
@@ -13,9 +29,6 @@ ActiveAdmin.register Mark do
         a.has_many :agencies_countries_marks, heading: 'Agencias', allow_destroy: true, new_record: 'Añadir Agencia', class: 'agencies_countries_panel' do |b|
           b.input :agency_id, label: 'Agencia', as: :select, collection: agencies, input_html: { class: 'chosen-input select_agencia'}
           b.input :campaign_ids, label: 'Campaña', as: :select, collection: campaigns.map{|c| ["#{c.name} [#{c.id}]", c.id]} , input_html: { :multiple => true, class: 'chosen-input'}
-          #b.has_many :campaigns, heading: 'Campañas', allow_destroy: true, new_record: 'Añadir Campaña', class: 'panel_urls' do |c|
-          #  c.input :id, label: 'Campaña', as: :select, collection: campaigns, input_html: { class: 'chosen-input'}
-          #end
         end
       end
     end
