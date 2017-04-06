@@ -9,6 +9,6 @@ class AgenciesCountriesMark < ActiveRecord::Base
   end
 
   def full_info
-    "#{countries_mark.mark_name} -> #{countries_mark.country_name} -> #{agency_name}"
+    "#{countries_mark.mark_name} #{countries_mark.country_name} #{agency_name}"
   end
 end
