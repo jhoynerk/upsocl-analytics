@@ -1,5 +1,5 @@
 ActiveAdmin.register Campaign do
-  permit_params :name, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
+  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],
@@ -7,6 +7,8 @@ ActiveAdmin.register Campaign do
       ["Upsocl Network", "92974712"],
       ["Upsocl Branded", "111669814"],
       ["Upsocl + CK2", "118766523"] ]
+
+  agencies_countries_marks = AgenciesCountriesMark.all
 
   show do
     panel 'Detalles de la Camapaña' do
@@ -38,6 +40,7 @@ ActiveAdmin.register Campaign do
   form do |f|
     f.inputs "Campaña" do
       f.input :name
+      f.input :agencies_countries_mark_id, label: 'Cliente / País / Agencia', as: :select, collection: agencies_countries_marks.map{ |a| [ "#{a.full_info}", a.id] }, input_html: { class: 'chosen-input'}
       f.input :users, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}
     end
     f.inputs do
