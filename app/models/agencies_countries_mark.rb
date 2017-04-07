@@ -1,7 +1,7 @@
 class AgenciesCountriesMark < ActiveRecord::Base
   has_many :campaigns
   belongs_to :agency
-  belongs_to :countries_mark, dependent: :delete
+  belongs_to :countries_mark
   accepts_nested_attributes_for :campaigns
 
   def agency_name
@@ -9,6 +9,10 @@ class AgenciesCountriesMark < ActiveRecord::Base
   end
 
   def full_info
-    "#{countries_mark.mark_name} #{countries_mark.country_name} #{agency_name}"
+    if countries_mark.nil?
+      "#{agency_name}"
+    else
+      "#{countries_mark.mark_name} #{countries_mark.country_name} #{agency_name}"
+    end
   end
 end

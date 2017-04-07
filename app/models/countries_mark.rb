@@ -5,11 +5,20 @@ class CountriesMark < ActiveRecord::Base
 
   accepts_nested_attributes_for :agencies_countries_marks, allow_destroy: :true
 
+  before_destroy :destroy_all_agencies_countries_marks
+
+
+
   def country_name
-    country.name unless mark.nil?
+    country.name unless country.nil?
   end
 
   def mark_name
     mark.name unless mark.nil?
+  end
+
+  private
+  def destroy_all_agencies_countries_marks
+    agencies_countries_marks.delete_all if agencies_countries_marks.any?
   end
 end
