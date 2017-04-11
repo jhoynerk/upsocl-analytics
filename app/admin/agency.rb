@@ -1,6 +1,8 @@
 ActiveAdmin.register Agency do
   permit_params :name
   menu parent: "Utilidad"
+
+  filter :name
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

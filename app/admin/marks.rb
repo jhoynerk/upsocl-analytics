@@ -4,7 +4,9 @@ ActiveAdmin.register Mark do
   agencies = Agency.all.select(:name, :id )
   campaigns = Campaign.all.select(:name, :id)
 
-
+  filter :name
+  filter :countries, label: 'Países', as: :select, collection: proc { Country.in_mark }, input_html: { class: 'chosen-input select_search'}
+  filter :countries_marks, label: 'Marcas Países', as: :select, collection: proc { CountriesMark.all.map{|cm| ["#{cm.content_search}", cm.id]} }, input_html: { class: 'chosen-input select_search'}
   # show
   show do |marks|
     panel 'Detalles del Cliente / Marca' do

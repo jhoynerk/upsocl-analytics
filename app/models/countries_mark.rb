@@ -17,6 +17,10 @@ class CountriesMark < ActiveRecord::Base
     mark.name unless mark.nil?
   end
 
+  def content_search
+    "#{mark_name} #{country_name}"
+  end
+
   private
   def destroy_all_agencies_countries_marks
     agencies_countries_marks.delete_all if agencies_countries_marks.any?
