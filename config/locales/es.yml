@@ -45,6 +45,9 @@ es:
       mark:
         one: Cliente / Marca
         other: Clientes / Marcas
+      agencies_countries_marks:
+        one: Agencias
+        other: Agencias
     attributes:
       user/active:
         true_value: Cliente Activo
@@ -74,6 +77,8 @@ es:
         name: Nombre
       mark:
         name: Nombre
+      country_mark:
+        agencies_countries_marks: agencias
   datetime:
     distance_in_words:
       about_x_hours:
