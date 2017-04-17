@@ -22,6 +22,7 @@ ActiveAdmin.register Mark do
 
   # create and update
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs "Cliente / Marcas" do
       f.input :name
     end

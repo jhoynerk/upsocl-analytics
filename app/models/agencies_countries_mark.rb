@@ -1,4 +1,5 @@
 class AgenciesCountriesMark < ActiveRecord::Base
+  validates :agency, presence: true
   has_many :campaigns
   belongs_to :agency
   belongs_to :countries_mark

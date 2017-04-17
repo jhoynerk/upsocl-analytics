@@ -38,6 +38,7 @@ ActiveAdmin.register Campaign do
   filter :name
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs "Campaña" do
       f.input :name
       f.input :agencies_countries_mark_id, label: 'Cliente / País / Agencia', as: :select, collection: AgenciesCountriesMark.all.map{ |a| [ "#{a.full_info}", a.id] }, input_html: { class: 'chosen-input'}
