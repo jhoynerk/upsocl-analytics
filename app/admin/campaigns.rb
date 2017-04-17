@@ -8,7 +8,7 @@ ActiveAdmin.register Campaign do
       ["Upsocl Branded", "111669814"],
       ["Upsocl + CK2", "118766523"] ]
 
-  agencies_countries_marks = AgenciesCountriesMark.all
+
 
   show do
     panel 'Detalles de la Camapaña' do
@@ -40,7 +40,7 @@ ActiveAdmin.register Campaign do
   form do |f|
     f.inputs "Campaña" do
       f.input :name
-      f.input :agencies_countries_mark_id, label: 'Cliente / País / Agencia', as: :select, collection: agencies_countries_marks.map{ |a| [ "#{a.full_info}", a.id] }, input_html: { class: 'chosen-input'}
+      f.input :agencies_countries_mark_id, label: 'Cliente / País / Agencia', as: :select, collection: AgenciesCountriesMark.all.map{ |a| [ "#{a.full_info}", a.id] }, input_html: { class: 'chosen-input'}
       f.input :users, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}
     end
     f.inputs do
