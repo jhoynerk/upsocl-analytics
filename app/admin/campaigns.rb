@@ -15,6 +15,9 @@ ActiveAdmin.register Campaign do
       attributes_table_for campaign do
         row :id
         row :name
+        row "Marca / País / Agencia" do
+          campaign.agencies_countries_mark.full_info unless campaign.agencies_countries_mark.nil?
+        end
         row :urls do
           render 'url_list', urls: campaign.urls
         end
