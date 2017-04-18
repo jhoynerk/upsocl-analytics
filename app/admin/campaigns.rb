@@ -11,7 +11,7 @@ ActiveAdmin.register Campaign do
 
 
   show do
-    panel 'Detalles de la Camapaña' do
+    panel 'Detalles de la Campaña' do
       attributes_table_for campaign do
         row :id
         row :name
