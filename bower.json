@@ -1,0 +1,19 @@
+{
+  "name": "upsocl_analytics",
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-ui-router": "latest",
+    "bootstrap": "latest",
+    "jquery-ui": "latest",
+    "angular-bootstrap": "latest",
+    "metisMenu": "latest",
+    "fontawesome": "latest",
+    "slimScroll": "latest",
+    "angular-resource": "latest",
+    "angular-daterangepicker": "latest",
+    "angular-datatables": "0.6.2",
+    "angular-chosen-localytics": "latest"
+  }
+}
