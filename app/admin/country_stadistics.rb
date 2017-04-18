@@ -5,10 +5,10 @@ ActiveAdmin.register CountryStadistic do
   index do
     selectable_column
     column(:campaña) do |u|
-      u.url.campaign.name.titleize
+      u.url_campaign_name
     end
     column(:url) do |u|
-      truncate(u.url.title, length: 50)
+      truncate(u.url_title, length: 50)
     end
     column :date
     column :country_code

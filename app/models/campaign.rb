@@ -1,6 +1,7 @@
 class Campaign < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :urls, dependent: :delete_all
+  belongs_to :agencies_countries_mark
 
   accepts_nested_attributes_for :urls, allow_destroy: :true
 

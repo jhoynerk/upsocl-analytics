@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208175710) do
+ActiveRecord::Schema.define(version: 20170404143308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,10 +49,25 @@ ActiveRecord::Schema.define(version: 20170208175710) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "campaigns", force: :cascade do |t|
+  create_table "agencies", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "agencies_countries_marks", force: :cascade do |t|
+    t.integer "countries_mark_id"
+    t.integer "agency_id"
+  end
+
+  add_index "agencies_countries_marks", ["agency_id"], name: "index_agencies_countries_marks_on_agency_id", using: :btree
+  add_index "agencies_countries_marks", ["countries_mark_id"], name: "index_agencies_countries_marks_on_countries_mark_id", using: :btree
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "agencies_countries_mark_id"
   end
 
   create_table "campaigns_users", id: false, force: :cascade do |t|
@@ -69,6 +84,14 @@ ActiveRecord::Schema.define(version: 20170208175710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "countries_marks", force: :cascade do |t|
+    t.integer "country_id"
+    t.integer "mark_id"
+  end
+
+  add_index "countries_marks", ["country_id"], name: "index_countries_marks_on_country_id", using: :btree
+  add_index "countries_marks", ["mark_id"], name: "index_countries_marks_on_mark_id", using: :btree
 
   create_table "countries_urls", id: false, force: :cascade do |t|
     t.integer "url_id"
@@ -153,6 +176,12 @@ ActiveRecord::Schema.define(version: 20170208175710) do
     t.string   "email"
     t.string   "address"
     t.string   "path_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "marks", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

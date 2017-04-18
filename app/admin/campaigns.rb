@@ -1,5 +1,5 @@
 ActiveAdmin.register Campaign do
-  permit_params :name, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
+  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],
@@ -8,11 +8,16 @@ ActiveAdmin.register Campaign do
       ["Upsocl Branded", "111669814"],
       ["Upsocl + CK2", "118766523"] ]
 
+
+
   show do
-    panel 'Detalles de la Camapaña' do
+    panel 'Detalles de la Campaña' do
       attributes_table_for campaign do
         row :id
         row :name
+        row "Marca / País / Agencia" do
+          campaign.agencies_countries_mark.full_info unless campaign.agencies_countries_mark.nil?
+        end
         row :urls do
           render 'url_list', urls: campaign.urls
         end
@@ -36,15 +41,17 @@ ActiveAdmin.register Campaign do
   filter :name
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs "Campaña" do
       f.input :name
+      f.input :agencies_countries_mark_id, label: 'Cliente / País / Agencia', as: :select, collection: AgenciesCountriesMark.all.map{ |a| [ "#{a.full_info}", a.id] }, input_html: { class: 'chosen-input'}
       f.input :users, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}
     end
     f.inputs do
-      f.has_many :urls, heading: 'Direcciones Url', allow_destroy: true, new_record: 'Añadir', class: 'panel_urls' do |a|
+      f.has_many :urls, heading: 'Posts', allow_destroy: true, new_record: 'Añadir', class: 'panel_urls' do |a|
         a.input :data, label: 'URL'
         a.input :screenshot
-        a.input :line_id, label: 'Line ID', :input_html => { :type => 'text' }
+        a.input :line_id, label: 'Line ID (DFP)', :input_html => { :type => 'text' }
         a.input :publicity, label: 'Con publicidad'
         a.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'
         a.input :tags, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Etiquetas'

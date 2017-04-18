@@ -9,7 +9,7 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w( graphics.js )
-Rails.application.config.assets.paths << Rails.root.join("vendor","assets","bower_components")
+Rails.application.config.assets.paths << Rails.root.join("bower_components")
 Rails.application.config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
 Rails.application.config.assets.configure do |env|
   env.register_engine '.slim', Slim::Template, silence_deprecation: true
