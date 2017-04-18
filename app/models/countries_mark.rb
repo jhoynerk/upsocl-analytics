@@ -7,13 +7,8 @@ class CountriesMark < ActiveRecord::Base
   validates_presence_of :agencies_countries_marks, message: "El país debe tener agencia, no puede estar en blanco"
   accepts_nested_attributes_for :agencies_countries_marks, allow_destroy: :true
 
-  def country_name
-    country.name unless country.nil?
-  end
-
-  def mark_name
-    mark.name unless mark.nil?
-  end
+  delegate :name, to: :mark, allow_nil: true, prefix: true
+  delegate :name, to: :country, allow_nil: true, prefix: true
 
   def content_search
     "#{mark_name} #{country_name}"

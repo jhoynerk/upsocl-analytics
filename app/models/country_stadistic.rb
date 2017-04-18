@@ -11,6 +11,8 @@ class CountryStadistic < ActiveRecord::Base
 
   scope :totals_filtered_by, -> (countries) { where('country_code in (?)', countries).select('SUM(pageviews) as pageviews', 'SUM(users) as users', 'SUM(avgtimeonpage) as avgtimeonpage') }
   scope :totals_filtered_count, -> (countries) { where('country_code in (?)', countries).count }
+
+  delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
   def self.to_percent(val, countries)
      ((val * 100).to_f / (countries.any? ? where('country_code in (?)', countries) : self ).sum(:pageviews).to_f).round(2).to_s + '%'
   end

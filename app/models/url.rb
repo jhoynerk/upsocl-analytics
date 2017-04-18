@@ -13,7 +13,10 @@ class Url < ActiveRecord::Base
   accepts_nested_attributes_for :facebook_posts, allow_destroy: :true
 
   attr_accessor :params
+
   mount_uploader :screenshot, ScreenshotUploader
+
+  delegate :name, to: :campaign, allow_nil: true, prefix: true
 
   validates :data, presence: true, url: { no_local: true, message: 'el formato no es correto' }
   validates :line_id, :profile_id, presence: true
