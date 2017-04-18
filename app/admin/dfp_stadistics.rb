@@ -6,10 +6,10 @@ ActiveAdmin.register DfpStadistic do
   index do
     selectable_column
     column(:campaña) do |u|
-      u.url.campaign.name.titleize
+      u.url.campaign.name.titleize unless u.url.nil?
     end
     column(:url) do |u|
-      truncate(u.url.title, length: 50)
+      truncate(u.url.title, length: 50) unless u.url.nil?
     end
     column :date
     column :impressions

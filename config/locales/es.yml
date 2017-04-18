@@ -39,6 +39,15 @@ es:
       facebook_account:
         one: Facebook
         other: Facebook
+      agency:
+        one: Agencia
+        other: Agencias
+      mark:
+        one: Cliente / Marca
+        other: Clientes / Marcas
+      agencies_countries_marks:
+        one: Agencias
+        other: Agencias
     attributes:
       user/active:
         true_value: Cliente Activo
@@ -55,7 +64,6 @@ es:
       dfp_stadistic:
         date: Fecha
         impressions: Impresiones
-
       user:
         name: Nombre
         current_sign_in_at: Actual inicio de sesion
@@ -65,6 +73,12 @@ es:
       campaign:
         name: Nombre
         users: Usuarios
+      agency:
+        name: Nombre
+      mark:
+        name: Nombre
+      country_mark:
+        agencies_countries_marks: agencias
   datetime:
     distance_in_words:
       about_x_hours:
@@ -228,7 +242,7 @@ es:
     download: "Descargar:"
     has_many_new: "Añadir %{model}"
     has_many_delete: "Eliminar"
-    has_many_remove: "Quitar"
+    has_many_remove: "X"
     filters:
       buttons:
         filter: "Filtrar"
@@ -342,3 +356,4 @@ es:
       block: "Lista"
       grid: "Grilla"
       blog: "Blog"
+    order: Orden

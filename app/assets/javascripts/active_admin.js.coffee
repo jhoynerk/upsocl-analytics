@@ -13,7 +13,7 @@ $ ->
       no_results_text: 'Sin resultados'
       width: "50%"
 
-  $('.has_many_add').on 'click', ->
+  $('.inputs').delegate '.has_many_add', 'click', ->
     setTimeout load_chosen, 100
 
   $("#page_stadistic_url_id, #country_stadistic_url_id").chosen
@@ -32,11 +32,34 @@ $ ->
   $('.panel_urls').delegate 'a.open', 'click', ->
     $(this).hide()
     panel = $(this).parent().children('ol')
-    $(this).parent().append('<a class="button close" data-url="' + $(this).data('url') + '" > cerrar </a>')
+    $(this).parent().append('<a class="button close" data-url="' + $(this).data('url') + '" > - </a>')
     panel.show()
     return
 
   $('.panel_urls').delegate 'a.close', 'click', ->
+    $(this).hide()
+    panel = $(this).parent().children('ol')
+    button = '<a class="button open" data-url="' + $(this).data('url') + '"> ' + $(this).data('url') + ' </a>'
+    $(this).parent().append(button)
+    panel.hide()
+    return
+
+  # next
+   $('.agencies_countries_panel').each (index) ->
+    url = $(this).find('ol > li > select.select_agencia option:selected').text()
+    button = '<a class="button open" data-url="' + url + '"> ' + url + ' </a>'
+    $(this).append(button)
+    $('.agencies_countries_panel > ol:first-child').hide()
+    return
+
+  $('.agencies_countries_panel').delegate 'a.open', 'click', ->
+    $(this).hide()
+    panel = $(this).parent().children('ol')
+    $(this).parent().append('<a class="button close" data-url="' + $(this).data('url') + '" > - </a>')
+    panel.show()
+    return
+
+  $('.agencies_countries_panel').delegate 'a.close', 'click', ->
     $(this).hide()
     panel = $(this).parent().children('ol')
     button = '<a class="button open" data-url="' + $(this).data('url') + '"> ' + $(this).data('url') + ' </a>'
