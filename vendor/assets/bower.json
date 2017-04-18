@@ -1,0 +1,19 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-ui-router": "latest",
+    "bootstrap": "latest",
+    "jquery-ui": "latest",
+    "angular-bootstrap": "latest",
+    "metisMenu": "latest",
+    "fontawesome": "latest",
+    "slimScroll": "latest",
+    "angular-resource": "latest",
+    "angular-daterangepicker": "latest",
+    "angular-datatables": "latest",
+    "angular-chosen-localytics": "latest"
+  }
+}
