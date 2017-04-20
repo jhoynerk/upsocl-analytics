@@ -357,3 +357,11 @@ es:
       grid: "Grilla"
       blog: "Blog"
     order: Orden
+  enumerations:
+    tag_type:
+      category: 'Categoría'
+      sub_category: 'Sub-Categoría'
+      format: 'Formato'
+      context: 'Contexto'
+      type_content: 'Tipo de Contenido'
+      tone: 'Tono'
