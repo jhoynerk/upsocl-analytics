@@ -4,7 +4,18 @@ class CampaignsController < ApplicationController
     @campaigns = checked_campaings.decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json(methods: [ :num_urls, :ordered_by_url_created ], include: [:urls, users: { only: [:name] } ] ) }
+      format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :tag_titles ],
+                                                        include: [:urls, users: { only: [:name] }]) }
+    end
+  end
+
+  def filter_by_tag
+    @campaigns = checked_campaings
+    @campaigns = @campaigns.includes('tags').with_tags(params[:tags_ids]) unless params[:tags_ids].nil? or params[:tags_ids] == ''
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :tag_titles ],
+                                                        include: [:urls, users: { only: [:name] }]) }
     end
   end
 

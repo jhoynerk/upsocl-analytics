@@ -1,19 +1,15 @@
 ActiveAdmin.register Tag do
   menu parent: "Ajustes"
-  permit_params :title
+  permit_params :title, :type_tag
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+    f.inputs "Cliente / Marcas" do
+      f.input :title
+      f.input :type_tag, :as => :select, collection: TagType.to_a, :input_html => { :class => "chosen-input"}, label: "Tipo de Tag"
+    end
 
+    f.actions
+  end
 
 end

@@ -7,6 +7,12 @@
 
 $(document).ready(function () {
 
+  $('.chosen-input').chosen({
+    allow_single_deselect: true,
+    no_results_text: 'Sin resultados',
+    width: "100%"
+  })
+
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
         $('body').addClass('body-small')

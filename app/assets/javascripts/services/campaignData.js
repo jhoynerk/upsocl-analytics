@@ -14,5 +14,9 @@ myApp.factory('Campaign', function($resource) {
   return $resource('/reactions.json');
 }).factory('ReactionData', function($resource) {
   return $resource('/data_reactions.json', { method: 'GET', isArray: false });
+}).factory('Tags', function($resource) {
+  return $resource('/tags.json', { method: 'GET', isArray: false });
+}).factory('CampaignFilter', function($resource) {
+  return $resource('/campaigns.json');
 });
 

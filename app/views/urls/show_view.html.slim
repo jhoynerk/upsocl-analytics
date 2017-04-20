@@ -38,6 +38,11 @@ div#url_id data="{{ url.id }}"
         span.color_updated_at
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
+        br
+        span
+          b Etiquetas: 
+          span
+            | {{ url.tag_names }}
 
   .row
     .col-lg-12
