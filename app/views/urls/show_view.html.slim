@@ -40,9 +40,12 @@ div#url_id data="{{ url.id }}"
           span#text-updated-at
         br
         span
-          b Etiquetas: 
+          h4 Etiquetas
+        div ng-repeat="tag_name in url.tag_names"
+          b
+            |  {{ tag_name.key }} :
           span
-            | {{ url.tag_names }}
+            |  {{ tag_name.value }}
 
   .row
     .col-lg-12

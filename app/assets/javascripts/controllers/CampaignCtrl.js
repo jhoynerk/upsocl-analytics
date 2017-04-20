@@ -35,7 +35,6 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
         draw_graphics($stateParams.id, data.stadistics);
         $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
         $('#daterange').data('daterangepicker').setEndDate(moment());
-        data['tag_names'] = (data.tags.map(function(t){ return t.title }).join(', '))
         $scope.url = data
         if($scope.datePicker != void 0){
           $scope.datePicker.date = {startDate: null, endDate: null};

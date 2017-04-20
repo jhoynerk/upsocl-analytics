@@ -13,7 +13,7 @@
       h2 LISTA DE CAMPA&Ntilde;AS
     .col-lg-3.search-in-title
       .input-group.container-search-chosen
-        select.chosen-input#filter-by-tags multiple="multiple"
+        select.chosen-input#filter-by-tags multiple="multiple" data-placeholder="Etiquetas"
           option ng-repeat="tag in tags" value="{{tag.id}}"
            | {{tag.title}}
         span.input-group-btn
