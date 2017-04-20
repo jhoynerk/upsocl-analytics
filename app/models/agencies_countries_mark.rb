@@ -10,10 +10,11 @@ class AgenciesCountriesMark < ActiveRecord::Base
   end
 
   def full_info
-    if countries_mark.nil?
-      "#{agency_name}"
-    else
+    (countries_mark.nil?) ? agency_name : all_info
+  end
+
+  private
+    def all_info
       "#{countries_mark.mark_name} #{countries_mark.country_name} #{agency_name}"
     end
-  end
 end
