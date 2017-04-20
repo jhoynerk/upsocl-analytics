@@ -1,5 +1,5 @@
 ActiveAdmin.register Campaign do
-  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
+  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], urls_attributes: [ :id, :status, :committed_visits, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],
@@ -49,13 +49,14 @@ ActiveAdmin.register Campaign do
     end
     f.inputs do
       f.has_many :urls, heading: 'Posts', allow_destroy: true, new_record: 'Añadir', class: 'panel_urls' do |a|
-        a.input :data, label: 'URL'
+        a.input :data
         a.input :screenshot
-        a.input :line_id, label: 'Line ID (DFP)', :input_html => { :type => 'text' }
+        a.input :status, as: :radio
+        a.input :committed_visits, as: :number
+        a.input :line_id, :input_html => { :type => 'text' }
         a.input :publicity, label: 'Con publicidad'
         a.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'
         a.input :tags, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Etiquetas'
-        #a.input :profile_id, label: 'Account Analytics', as: :select, collection: AnalyticConnection.new.all_profiles{|u| ["#{u.name}", u.id]}, input_html: { class: 'chosen-input'}
         a.input :profile_id, label: 'Account Analytics', as: :select, collection: analytics, input_html: { class: 'chosen-input'}
         a.input :interval_status, label: 'Frecuencia de actualización', as: :select, collection: IntervalStatus.to_a, input_html: { class: 'chosen-input' }
         a.has_many :facebook_posts, heading: 'Post Facebook asociados', allow_destroy: true, new_record: 'Añadir Post Facebook' do |e|
