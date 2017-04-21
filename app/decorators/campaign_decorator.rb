@@ -8,4 +8,7 @@ class CampaignDecorator < Draper::Decorator
     I18n.l(object.created_at, format: :short)
   end
 
+  def tag_names
+    active_tag_names
+  end
 end
