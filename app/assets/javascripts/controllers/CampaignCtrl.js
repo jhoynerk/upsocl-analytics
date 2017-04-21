@@ -1,8 +1,25 @@
 myApp = angular.module('upsocl.controllers', [])
 
-myApp.controller('CampaignListController', function($scope, $state, $window, Campaign, User) {
+myApp.controller('CampaignListController', function($scope, $state, $http, $window, Campaign, Tags, User, CampaignFilter) {
   $scope.campaigns = Campaign.query();
-  $scope.user = User.get();
+  $scope.tags = Tags.query();
+  $scope.user = User.get(function(data){
+    setTimeout(function(){
+      $('.chosen-input').chosen({
+        allow_single_deselect: true,
+        no_results_text: 'Sin resultados',
+        width: "100%"
+      })
+    }, 500);
+  });
+
+  $scope.searchTags = function(){
+    var ids = $('.chosen-input').val()
+    $http.post('/campaigns/filter_by_tag.json', {tags_ids: ids}).then( function(response) {
+      $scope.campaigns = response.data;
+    })
+  };
+
 })
 
 myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, User) {
@@ -13,12 +30,15 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
   $scope.$watch('date', function(newDate) {
     var startDate = newDate.startDate.format('YYYY-MM-DD');
     var endDate = newDate.endDate.format('YYYY-MM-DD');
-      $scope.url = Url.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
+      Url.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
         class_updated_at(data.created_at);
         draw_graphics($stateParams.id, data.stadistics);
         $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
         $('#daterange').data('daterangepicker').setEndDate(moment());
-        $scope.datePicker.date = {startDate: null, endDate: null};
+        $scope.url = data
+        if($scope.datePicker != void 0){
+          $scope.datePicker.date = {startDate: null, endDate: null};
+        }
       });
   }, false);
 })

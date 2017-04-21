@@ -1,17 +1,27 @@
 #= require active_admin/base
 #= require chosen.jquery.min
-$ ->
 
-  $('.chosen-input').chosen
-    allow_single_deselect: true
-    no_results_text: 'Sin resultados'
-    width: "50%"
-
-  load_chosen = ->
-    $('.chosen-input').chosen
+load_chosen = ->
+  $('.chosen-input').each () ->
+    max = $(this).data('maxselected')
+    max = (max != undefined) ? max : 20
+    $(this).chosen
       allow_single_deselect: true
       no_results_text: 'Sin resultados'
       width: "50%"
+      max_selected_options: max
+    .bind "chosen:maxselected", ->
+      error = $(this).parents('li').find('span.error')
+      if(error.size()<1)
+        span = $("<span class='error'>Usted ha alcanzado el límite para este tipo de etiqueta</span>")
+        $(this).parents('li').append(span);
+        setTimeout (->
+          span.remove()
+          return
+        ), 3000
+
+$ ->
+  load_chosen()
 
   $('.inputs').delegate '.has_many_add', 'click', ->
     setTimeout load_chosen, 100
