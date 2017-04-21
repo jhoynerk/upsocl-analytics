@@ -16,7 +16,7 @@ module Clockwork
     Rails.logger.tagged("Clockwork") { Rails.logger.debug("Running #{job}") }
     @current_job = job
     begin
-      Rake::Task[job.to_s].execute
+      Rake.application.invoke_task(job.to_s)
     rescue Exception => e
       Raygun.track_exception(e)
     end
@@ -26,7 +26,7 @@ module Clockwork
     add_log(error)
   end
 
-  every(1.day, 'analytics:add_records[week, day]', at: '12:55')
+  every(1.day, 'analytics:add_records[week, day]', at: '13:35')
 
   def self.add_log(error)
     logger = Logger.new(STDOUT)
