@@ -7,7 +7,7 @@ namespace :analytics do
       interval_range(arg_interval)
       if args.url_id.nil?
         interval = interval_status(arg_interval)
-        urls = Url.where("id > ? ", 4100).update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc).where(publico: false)
+        urls = Url.update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc).where(publico: false)
       else
         urls = [Url.find(args.url_id)]
       end
