@@ -1,4 +1,5 @@
 class Campaign < ActiveRecord::Base
+  include TagsUtil
   belongs_to :agencies_countries_mark
   has_many :urls, dependent: :delete_all
   has_and_belongs_to_many :users

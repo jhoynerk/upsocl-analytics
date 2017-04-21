@@ -1,5 +1,5 @@
 ActiveAdmin.register Campaign do
-  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], :tag_ids=> [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
+  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [], urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],

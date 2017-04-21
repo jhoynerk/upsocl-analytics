@@ -4,7 +4,7 @@ ActiveAdmin.register Tag do
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
-    f.inputs "Cliente / Marcas" do
+    f.inputs "Etiquetas" do
       f.input :title
       f.input :type_tag, :as => :select, collection: TagType.to_a, :input_html => { :class => "chosen-input"}, label: "Tipo de Etiqueta"
     end
