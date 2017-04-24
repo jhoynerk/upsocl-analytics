@@ -1,7 +1,7 @@
 namespace :analytics do
   desc "Call Google Analytics Api for get data of url"
   task :add_records, [:time, :interval, :url_id] => :environment do |t, args|
-    begin
+    # begin
       time_range(args.time)
       arg_interval = args.interval
       interval_range(arg_interval)
@@ -88,9 +88,9 @@ namespace :analytics do
       end
       puts "Task complete... Updated #{count} urls"
       Message.create(type_update: 1, message: "#{Time.now} Tarea completa... Se actualizaron #{count} urls", status: 2)
-    rescue Exception => e
-      Message.create(type_update: 1, message: "#{Time.now} Ocurrio un problema en la tarea programada. Error: #{e}", status: 3)
-    end
+    # rescue Exception => e
+    #   Message.create(type_update: 1, message: "#{Time.now} Ocurrio un problema en la tarea programada. Error: #{e}", status: 3)
+    # end
   end
 
   def time_range(time)
@@ -130,7 +130,7 @@ namespace :analytics do
   def attention(url)
     unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
-        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
+        return (url.totals_stadistics[:avgtimeonpage].to_f * url.totals_stadistics[:pageviews]).to_f / 60
       end
     end
     return 0

@@ -25,6 +25,7 @@ gem 'whenever', :require => false
 
 # gem upload images
 gem 'carrierwave'
+gem 'fog'
 
 # gem for get dfp info
 gem 'google-dfp-api'
