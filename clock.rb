@@ -26,7 +26,7 @@ module Clockwork
     add_log(error)
   end
 
-  every(1.day, 'analytics:add_records[week, day]', at: '13:16')
+  every(1.day, 'analytics:add_records[week, day]', at: '10:00')
 
   def self.add_log(error)
     logger = Logger.new(STDOUT)
