@@ -251,4 +251,8 @@ class Url < ActiveRecord::Base
     copy_data << sum
     return copy_data
   end
+
+  def total_valid_with_data?
+    !(totals_stadistics.nil? && totals_stadistics[:pageviews].nil?)
+  end
 end
