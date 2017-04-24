@@ -23,7 +23,6 @@ gem "daemons"
 # Cron Jobs
 gem 'whenever', :require => false
 
-
 # gem upload images
 gem 'carrierwave'
 
@@ -63,6 +62,9 @@ gem 'social_shares', :github => "xleninx/social_shares"
 #Take screen to page
 gem 'cloudinary'
 
+# Shedule task
+gem 'clockwork'
+
 # ActiveAdmin
 gem 'activeadmin', '~> 1.0.0.pre4'
 
@@ -93,6 +95,9 @@ gem 'enumerate_it'
 #backup
 gem 'backup'
 
+# Error information
+gem 'raygun4ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -118,6 +123,4 @@ end
 
 group :production do
   gem 'rails_12factor', '0.0.3'
-  # gem unicorn
-  gem "unicorn-rails"
 end
