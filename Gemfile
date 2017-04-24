@@ -62,6 +62,9 @@ gem 'social_shares', :github => "xleninx/social_shares"
 #Take screen to page
 gem 'cloudinary'
 
+#Save img to S3
+gem 'carrierwave'
+
 # Shedule task
 gem 'clockwork'
 
