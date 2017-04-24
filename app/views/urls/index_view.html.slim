@@ -11,7 +11,8 @@
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
     .text-center.p-lg
       h2 LISTA DE CAMPA&Ntilde;AS
-    .col-lg-3.search-in-title
+      b
+    .col-lg-3.search-in-title ng-if="user.admin"
       .input-group.container-search-chosen
         select.chosen-input#filter-by-tags multiple="multiple" data-placeholder="Etiquetas"
           option ng-repeat="tag in tags" value="{{tag.id}}"

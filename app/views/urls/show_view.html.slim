@@ -39,9 +39,10 @@ div#url_id data="{{ url.id }}"
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
         br
-        span
+        b
+        span ng-if="user.admin"
           h4 Etiquetas
-        div ng-repeat="tag_name in url.tag_names"
+        div  ng-if="user.admin" ng-repeat="tag_name in url.tag_names"
           b
             |  {{ tag_name.key }} :
           span
