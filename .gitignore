@@ -24,8 +24,6 @@ pickle-email-*.html
 /bower_components/*
 /public/*
 /node_modules/*
-
-!/public/assets/chosen-sprite.png
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 
@@ -42,7 +40,6 @@ config/initializers/secret_token.rb
 # if using bower-rails ignore default bower_components path bower.json files
 /vendor/assets/bower_components
 *.bowerrc
-
 
 # Ignore pow environment settings
 .powenv

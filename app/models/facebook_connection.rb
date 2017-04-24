@@ -28,7 +28,7 @@ class FacebookConnection
   end
 
   def consult_comments
-    object(user_post, "comments.summary(true)")
+    object(user_post, "comments.summary(true).filter(stream)")
   end
 
   def consult_shares
