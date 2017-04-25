@@ -19,7 +19,9 @@ class ProcessData
         pageviews: data&.pageviews.to_i,
         users: data&.users.to_i,
         country_name: data&.country,
-        country_code: data&.countryIsoCode
+        country_code: data&.countryIsoCode,
+        traffic_type: data&.traffictype,
+        device_type: data&.deviceCategory
       }
     end
 end
