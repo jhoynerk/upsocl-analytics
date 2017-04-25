@@ -14,7 +14,7 @@ class PageStadistic < ActiveRecord::Base
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
 
   def self.compute_avg( sum, count )
-    count.zero? ? 0.0 : (((sum / count)) rescue 0)
+    count.zero? ? 0.0 : (sum / count) rescue 0
   end
 
   def self.parameters( url:, date:, **additional_arguments )

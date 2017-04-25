@@ -14,7 +14,7 @@ class TrafficStadistic < ActiveRecord::Base
     }
   end
 
-  def search_parameters( pageviews:, **additional_arguments )
-    { pageviews: pageviews }
+  def search_parameters(**args)
+    args.extract!(:pageviews)
   end
 end
