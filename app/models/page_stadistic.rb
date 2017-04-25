@@ -24,12 +24,7 @@ class PageStadistic < ActiveRecord::Base
     }
   end
 
-  def self.attrs( sessions:, avgtimeonpage:, pageviews:, users:, **additional_arguments )
-    {
-      sessions: sessions,
-      avgtimeonpage: avgtimeonpage,
-      pageviews: pageviews,
-      users: users
-    }
+  def search_parameters(**args)
+    args.extract!(:sessions, :avgtimeonpage, :pageviews, :users)
   end
 end

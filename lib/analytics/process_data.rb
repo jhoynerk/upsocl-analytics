@@ -10,16 +10,16 @@ class ProcessData
   end
 
   private
-
     def attr_type_hash(data)
       {
         url: @url,
-        date: data.date.to_date,
-        sessions: data.sessions.to_i,
-        avgtimeonpage: data.avgtimeonpage.to_f,
-        pageviews: data.pageviews.to_i,
-        users: data.users.to_i,
-        country_name: data.country,
+        date: data&.date.to_date,
+        sessions: data&.sessions.to_i,
+        avgtimeonpage: data&.avgtimeonpage.to_f,
+        pageviews: data&.pageviews.to_i,
+        users: data&.users.to_i,
+        country_name: data&.country,
+        country_code: data&.countryIsoCode
       }
     end
 end

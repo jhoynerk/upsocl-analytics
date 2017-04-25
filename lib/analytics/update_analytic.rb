@@ -16,10 +16,10 @@ class UpdateAnalytic
 
   private
     def data(model)
-      conection(@url.profile_id, souce(model), @url.only_path)
+      conection(@url.profile_id, source(model), @url.only_path)
     end
 
-    def souce(model)
+    def source(model)
       model.sub('Stadistic', '')
     end
 
