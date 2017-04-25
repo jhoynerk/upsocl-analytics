@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420135507) do
+ActiveRecord::Schema.define(version: 20170425194936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,9 +135,9 @@ ActiveRecord::Schema.define(version: 20170420135507) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "device_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "pageviews",   default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "device_stadistics", ["url_id"], name: "index_device_stadistics_on_url_id", using: :btree
@@ -197,12 +197,12 @@ ActiveRecord::Schema.define(version: 20170420135507) do
   create_table "page_stadistics", force: :cascade do |t|
     t.integer  "url_id"
     t.date     "date"
-    t.float    "avgtimeonpage"
-    t.integer  "pageviews"
-    t.integer  "sessions"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
+    t.float    "avgtimeonpage", default: 0.0
+    t.integer  "pageviews",     default: 0
+    t.integer  "sessions",      default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
   end
 
   add_index "page_stadistics", ["url_id"], name: "index_page_stadistics_on_url_id", using: :btree
@@ -229,9 +229,9 @@ ActiveRecord::Schema.define(version: 20170420135507) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "traffic_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "pageviews",    default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "traffic_stadistics", ["url_id"], name: "index_traffic_stadistics_on_url_id", using: :btree
