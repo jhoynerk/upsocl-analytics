@@ -28,5 +28,7 @@ module UpsoclAnalytics
     config.action_dispatch.default_headers = {
         'X-Frame-Options' => 'ALLOWALL'
     }
+    config.autoload_paths << Rails.root.join('lib/analytics')
+    config.autoload_paths << Rails.root.join('lib/analytics/helpers')
   end
 end
