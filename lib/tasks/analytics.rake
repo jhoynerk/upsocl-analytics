@@ -123,7 +123,7 @@ namespace :analytics do
     end
   end
 
-  def interval_status(time)
+  def interval_status(time = '')
     (time == '6month') ? 'month6' : time
   end
 
