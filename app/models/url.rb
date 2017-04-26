@@ -28,6 +28,30 @@ class Url < ActiveRecord::Base
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
 
+  scope :search_urls_to_update, -> {
+    with_page_stadistics | with_not_page_statistics | update_last_three_month
+  }
+
+  scope :with_page_stadistics, -> {
+    last_week.active.joins(:page_stadistics).having('SUM(page_stadistics.pageviews) < urls.committed_visits')
+    .group('urls.id')
+  }
+
+  scope :with_not_page_statistics, -> {
+    active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' )
+    .where('page_stadistics.url_id is null')
+  }
+
+  scope :update_last_three_month, -> {
+    last_month.max_month_update
+  }
+
+  scope :last_week, -> { where( '(urls.data_updated_at > ? AND urls.created_at > ?)', 1.week.ago, 1.month.ago ).max_month_update }
+  scope :last_month, -> { where( 'urls.data_updated_at < ?', 1.month.ago ) }
+  scope :max_month_update, ->{ where( 'urls.created_at > ?', 3.month.ago ) }
+  scope :active, ->{ where( 'status = ? ', StatusUrls::ACTIVE ) }
+
+
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
   def social_count
