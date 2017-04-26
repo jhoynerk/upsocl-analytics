@@ -36,8 +36,7 @@ ActiveAdmin.register Url do
 
   member_action :update_metrics, method: :post do
     url = Url.find(params[:id])
-    Delayed::Job.enqueue(DelayedRake.new("analytics:add_records[week,day,#{url.id}]"))
-    #Rake.application.invoke_task("analytics:add_records['week','day',#{url.id}]")
+    url.run_analytics_task
     if AnalyticFacebook.new(url).save
       redirect_to resource_path(url), notice: "facebook actualizado, analytics se ha puesto en la cola de tareas"
     else
