@@ -106,11 +106,11 @@ ActiveRecord::Schema.define(version: 20170425194936) do
     t.date     "date"
     t.string   "country_name"
     t.string   "country_code"
-    t.integer  "pageviews"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
-    t.float    "avgtimeonpage"
+    t.integer  "pageviews",     default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
+    t.float    "avgtimeonpage", default: 0.0
   end
 
   add_index "country_stadistics", ["url_id"], name: "index_country_stadistics_on_url_id", using: :btree
