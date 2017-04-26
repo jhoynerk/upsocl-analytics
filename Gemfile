@@ -71,7 +71,7 @@ gem 'clockwork'
 
 # ActiveAdmin
 gem 'activeadmin', '~> 1.0.0.pre4'
-
+gem 'active_admin_role'
 # Slim html
 gem 'slim-rails'
 
