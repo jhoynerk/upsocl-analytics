@@ -130,7 +130,7 @@ namespace :analytics do
   def attention(url)
     unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
-        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
+        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]).to_f / 60
       end
     end
     return 0
