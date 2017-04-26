@@ -1,4 +1,6 @@
 class Url < ActiveRecord::Base
+  MONTH_LIMIT_TO_UPDATE = 3
+
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
@@ -29,18 +31,19 @@ class Url < ActiveRecord::Base
   before_destroy { |record| clean_screenshot(record.id) }
 
   scope :search_urls_to_update, -> {
-    with_not_page_statistics | update_daily_wich_not_committed | update_week_wich_commited | update_last_three_month
+    not_page_statistics | update_daily_wich_not_reached_goal | update_week_wich_reached_goal | update_monthly
   }
 
-  scope :update_daily_wich_not_committed, -> { update_active.not_committed_for_page_stadistics }
-  scope :not_committed_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
+  scope :update_daily_wich_not_reached_goal, -> { update_active.not_reached_goal_for_page_stadistics }
+  scope :not_reached_goal_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
 
-  scope :update_week_wich_commited, -> { update_active.last_update_greater_one_week.committed_for_page_stadistics.max_month_update( 1 ) }
-  scope :committed_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
+  scope :update_week_wich_reached_goal, -> { update_active.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
+  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
 
-  scope :with_not_page_statistics, -> { update_active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( 'page_stadistics.url_id is null' ) }
+  scope :not_page_statistics, -> { update_active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
 
-  scope :update_last_three_month, -> { update_active.last_update_greater_one_month.max_month_update(3) }
+
+  scope :update_monthly, -> { update_active.last_update_greater_one_month.max_month_update(MONTH_LIMIT_TO_UPDATE) }
 
   scope :last_update_greater_one_week, -> { where( '(urls.data_updated_at < ? AND urls.created_at < ?)', 1.week.ago, 1.week.ago ) }
   scope :last_update_greater_one_month, -> { where( 'urls.data_updated_at < ?', 1.month.ago ) }
