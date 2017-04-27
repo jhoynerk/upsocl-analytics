@@ -84,6 +84,24 @@ describe Url do
     describe 'when the urls must have a week of being updated' do
       let!(:url_active_week) { create(:url, status: true, data_updated_at: 8.days.ago, created_at: 8.days.ago) }
       it { expect( Url.last_update_greater_one_week ).to eq([ url_active_week ]) }
+      it 'when you do not have an update week' do
+        url_active_week.update(data_updated_at: 6.days.ago)
+        expect( Url.last_update_greater_one_week ).to eq([ ])
+      end
+      it 'When you do not have a week of creation' do
+        url_active_week.update(created_at: 6.days.ago)
+        expect( Url.last_update_greater_one_week ).to eq([ ])
+      end
+    end
+
+    describe 'when the urls must have a month of being updated' do
+      let!(:url_active_month) { create(:url, status: true, data_updated_at: 32.days.ago, created_at: 32.days.ago) }
+      it { expect( Url.last_update_greater_one_month ).to eq([ url_active_month ]) }
+      it { expect( Url.update_monthly ).to eq( [ url_active_month ] ) }
+    end
+
+    describe '' do
+      it { expect( Url.not_page_statistics ).to eq([ url_active ])}
     end
 
   end
