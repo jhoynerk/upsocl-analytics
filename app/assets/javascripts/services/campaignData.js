@@ -10,6 +10,8 @@ myApp.factory('Campaign', function($resource) {
   return $resource('/user.json');
 }).factory('Url', function($resource) {
   return $resource('/urls/:id.json');
+}).factory('Video', function($resource) {
+  return $resource('/facebook_posts/:id.json');
 }).factory('Reactions', function($resource) {
   return $resource('/reactions.json');
 }).factory('ReactionData', function($resource) {

@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
   end
   resources :urls, only: [:show]
+  resources :facebook_posts, only: [:show]
+  get 'facebook_posts_view', to: 'facebook_posts#show_view'
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
   get 'show_all_view', to: 'urls#show_all_view'

@@ -1,0 +1,254 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-8
+    h2 Campa&ntilde;a: {{ video.campaign.name }}
+    ol.breadcrumb
+      li
+        a href="" ui-sref='campaigns()'  Inicio
+      li
+        a href='/' ui-sref="campaigns" Campa&ntilde;as
+      li.active
+        strong
+          | {{ video.campaign.name }}
+  .col-sm-4
+    h2.ng-binding.text-center Rango de Fechas
+    input#daterange.input-sm.form-control.text-center.date-picker date-range-picker='' options="opts" ng-model="date" type="text" placeholder='Selecciones fechas a consultar' /
+    button.btn.btn-primary.btn-block onClick="get_report()" Generar Reporte
+  .col-sm-offset-4.col-sm-4
+    div ng-if="video.next_url != nil"
+      a.btn.btn-outline.btn-info.pull-right ui-sref='viewCampaignUrl({ id: video.next_video.id })'
+        | Siguiente
+        i.fa.fa-arrow-right
+    div ng-if="video.previous_url != nil"
+      a.btn.btn-outline.btn-info.pull-left ui-sref='viewCampaignUrl({ id: video.previous_video.id })'
+        i.fa.fa-arrow-left  Anterior
+div#url_id data="{{ video.id }}"
+.wrapper.wrapper-content
+  .ibox-content.m-b-sm.border-bottom
+    .text-center.p-lg
+      h2
+        | {{ video.title }}
+    .screenshot
+      img.center-block.img-responsive ng-src="{{ video.screenshot.url }}"
+    .row
+      .text-center.p-lg
+        h3
+          | Ultima Actualizacion:
+          strong#data_updated_at.color_updated_at data-date="{{ video.created_at }}"
+            | {{ video.data_updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
+        span.color_updated_at
+          i.fa.fa-info-circle.fa-lg
+          span#text-updated-at
+        br
+        b
+        span ng-if="user.admin"
+          h4 Etiquetas
+        div  ng-if="user.admin" ng-repeat="tag_name in video.tag_names"
+          b
+            |  {{ tag_name.key }} :
+          span
+            |  {{ tag_name.value }}
+
+  .row
+    / .col-lg-12
+    /   .ibox.float-e-margins.text-center
+    /     .ibox-title
+    /       span.label.label-primary.pull-right Google Analytics
+    /       h5 Visitas
+    /     .ibox-content
+    /       h1.no-margins
+    /         | {{ video.totals_stadistics.pageviews }}
+    /       small Visitas
+    / .col-lg-4.col-md-4.col-sm-6
+    /   .ibox.float-e-margins.text-center
+    /     .ibox-title
+    /       span.label.label-warning.pull-right DoubleClick
+    /       h5 Impresiones
+    /     .ibox-content
+    /       h1.no-margins
+    /         div ng-if="video.publicity == true"
+    /           | {{ video.stadistics.dfp_stadistics.impressions }}
+    /         div ng-if="video.publicity != true"
+    /           | 0
+    /       small Impresiones de Anuncios
+    / .col-lg-4.col-md-4.col-sm-6
+    /   .ibox.float-e-margins.text-center
+    /     .ibox-title
+    /       span.label.label-warning.pull-right DoubleClick
+    /       h5 Clicks
+    /     .ibox-content
+    /       h1.no-margins
+    /         div ng-if="video.publicity == true"
+    /           | {{ video.stadistics.dfp_stadistics.clicks }}
+    /         div ng-if="video.publicity != true"
+    /           | 0
+    /       small Clicks en Anuncios
+    / .col-lg-4.col-md-4.col-sm-6
+    /   .ibox.float-e-margins.text-center
+    /     .ibox-title
+    /       span.label.label-warning.pull-right DoubleClick
+    /       h5 CTR
+    /     .ibox-content
+    /       h1.no-margins
+    /         div ng-if="video.publicity == true"
+    /           | {{ video.stadistics.dfp_stadistics.ctr | number: 2 }}%
+    /         div ng-if="video.publicity != true"
+    /           | 0 %
+    /       small % de clicks en Anuncios
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Shares
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_shares }}
+          small Veces Compartido
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Reacciones
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_likes }}
+          small Me gusta!
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Comments
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_comments }}
+          small Veces Comentado
+  /   .col-lg-4.col-md-4.col-sm-6
+  /     .ibox.float-e-margins.text-center
+  /       .ibox-title
+  /         span.label.label-danger.pull-right Google Analytcis
+  /         h5 Atención
+  /       .ibox-content
+  /         h1.no-margins
+  /           | {{ video.attention | number: 2}}
+  /         small Tiempo de Atención Total (Horas)
+  /   .col-lg-4.col-md-4.col-sm-6
+  /     .ibox.float-e-margins.text-center
+  /       .ibox-title
+  /         span.label.label-danger.pull-right Google Analytcis
+  /         h5 Usuarios
+  /       .ibox-content
+  /         h1.no-margins
+  /           | {{ video.totals_stadistics.users }}
+  /         small Usuarios Unicos
+  /   .col-lg-4.col-md-4.col-sm-6
+  /     .ibox.float-e-margins.text-center
+  /       .ibox-title
+  /         span.label.label-danger.pull-right Google Analytics
+  /         h5 Tiempo Promedio
+  /       .ibox-content
+  /         h1.no-margins
+  /           | {{ video.totals_stadistics.avgtimeonpage }}
+  /         small Tiempo promedio (Min)
+  / .row
+  /   .col-lg-6.col-md-6.col-sm-6
+  /     .ibox.float-e-margins
+  /       .ibox-title
+  /         h5 Distribucion de Dispositivos
+  /       .ibox-content
+  /         .col-lg-8
+  /           div
+  /             canvas#device_chart height='150'
+  /         .col-lg-4
+  /           #device_legend
+  /         .clearfix
+  /   .col-lg-6.col-md-6.col-sm-6
+  /     .ibox.float-e-margins
+  /       .ibox-title
+  /         h5 Distribucion de Tipos de Trafico
+  /       .ibox-content
+  /         .col-lg-8
+  /           div
+  /             canvas#traffic_chart height='150'
+  /         .col-lg-4
+  /           #traffic_legend
+  /         .clearfix
+  / .row
+  /   .col-lg-12
+  /     .ibox.float-e-margins
+  /       .ibox-title
+  /         h5 Ultimos 7 dias de progreso
+  /       .ibox-content
+  /         .row
+  /           .col-lg-9
+  /             .flot-chart
+  /               #flot-dashboard-chart.flot-chart-content
+  /           .col-lg-3
+  /             ul.stat-list
+  /               li#visits-percent
+  /                 h2.no-margins#total-visits
+  /                 small Total de visitas
+  /                 .stat-percent
+  /                   | 0%
+  /                   i.fa.fa-level-up.text-navy
+  /                 .progress.progress-mini
+  /                   .progress-bar style=("width: 0%;")
+  / .row
+  /   .col-lg-12
+  /     .ibox.float-e-margins
+  /       .ibox-title
+  /         h5 Visitas por pais
+  /       .ibox-content
+  /         .row
+  /           .col-lg-6
+  /             table.table.table-hover.margin.bottom
+  /               thead
+  /                 tr
+  /                   th Pais
+  /                   th.text-center Visitas
+  /               tbody.table-country
+
+  /           .col-lg-6
+  /             #world-map style=("height: 300px;")
+
+scss:
+  .ds-vc-feelback-title {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    border-style: solid;
+    background-color: transparent;
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Helvetica,Arial,sans-serif;
+    border-width: 0;
+    border-color: #000;
+    padding: 0;
+  }
+  .ds-vc-widget {
+    display: block;
+    width: 100%;
+  }
+
+  .ds-vc-category {
+    float: left;
+    text-align: center;
+    width: 18%;
+    margin: 0 1%;
+    a {
+      text-decoration: none;
+      color: #3d3d3d;
+      cursor: pointer;
+      img {
+        height: 60px;
+        width: 60px;
+        border-style: none;
+      }
+      .ds-vs-category-icon-text {
+        padding: 3px 6px;
+        margin: 0;
+      }
+    }
+  }
+
+
+
+
