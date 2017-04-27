@@ -25,7 +25,6 @@ namespace :analytics do
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
-
         page_stadistics.each do |data|
           page = PageStadistic.where(url: url, date: data.date.to_date).first
           unless (page.nil?)
