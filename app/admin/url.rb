@@ -29,7 +29,8 @@ ActiveAdmin.register Url do
   form do |f|
     f.inputs "Articulo" do
       li "Título: #{f.object.title}"
-      f.input :campaign_id, label: 'Campaña', as: :select, collection: Campaign.all.map{ |a| [ "#{a.name}", a.id] }, input_html: { class: 'chosen-input'}
+      li "Campaña Actual: #{f.object.campaign_name}"
+      f.input :campaign_id, label: 'Campaña Nueva', as: :select, collection: Campaign.all.map{ |a| [ "#{a.name}", a.id] }, input_html: { class: 'chosen-input'}
     end
     f.actions
   end
