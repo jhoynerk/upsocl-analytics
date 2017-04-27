@@ -1,6 +1,8 @@
 ActiveAdmin.register Url do
   require 'rake'
   UpsoclAnalytics::Application.load_tasks
+  filter :title
+  filter :campaign
   menu label: 'Artículos'
   config.clear_action_items!
   permit_params  :campaign_id, :title
