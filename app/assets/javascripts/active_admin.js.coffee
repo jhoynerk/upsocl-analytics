@@ -8,7 +8,7 @@ load_chosen = ->
     $(this).chosen(
       allow_single_deselect: true
       no_results_text: 'Sin resultados'
-      width: '50%'
+      width: '100%'
       max_selected_options: max).bind 'chosen:maxselected', ->
       error = undefined
       span = undefined

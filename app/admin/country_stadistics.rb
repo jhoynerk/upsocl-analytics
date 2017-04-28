@@ -17,10 +17,10 @@ ActiveAdmin.register CountryStadistic do
     actions
   end
 
-  filter :url
-  filter :url_id
+  filter :url, label: 'Nombre del articulo', as: :select, input_html: {class: 'chosen-input'}
+  #filter :url_id, label: 'URL ID', as: :number
   filter :date
-  filter :country_code
+  filter :country_code, as: :select, collection: Country.for_select, input_html: {class: 'chosen-input'}
 
   form do |f|
     f.inputs "Estadisticas de país" do
@@ -35,4 +35,9 @@ ActiveAdmin.register CountryStadistic do
     f.actions
   end
 
+  controller do
+    def scoped_collection
+      CountryStadistic.by_assigned_country
+    end
+  end
 end
