@@ -38,6 +38,15 @@ div#url_id data="{{ url.id }}"
         span.color_updated_at
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
+        br
+        b
+        span ng-if="user.admin"
+          h4 Etiquetas
+        div  ng-if="user.admin" ng-repeat="tag_name in url.tag_names"
+          b
+            |  {{ tag_name.key }} :
+          span
+            |  {{ tag_name.value }}
 
   .row
     .col-lg-12

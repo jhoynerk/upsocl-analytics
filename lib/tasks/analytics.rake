@@ -7,7 +7,7 @@ namespace :analytics do
       interval_range(arg_interval)
       if args.url_id.nil?
         interval = interval_status(arg_interval)
-        urls = Url.where("id > ? ", 4100).update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc).where(publico: false)
+        urls = Url.update_interval(@start_interval, @end_interval, interval.upcase).order(id: :desc).where(publico: false)
       else
         urls = [Url.find(args.url_id)]
       end
@@ -25,7 +25,6 @@ namespace :analytics do
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
-
         page_stadistics.each do |data|
           page = PageStadistic.where(url: url, date: data.date.to_date).first
           unless (page.nil?)
@@ -130,7 +129,7 @@ namespace :analytics do
   def attention(url)
     unless url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
-        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]) / 60
+        return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]).to_f / 60
       end
     end
     return 0

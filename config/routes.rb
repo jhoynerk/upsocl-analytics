@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   get "home/index"
   get "home/minor"
 
-  resources :campaigns, only: [:index, :show]
+  resources :campaigns, only: [:index, :show] do
+    collection do
+      post 'filter_by_tag', to: 'campaigns#filter_by_tag'
+    end
+  end
   resources :urls, only: [:show]
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'

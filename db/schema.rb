@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425194936) do
+ActiveRecord::Schema.define(version: 20180421215339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 20170425194936) do
     t.datetime "updated_at",                 null: false
     t.integer  "agencies_countries_mark_id"
   end
+
+  create_table "campaigns_tags", force: :cascade do |t|
+    t.integer "campaign_id"
+    t.integer "tag_id"
+  end
+
+  add_index "campaigns_tags", ["campaign_id"], name: "index_campaigns_tags_on_campaign_id", using: :btree
+  add_index "campaigns_tags", ["tag_id"], name: "index_campaigns_tags_on_tag_id", using: :btree
 
   create_table "campaigns_users", id: false, force: :cascade do |t|
     t.integer "campaign_id"
@@ -214,7 +222,8 @@ ActiveRecord::Schema.define(version: 20170425194936) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "title"
+    t.string  "title"
+    t.integer "type_tag", default: 0
   end
 
   create_table "tags_urls", force: :cascade do |t|

@@ -1,4 +1,6 @@
 class Url < ActiveRecord::Base
+  include TagsUtil
+
   MONTH_LIMIT_TO_UPDATE = 3
 
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
