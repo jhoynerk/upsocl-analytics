@@ -1,7 +1,7 @@
 class PageStadistic < ActiveRecord::Base
   include RecordAnalytics
 
-  validates_presence_of :url, :date, :pageviews, :avgtimeonpage
+  validates_presence_of :url, :date, :pageviews, :avgtimeonpage, :sessions, :users
   validates :date, uniqueness: { scope: :url }
   validates :avgtimeonpage, numericality: { greater_than_or_equal_to: :avgtimeonpage_was }, allow_blank: true
   validates :pageviews, numericality: { greater_than_or_equal_to: :pageviews_was }, allow_blank: true
@@ -17,11 +17,8 @@ class PageStadistic < ActiveRecord::Base
     count.zero? ? 0.0 : (sum / count) rescue 0
   end
 
-  def self.parameters( url:, date:, **additional_arguments )
-    {
-      url: url,
-      date: date
-    }
+  def self.parameters(**args)
+    args.extract!(:url, :date)
   end
 
   def search_parameters(**args)

@@ -1,7 +1,7 @@
 class CountryStadistic < ActiveRecord::Base
   include RecordAnalytics
 
-  validates_presence_of :url, :date, :country_code, :country_name, :pageviews, :avgtimeonpage
+  validates_presence_of :url, :date, :country_code, :country_name, :pageviews, :avgtimeonpage, :users
   validates :date, uniqueness: { scope: [ :url, :country_code ] }
   validates :avgtimeonpage, numericality: { greater_than_or_equal_to: :avgtimeonpage_was }, allow_blank: true
   validates :pageviews, numericality: { greater_than_or_equal_to: :pageviews_was }, allow_blank: true
@@ -19,12 +19,8 @@ class CountryStadistic < ActiveRecord::Base
      ((val * 100).to_f / (countries.any? ? where('country_code in (?)', countries) : self ).sum(:pageviews).to_f).round(2).to_s + '%'
   end
 
-  def self.parameters(url:, date:, country_code:, **additional_arguments)
-    {
-      url: url,
-      date: date,
-      country_code: country_code
-    }
+  def self.parameters(**args)
+    args.extract!(:url, :date, :country_code)
   end
 
   def search_parameters(**args)
