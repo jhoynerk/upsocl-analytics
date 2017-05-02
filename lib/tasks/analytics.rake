@@ -122,12 +122,12 @@ namespace :analytics do
     end
   end
 
-  def interval_status(time)
+  def interval_status(time = nil)
     (time == '6month') ? 'month6' : time
   end
 
-  def attention(url)
-    unless url.totals_stadistics.nil?
+  def attention(url = nil)
+    unless url.nil? || url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]).to_f / 60
       end
