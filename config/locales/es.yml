@@ -5,7 +5,7 @@ es:
     edit: Editar
     read: Leer
     destroy: Eliminar
-    batch_action: Action en Lotes
+    batch_action: Acción en Lotes
     create: Crear
     update: Actualizar
   date:

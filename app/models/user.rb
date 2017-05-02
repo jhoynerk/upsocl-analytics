@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   validates_presence_of :password_confirmation, if: -> { password.present? }
   validates_confirmation_of :password
 
+  def can_view_admin?
+    ['country_manager', 'admin'].include?(role)
+  end
+
   def join_campaigns
     campaigns.map(&:name).join(', ')
   end

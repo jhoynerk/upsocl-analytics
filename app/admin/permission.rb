@@ -1,20 +1,24 @@
 ActiveAdmin.register ::ActiveAdmin::Permission do
   actions :index
 
-  filter :state, as: :select, collection: controller.resource_class.states
+  filter :state, as: :select, label: 'Estado', collection: controller.resource_class.states
 
   filter :managed_resource_action_equals, as: :select,
-    label: ::ActiveAdmin::ManagedResource.human_attribute_name(:action),
-    collection: -> { ::ActiveAdmin::ManagedResource.uniq.order(:action).pluck(:action) }
-
-  filter :managed_resource_name_equals, as: :select,
-    label: ::ActiveAdmin::ManagedResource.human_attribute_name(:name),
-    collection: -> { ::ActiveAdmin::ManagedResource.uniq.pluck(:name).sort }
+    label: 'Acción',
+    collection: -> do
+      actions = ::ActiveAdmin::ManagedResource.uniq.order(:action).pluck(:action)
+      actions.map! { |a| t("actions.#{a}") }
+    end
 
   filter :managed_resource_class_name_equals, as: :select,
-    label: ::ActiveAdmin::ManagedResource.human_attribute_name(:class_name),
-    collection: -> { ::ActiveAdmin::ManagedResource.uniq.order(:class_name).pluck(:class_name) }
-
+    label: 'Nombre',
+    collection: -> do
+      collection = ::ActiveAdmin::ManagedResource.uniq.order(:class_name).pluck(:class_name)
+      collection.map! do |c|
+        c = c.constantize
+        c.try(:model_name) ? c.model_name.human : c
+      end
+    end
   scope :all, default: true
 
   controller.resource_class.manageable_roles.each_key(&method(:scope))
@@ -45,7 +49,7 @@ ActiveAdmin.register ::ActiveAdmin::Permission do
       status_tag(t("active_admin.batch_actions.labels.#{record.state}"), record.can? ? :ok : nil)
     end
     column :action do |record|
-      record.action
+      t("actions.#{record.action}")
     end
     column :nombre do |record|
       c = record.class_name.constantize
