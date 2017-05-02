@@ -25,7 +25,6 @@ namespace :analytics do
         traffic_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Traffic', url: url.only_path, start_date: @start_date, end_date: @end_date)
         device_stadistics = AnalyticConnection.new(url.profile_id).historical_data_for(source: 'Device', url: url.only_path, start_date: @start_date, end_date: @end_date)
         dfp_stadistics = DfpConnection.new.run_report(start_date: @start_date, end_date: @end_date, item_id: url.line_id)
-
         page_stadistics.each do |data|
           page = PageStadistic.where(url: url, date: data.date.to_date).first
           unless (page.nil?)
@@ -123,12 +122,12 @@ namespace :analytics do
     end
   end
 
-  def interval_status(time)
+  def interval_status(time = nil)
     (time == '6month') ? 'month6' : time
   end
 
-  def attention(url)
-    unless url.totals_stadistics.nil?
+  def attention(url = nil)
+    unless url.nil? || url.totals_stadistics.nil?
       unless url.totals_stadistics[:pageviews].nil?
         return (url.totals_stadistics[:avgtimeonpage] * url.totals_stadistics[:pageviews]).to_f / 60
       end
