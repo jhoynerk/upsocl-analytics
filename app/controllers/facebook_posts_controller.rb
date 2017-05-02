@@ -2,7 +2,6 @@ class FacebookPostsController < ApplicationController
   layout false
   def show
     @url = FacebookPost.find(params[:id]).decorate
-    # @url.params = { :start_date => params[:startDate].to_time, :end_date => params[:endDate].to_time }
     respond_to do |format|
       format.html {}
       format.json { render :json => @url.as_json( methods: [ :tags, :tag_names, :campaign, :social_count, :stadistics, :totals_stadistics, :next_url, :previous_url, :count_votes ]) }

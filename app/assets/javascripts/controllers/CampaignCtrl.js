@@ -43,7 +43,7 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
   }, false);
 })
 
-myApp.controller('CampaignVideoViewController', function($scope, $stateParams, Reactions, Video, User) {
+myApp.controller('CampaignVideoViewController', function($scope, $sce, $stateParams, Reactions, Video, User) {
   $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
   $scope.opts = run_datepicker();
   $scope.user = User.get();
@@ -53,9 +53,9 @@ myApp.controller('CampaignVideoViewController', function($scope, $stateParams, R
     var endDate = newDate.endDate.format('YYYY-MM-DD');
       Video.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
         class_updated_at(data.created_at);
-        // draw_graphics($stateParams.id, data.stadistics);
         $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
         $('#daterange').data('daterangepicker').setEndDate(moment());
+        $scope.detailFrame = $sce.trustAsResourceUrl(data.url_video)
         $scope.video = data
         if($scope.datePicker != void 0){
           $scope.datePicker.date = {startDate: null, endDate: null};

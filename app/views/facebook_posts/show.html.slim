@@ -24,13 +24,13 @@
 div#url_id data="{{ video.id }}"
 .wrapper.wrapper-content
   .ibox-content.m-b-sm.border-bottom
-    .text-center.p-lg
+    .text-center.p-sm
       h2
         | {{ video.title }}
-    .screenshot
-      img.center-block.img-responsive ng-src="{{ video.screenshot.url }}"
+    .screenshot.text-center ng-show="video.url_video.length > 0"
+      iframe allowfullscreen="" frameborder="0" height="360" mozallowfullscreen="" ng-src="{{ detailFrame }}" webkitallowfullscreen="" width="640"
     .row
-      .text-center.p-lg
+      .text-center.p-sm
         h3
           | Ultima Actualizacion:
           strong#data_updated_at.color_updated_at data-date="{{ video.created_at }}"
@@ -39,61 +39,20 @@ div#url_id data="{{ video.id }}"
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
         br
+        h3
+          b Reproducciones de Video  : 
+          strong
+            | {{ video.post_video_views }}
         b
         span ng-if="user.admin"
           h4 Etiquetas
         div  ng-if="user.admin" ng-repeat="tag_name in video.tag_names"
           b
-            |  {{ tag_name.key }} :
+            | {{ tag_name.key }} :
           span
-            |  {{ tag_name.value }}
+            | {{ tag_name.value }}
 
   .row
-    / .col-lg-12
-    /   .ibox.float-e-margins.text-center
-    /     .ibox-title
-    /       span.label.label-primary.pull-right Google Analytics
-    /       h5 Visitas
-    /     .ibox-content
-    /       h1.no-margins
-    /         | {{ video.totals_stadistics.pageviews }}
-    /       small Visitas
-    / .col-lg-4.col-md-4.col-sm-6
-    /   .ibox.float-e-margins.text-center
-    /     .ibox-title
-    /       span.label.label-warning.pull-right DoubleClick
-    /       h5 Impresiones
-    /     .ibox-content
-    /       h1.no-margins
-    /         div ng-if="video.publicity == true"
-    /           | {{ video.stadistics.dfp_stadistics.impressions }}
-    /         div ng-if="video.publicity != true"
-    /           | 0
-    /       small Impresiones de Anuncios
-    / .col-lg-4.col-md-4.col-sm-6
-    /   .ibox.float-e-margins.text-center
-    /     .ibox-title
-    /       span.label.label-warning.pull-right DoubleClick
-    /       h5 Clicks
-    /     .ibox-content
-    /       h1.no-margins
-    /         div ng-if="video.publicity == true"
-    /           | {{ video.stadistics.dfp_stadistics.clicks }}
-    /         div ng-if="video.publicity != true"
-    /           | 0
-    /       small Clicks en Anuncios
-    / .col-lg-4.col-md-4.col-sm-6
-    /   .ibox.float-e-margins.text-center
-    /     .ibox-title
-    /       span.label.label-warning.pull-right DoubleClick
-    /       h5 CTR
-    /     .ibox-content
-    /       h1.no-margins
-    /         div ng-if="video.publicity == true"
-    /           | {{ video.stadistics.dfp_stadistics.ctr | number: 2 }}%
-    /         div ng-if="video.publicity != true"
-    /           | 0 %
-    /       small % de clicks en Anuncios
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
         .ibox-title
@@ -121,93 +80,46 @@ div#url_id data="{{ video.id }}"
           h1.no-margins
             | {{ video.total_comments }}
           small Veces Comentado
-  /   .col-lg-4.col-md-4.col-sm-6
-  /     .ibox.float-e-margins.text-center
-  /       .ibox-title
-  /         span.label.label-danger.pull-right Google Analytcis
-  /         h5 Atención
-  /       .ibox-content
-  /         h1.no-margins
-  /           | {{ video.attention | number: 2}}
-  /         small Tiempo de Atención Total (Horas)
-  /   .col-lg-4.col-md-4.col-sm-6
-  /     .ibox.float-e-margins.text-center
-  /       .ibox-title
-  /         span.label.label-danger.pull-right Google Analytcis
-  /         h5 Usuarios
-  /       .ibox-content
-  /         h1.no-margins
-  /           | {{ video.totals_stadistics.users }}
-  /         small Usuarios Unicos
-  /   .col-lg-4.col-md-4.col-sm-6
-  /     .ibox.float-e-margins.text-center
-  /       .ibox-title
-  /         span.label.label-danger.pull-right Google Analytics
-  /         h5 Tiempo Promedio
-  /       .ibox-content
-  /         h1.no-margins
-  /           | {{ video.totals_stadistics.avgtimeonpage }}
-  /         small Tiempo promedio (Min)
-  / .row
-  /   .col-lg-6.col-md-6.col-sm-6
-  /     .ibox.float-e-margins
-  /       .ibox-title
-  /         h5 Distribucion de Dispositivos
-  /       .ibox-content
-  /         .col-lg-8
-  /           div
-  /             canvas#device_chart height='150'
-  /         .col-lg-4
-  /           #device_legend
-  /         .clearfix
-  /   .col-lg-6.col-md-6.col-sm-6
-  /     .ibox.float-e-margins
-  /       .ibox-title
-  /         h5 Distribucion de Tipos de Trafico
-  /       .ibox-content
-  /         .col-lg-8
-  /           div
-  /             canvas#traffic_chart height='150'
-  /         .col-lg-4
-  /           #traffic_legend
-  /         .clearfix
-  / .row
-  /   .col-lg-12
-  /     .ibox.float-e-margins
-  /       .ibox-title
-  /         h5 Ultimos 7 dias de progreso
-  /       .ibox-content
-  /         .row
-  /           .col-lg-9
-  /             .flot-chart
-  /               #flot-dashboard-chart.flot-chart-content
-  /           .col-lg-3
-  /             ul.stat-list
-  /               li#visits-percent
-  /                 h2.no-margins#total-visits
-  /                 small Total de visitas
-  /                 .stat-percent
-  /                   | 0%
-  /                   i.fa.fa-level-up.text-navy
-  /                 .progress.progress-mini
-  /                   .progress-bar style=("width: 0%;")
-  / .row
-  /   .col-lg-12
-  /     .ibox.float-e-margins
-  /       .ibox-title
-  /         h5 Visitas por pais
-  /       .ibox-content
-  /         .row
-  /           .col-lg-6
-  /             table.table.table-hover.margin.bottom
-  /               thead
-  /                 tr
-  /                   th Pais
-  /                   th.text-center Visitas
-  /               tbody.table-country
 
-  /           .col-lg-6
-  /             #world-map style=("height: 300px;")
+  .row
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Personas Alcanzadas
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_impressions_unique }}
+          small Personas
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Tiempo Promedio
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_avg_time_watched }}
+          small Segundos
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Minutos Totales Reproducidos
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_view_time }}
+          small Minutos
+    / .col-lg-4.col-md-4.col-sm-6
+    /   .ibox.float-e-margins.text-center
+    /     .ibox-title
+    /       span.label.label-success.pull-right Facebook
+    /       h5 Reproducciones de Video
+    /     .ibox-content
+    /       h1.no-margins
+    /         | {{ video.post_video_views }}
+    /       small Veces Reproducido
+
+
 
 scss:
   .ds-vc-feelback-title {

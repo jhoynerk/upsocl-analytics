@@ -100,6 +100,7 @@ ActiveAdmin.register Campaign do
         e.input :title, label: 'titulo'
         e.input :post_id, label: 'ID del post de facebook'
         e.input :url_video, label: 'Url Vimeo'
+        e.input :goal, label: 'Visitas Comprometidas'
         e.input :facebook_account, :as => :select, :input_html => { :class => "chosen-input"}
         e.input :tags, :as => :select, collection: Tag.type_tag_sub_category.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Sub-Categoría'
         e.input :tags, :as => :select, collection: Tag.type_tag_type_content.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 3 }, label: 'Tipo de Contenido'

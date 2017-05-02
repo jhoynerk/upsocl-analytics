@@ -7,7 +7,14 @@ class FacebookPost < ActiveRecord::Base
   has_many :urls, dependent: :delete_all
   has_and_belongs_to_many :tags
 
-  before_create :set_facebook
+  scope :urls, -> { where.not(campaign_id: nil) }
+  scope :goal_achieveds, -> { where(goal_achieved: true) }
+  scope :unreached_goals, -> { where(goal_achieved: false) }
+  scope :update_interval, -> (date) { where('created_at > ? or created_at IS NULL', date) }
+  scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
+
+  before_create :set_update_date
+  before_validation :set_facebook
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
 
   alias_attribute :facebook_likes, :total_likes
@@ -18,6 +25,7 @@ class FacebookPost < ActiveRecord::Base
   validates :title, presence: true, unless: :video?
   validates :facebook_account, presence: true
   validates_numericality_of :post_id
+  validates_numericality_of :goal, allow_nil: true, greater_than_or_equal_to: 1
 
   def account_id
     facebook_account.facebook_id
@@ -31,15 +39,44 @@ class FacebookPost < ActiveRecord::Base
     [self]
   end
 
+  def update_stadistics
+    update(data_updated_at: Time.now)
+  end
+
   private
+  def check_goal
+    self.goal_achieved = true if goal_achieved?
+  end
+
+  def goal_achieved?
+    post_video_views > goal
+  end
+
+  def set_update_date
+    self.data_updated_at = self.created_at
+  end
 
   def video?
-    campaign.blank?
+    !campaign.blank?
   end
 
   def set_facebook
-     # if publico == false
-    self.attributes = AnalyticFacebook.new(self).update
+    begin
+      get_stadistic_facebook
+    rescue
+      self.errors.add(:post_id, 'post_id no existe para esta cuenta de facebook')
+      false
+    end
+  end
+
+  def get_stadistic_facebook
+    if video?
+      self.attributes = AnalyticFacebook.new(self).update_attr_post_video
+      check_goal
+    else
+      self.attributes = AnalyticFacebook.new(self).update
+      check_goal
+    end
   end
 
 end
