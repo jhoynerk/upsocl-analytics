@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
     authenticated :user do
-      root 'campaigns#index', as: :authenticated_root
+      root 'campaigns#index', as: :root
       get 'campaigns_full', to: 'campaigns#full_info'
     end
 
