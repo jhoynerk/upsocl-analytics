@@ -25,6 +25,7 @@ gem 'whenever', :require => false
 
 # gem upload images
 gem 'carrierwave'
+gem 'fog'
 
 # gem for get dfp info
 gem 'google-dfp-api'
@@ -61,6 +62,9 @@ gem 'social_shares'
 
 #Take screen to page
 gem 'cloudinary'
+
+#Save img to S3
+gem 'carrierwave'
 
 # Shedule task
 gem 'clockwork'
