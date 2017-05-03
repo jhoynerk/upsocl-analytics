@@ -14,18 +14,18 @@ class FacebookPost < ActiveRecord::Base
   scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
 
   before_create :set_update_date
-  # before_validation :set_facebook
+  before_validation :set_facebook
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
 
   alias_attribute :facebook_likes, :total_likes
   alias_attribute :facebook_comments, :total_comments
   alias_attribute :facebook_shares, :total_shares
 
-  validates :url_video, url: true, unless: :video?
-  validates :title, presence: true, unless: :video?
+  validates :url_video, url: true, if: :video?
+  validates :title, presence: true, if: :video?
   validates :facebook_account, :goal, presence: true
   validates_numericality_of :post_id
-  validates_numericality_of :goal, greater_than_or_equal_to: 1
+  validates_numericality_of :goal, greater_than_or_equal_to: 1, if: :video?
 
   def account_id
     facebook_account.facebook_id
@@ -40,7 +40,7 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def update_stadistics
-    update(data_updated_at: Time.now)
+    update!(data_updated_at: Time.now)
   end
 
   private
@@ -49,7 +49,7 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def goal_achieved?
-    post_video_views > goal
+    post_video_views_10s > goal
   end
 
   def set_update_date
@@ -61,12 +61,7 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def set_facebook
-    begin
       get_stadistic_facebook
-    rescue
-      self.errors.add(:post_id, 'post_id no existe para esta cuenta de facebook')
-      false
-    end
   end
 
   def get_stadistic_facebook

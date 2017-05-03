@@ -10,6 +10,10 @@ class FacebookPostDecorator < Draper::Decorator
     format(object.post_impressions_unique.ceil.to_i)
   end
 
+  def post_video_views_10s
+    format(object.post_video_views_10s.ceil.to_i)
+  end
+
   def post_video_avg_time_watched
     format(to_seconds(object.post_video_avg_time_watched).ceil.to_i)
   end

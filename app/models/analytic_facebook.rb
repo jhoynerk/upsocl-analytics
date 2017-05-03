@@ -51,7 +51,8 @@ class AnalyticFacebook
       post_impressions_unique: fpc.post_impressions_unique,
       post_video_avg_time_watched: fpc.post_video_avg_time_watched,
       post_video_views: fpc.post_video_views,
-      post_video_view_time: fpc.post_video_view_time
+      post_video_view_time: fpc.post_video_view_time,
+      post_video_views_10s: fpc.post_video_views_10s
     }
   end
 

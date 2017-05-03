@@ -106,8 +106,8 @@ div#url_id data="{{ video.id }}"
       .ibox.float-e-margins.text-center
         .ibox-title
           span.label.label-success.pull-right Facebook
-          h5 Minutos Totales Reproducidos
+          h5 Veces que se Reprodujo tu Video
         .ibox-content
           h1.no-margins
-            | {{ video.post_video_view_time }}
-          small Minutos
+            | {{ video.post_video_views_10s }}
+          small Mayor a 10 segundos
