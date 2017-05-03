@@ -6,7 +6,7 @@ ActiveAdminRole.configure do |config|
   # [Optional:Array]
   # == Special roles which don't need to manage on database
   config.super_user_roles = [:admin]
-  config.guest_user_roles = [:cliente]
+  config.guest_user_roles = [:guest]
 
   # [Optional:String]
   # == User class name | default: 'AdminUser'
