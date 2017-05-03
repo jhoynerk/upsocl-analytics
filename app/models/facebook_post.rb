@@ -61,7 +61,12 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def set_facebook
+    begin
       get_stadistic_facebook
+    rescue
+      self.errors.add(:post_id, 'post_id no existe para esta cuenta de facebook')
+      false
+    end
   end
 
   def get_stadistic_facebook
