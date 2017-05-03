@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
 
   def can_view_admin?
-    ['country_manager', 'admin'].include?(role)
+    [:country_manager, :admin].include?(role.to_sym)
   end
 
   def join_campaigns
