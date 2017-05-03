@@ -1,6 +1,5 @@
 ActiveAdmin.register User do
   permit_params :email, :name, :admin,:password, :password_confirmation, campaign_ids: []
-  menu parent: "Cuentas"
   show do
     panel 'Detalles de Usuario' do
       attributes_table_for user do
