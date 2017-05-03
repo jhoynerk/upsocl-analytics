@@ -280,4 +280,8 @@ class Url < ActiveRecord::Base
   def total_valid_with_data?
     !(totals_stadistics.nil? && totals_stadistics[:pageviews].nil?)
   end
+
+  def has_dfp?
+    line_id != 0
+  end
 end
