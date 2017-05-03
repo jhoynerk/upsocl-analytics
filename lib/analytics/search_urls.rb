@@ -13,7 +13,7 @@ class SearchUrls
     end
 
     def search_url
-      [ Url.where(id: @url_id) ]
+      Url.where(id: @url_id)
     end
 
     def search_all_urls
