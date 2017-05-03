@@ -14,7 +14,7 @@ class FacebookPost < ActiveRecord::Base
   scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
 
   before_create :set_update_date
-  before_validation :set_facebook
+  # before_validation :set_facebook
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
 
   alias_attribute :facebook_likes, :total_likes
@@ -23,9 +23,9 @@ class FacebookPost < ActiveRecord::Base
 
   validates :url_video, url: true, unless: :video?
   validates :title, presence: true, unless: :video?
-  validates :facebook_account, presence: true
+  validates :facebook_account, :goal, presence: true
   validates_numericality_of :post_id
-  validates_numericality_of :goal, allow_nil: true, greater_than_or_equal_to: 1
+  validates_numericality_of :goal, greater_than_or_equal_to: 1
 
   def account_id
     facebook_account.facebook_id
