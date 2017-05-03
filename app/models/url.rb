@@ -24,6 +24,7 @@ class Url < ActiveRecord::Base
 
   validates :data, presence: true, url: { no_local: true, message: 'el formato no es correto' }
   validates :line_id, :profile_id, presence: true
+  validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
 
   before_save :set_title
   before_create :set_facebook
@@ -283,5 +284,13 @@ class Url < ActiveRecord::Base
 
   def has_dfp?
     line_id != 0
+  end
+
+  def total_attention
+    (totals_stadistics[:avgtimeonpage] * totals_stadistics[:pageviews]) / 60
+  end
+
+  def attention_last
+    (total_valid_with_data?) ? total_attention : 0
   end
 end
