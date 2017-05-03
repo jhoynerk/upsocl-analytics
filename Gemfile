@@ -71,7 +71,7 @@ gem 'clockwork'
 
 # ActiveAdmin
 gem 'activeadmin', '~> 1.0.0.pre4'
-
+gem 'active_admin_role'
 # Slim html
 gem 'slim-rails'
 
@@ -103,9 +103,8 @@ gem 'backup'
 gem 'raygun4ruby'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
   gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'faker', '1.4.3'
 end
 

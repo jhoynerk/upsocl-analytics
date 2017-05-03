@@ -1,5 +1,13 @@
 ---
 es:
+  actions:
+    new: Nuevo
+    edit: Editar
+    read: Leer
+    destroy: Eliminar
+    batch_action: Acción en Lotes
+    create: Crear
+    update: Actualizar
   date:
     abbr_day_names: [ Dom, Lun, Mar, Mié, Jue, Vie, Sab ]
     abbr_month_names: [ ~, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic ]
@@ -15,6 +23,15 @@ es:
     - :year
   activerecord:
     models:
+      active_admin/permission:
+        one: Permiso
+        other: Permisos
+      active_admin/permission:
+        one: Permiso
+        other: Permisos
+      active_admin/comment:
+        one: Comentario
+        other: Comentarios
       user:
         one: Usuario
         other: Usuarios
@@ -223,6 +240,8 @@ es:
       short: "%a %d de %b de %Y"
     pm: pm
   active_admin:
+    scopes:
+      all: Todos
     dashboard: Inicio
     dashboard_welcome:
       welcome: "Bienvenido a Active Admin. Esta es la página de inicio predeterminada."
@@ -294,6 +313,8 @@ es:
       action_label: "%{title} seleccionado"
       labels:
         destroy: "Borrar"
+        can: "Permitir"
+        cannot: "No Permitir"
     comments:
       created_at: "Fecha de creación"
       resource_type: "Tipo de recurso"

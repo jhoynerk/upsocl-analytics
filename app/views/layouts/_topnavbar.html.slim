@@ -10,7 +10,9 @@
           a aria-expanded="false" href="" ui-sref='campaigns()' role="button"  Inicio
         li ng-if="user.admin == true" class=("#{'active' if current_page?('/campaigns')}")
           a aria-expanded="false" href="" ui-sref='viewAllCampaignUrl()' role="button"  Campañas
-
+        li ng-if="#{current_user.can_view_admin?}"
+          a aria-expanded="false" href="/admin" role="button"  Administrador
+          
       ul.nav.navbar-top-links.navbar-right
         li
           = link_to destroy_user_session_path, method: :delete do

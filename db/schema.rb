@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428140725) do
+ActiveRecord::Schema.define(version: 20170426173344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,22 @@ ActiveRecord::Schema.define(version: 20170428140725) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "active_admin_managed_resources", force: :cascade do |t|
+    t.string "class_name", null: false
+    t.string "action",     null: false
+    t.string "name"
+  end
+
+  add_index "active_admin_managed_resources", ["class_name", "action", "name"], name: "active_admin_managed_resources_index", unique: true, using: :btree
+
+  create_table "active_admin_permissions", force: :cascade do |t|
+    t.integer "managed_resource_id",                       null: false
+    t.integer "role",                limit: 2, default: 0, null: false
+    t.integer "state",               limit: 2, default: 0, null: false
+  end
+
+  add_index "active_admin_permissions", ["managed_resource_id", "role"], name: "active_admin_permissions_index", unique: true, using: :btree
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -305,6 +321,7 @@ ActiveRecord::Schema.define(version: 20170428140725) do
     t.datetime "updated_at",                             null: false
     t.string   "name"
     t.boolean  "admin",                  default: false
+    t.integer  "role",                   default: 0,     null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
