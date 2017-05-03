@@ -31,6 +31,11 @@ class Url < ActiveRecord::Base
 
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  def update_stadistics
+    AnalyticFacebook.new(self).save
+  end
+
   def social_count
     SocialShares.selected data, %w(facebook google twitter)
   end

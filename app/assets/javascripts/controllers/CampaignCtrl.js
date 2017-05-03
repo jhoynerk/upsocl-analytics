@@ -22,7 +22,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
 
 })
 
-myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, User) {
+myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, UrlUpdateStadistics, User) {
   $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
   $scope.opts = run_datepicker();
   $scope.user = User.get();
@@ -41,6 +41,53 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
         }
       });
   }, false);
+
+  $scope.update_stadistics = function(){
+      var startDate = $scope.date.startDate.format('YYYY-MM-DD');
+      var endDate = $scope.date.endDate.format('YYYY-MM-DD');
+      UrlUpdateStadistics.get({id: $stateParams.id, startDate: startDate, endDate: endDate}, function(data){
+          class_updated_at(data.created_at);
+          draw_graphics($stateParams.id, data.stadistics);
+          $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
+          $('#daterange').data('daterangepicker').setEndDate(moment());
+          $scope.url = data
+          if($scope.datePicker != void 0){
+            $scope.datePicker.date = {startDate: null, endDate: null};
+          }
+      });
+  }
+
+})
+
+myApp.controller('CampaignVideoViewController', function($scope, $sce, $stateParams, Reactions, Video, VideoUpdateStadistics, User) {
+  $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
+  $scope.opts = run_datepicker();
+  $scope.user = User.get();
+  $scope.reactions = Reactions.query();
+  $scope.$watch('date', function(newDate) {
+    var startDate = newDate.startDate.format('YYYY-MM-DD');
+    var endDate = newDate.endDate.format('YYYY-MM-DD');
+    Video.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
+      class_updated_at(data.created_at);
+      $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
+      $('#daterange').data('daterangepicker').setEndDate(moment());
+      $scope.detailFrame = $sce.trustAsResourceUrl(data.url_video)
+      $scope.video = data
+      if($scope.datePicker != void 0){
+        $scope.datePicker.date = {startDate: null, endDate: null};
+      }
+    });
+  }, false);
+
+  $scope.update_stadistics = function(){
+    VideoUpdateStadistics.get({id: $stateParams.id}, function(data){
+      class_updated_at(data.created_at);
+      $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
+      $('#daterange').data('daterangepicker').setEndDate(moment());
+      $scope.detailFrame = $sce.trustAsResourceUrl(data.url_video)
+      $scope.video = data
+    });
+  }
 })
 
 

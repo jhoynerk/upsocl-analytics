@@ -17,6 +17,10 @@ app.config(function($stateProvider) {
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
+  }).state('viewCampaignVideo', { //state for showing single movie
+    url: '/campaign/videos/:id',
+    templateUrl: 'facebook_posts_view',
+    controller: 'CampaignVideoViewController'
   }).state('viewAllCampaignUrl', { //state for showing single movie
     url: '/campaigns',
     templateUrl: 'show_all_view',
