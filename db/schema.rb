@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418211728) do
+ActiveRecord::Schema.define(version: 20170428140725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,13 +170,37 @@ ActiveRecord::Schema.define(version: 20170418211728) do
   end
 
   create_table "facebook_posts", force: :cascade do |t|
-    t.string  "post_id"
-    t.integer "url_id"
-    t.integer "facebook_account_id"
+    t.string   "post_id"
+    t.integer  "url_id"
+    t.integer  "facebook_account_id"
+    t.string   "title"
+    t.string   "url_video"
+    t.integer  "campaign_id"
+    t.integer  "interval_status",             default: 0
+    t.integer  "total_likes",                 default: 0
+    t.integer  "total_comments",              default: 0
+    t.integer  "total_shares",                default: 0
+    t.float    "post_impressions_unique",     default: 0.0
+    t.float    "post_video_avg_time_watched", default: 0.0
+    t.float    "post_video_views",            default: 0.0
+    t.float    "post_video_view_time",        default: 0.0
+    t.datetime "data_updated_at"
+    t.boolean  "goal_achieved",               default: false
+    t.float    "goal",                        default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "facebook_posts", ["facebook_account_id"], name: "index_facebook_posts_on_facebook_account_id", using: :btree
   add_index "facebook_posts", ["url_id"], name: "index_facebook_posts_on_url_id", using: :btree
+
+  create_table "facebook_posts_tags", force: :cascade do |t|
+    t.integer "facebook_post_id"
+    t.integer "tag_id"
+  end
+
+  add_index "facebook_posts_tags", ["facebook_post_id"], name: "index_facebook_posts_tags_on_facebook_post_id", using: :btree
+  add_index "facebook_posts_tags", ["tag_id"], name: "index_facebook_posts_tags_on_tag_id", using: :btree
 
   create_table "forms", force: :cascade do |t|
     t.string   "name"
