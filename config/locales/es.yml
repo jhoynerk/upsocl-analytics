@@ -86,6 +86,7 @@ es:
         current_sign_in_at: Actual inicio de sesion
         created_at: Creado el
         active: Activo
+        role: Rol
         campaigns: Campañas
       campaign:
         name: Nombre
