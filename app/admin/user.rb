@@ -19,6 +19,7 @@ ActiveAdmin.register User do
         row :admin do
           t("#{user.admin}_value", scope: 'activerecord.attributes.user/admin')
         end
+        row :role
         row :campaigns do
           user.join_campaigns
         end
@@ -31,6 +32,7 @@ ActiveAdmin.register User do
     id_column
     column :email
     column :name
+    column :role
     column :current_sign_in_at
     column :created_at
     actions
