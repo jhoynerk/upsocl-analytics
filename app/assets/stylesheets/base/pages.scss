@@ -708,9 +708,11 @@ dd.project-people {
 /* FAQ */
 
 .faq-item {
-  padding: 20px;
-  margin-bottom: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
   background: white;
+  border: 1px solid #aaa;
+  border-top: 3px solid #8080c5;
 }
 
 .faq-question {

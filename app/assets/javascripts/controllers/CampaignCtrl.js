@@ -10,6 +10,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
         no_results_text: 'Sin resultados',
         width: "100%"
       })
+      $('[data-toggle="tooltip"]').tooltip();
     }, 500);
   });
 
@@ -17,6 +18,9 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
     var ids = $('.chosen-input').val()
     $http.post('/campaigns/filter_by_tag.json', {tags_ids: ids}).then( function(response) {
       $scope.campaigns = response.data;
+      setTimeout(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    }, 500);
     })
   };
 
