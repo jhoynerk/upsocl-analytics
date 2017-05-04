@@ -24,5 +24,4 @@ namespace :analytics do
   def message(message, status)
     Message.create(type_update: 1, message: message, status: status)
   end
-
 end

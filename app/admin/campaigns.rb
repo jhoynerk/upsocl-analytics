@@ -1,5 +1,11 @@
 ActiveAdmin.register Campaign do
-  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [], urls_attributes: [ :id, :status, :committed_visits, :data, :publicity, :screenshot, :line_id, :_destroy, :profile_id, :interval_status, :country_ids=> [], :tag_ids=> [] , facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :_destroy ] ]
+  permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [],
+                urls_attributes: [ :id, :status, :committed_visits, :data, :publicity, :screenshot, :line_id,
+                                   :_destroy, :profile_id, :interval_status, :country_ids=> [],
+                                   :tag_ids=> [],facebook_posts_attributes: [ :id, :post_id,
+                                   :facebook_account_id, :_destroy ] ],
+                facebook_posts_attributes: [ :id, :title, :post_id, :url_video, :goal, :_destroy,
+                                             :facebook_account_id, :tag_ids=> [] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],
@@ -7,8 +13,6 @@ ActiveAdmin.register Campaign do
       ["Upsocl Network", "92974712"],
       ["Upsocl Branded", "111669814"],
       ["Upsocl + CK2", "118766523"] ]
-
-
 
   show do
     panel 'Detalles de la Campaña' do
@@ -92,6 +96,21 @@ ActiveAdmin.register Campaign do
         end
       end
     end
+
+    f.inputs do
+      f.has_many :facebook_posts, heading: 'Videos Facebook', allow_destroy: true, new_record: 'Añadir Video Facebook', class: 'panel_urls' do |e|
+        e.input :title, label: 'titulo'
+        e.input :post_id, label: 'ID del post de facebook'
+        e.input :url_video, label: 'Url Vimeo'
+        e.input :goal, label: 'Visitas Comprometidas'
+        e.input :facebook_account, :as => :select, :input_html => { :class => "chosen-input"}
+        e.input :tags, :as => :select, collection: Tag.type_tag_sub_category.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Sub-Categoría'
+        e.input :tags, :as => :select, collection: Tag.type_tag_type_content.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 3 }, label: 'Tipo de Contenido'
+        e.input :tags, :as => :select, collection: Tag.type_tag_tone.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Tono'
+        e.input :tags, :as => :select, collection: Tag.type_tag_format.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 1 }, label: 'Formato'
+      end
+    end
+
     f.actions
   end
 

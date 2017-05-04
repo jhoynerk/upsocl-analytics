@@ -52,7 +52,15 @@
                 a href="{{ url.data }}" target='_blank'
                   | {{ url.title }}
               .clearfix
+            span.list-group-item ng-repeat="video in campaign.facebook_posts_ordered_by_created"
+              .col-lg-2
+                a.btn.btn-outline.btn-success ui-sref='viewCampaignVideo({ id: video.id })'
+                  i.fa.fa-eye  Ver Video
+              .col-lg-10
+                a href="{{ video.post_id }}" target='_blank'
+                  | {{ video.title }}
+              .clearfix
+
   .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="campaigns.length < 1"
     .ibox-content.m-b-sm.border-bottom.text-center
       h3 No se ha encontrado ninguna campaña
-

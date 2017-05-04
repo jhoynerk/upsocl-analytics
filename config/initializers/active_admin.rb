@@ -49,20 +49,19 @@ ActiveAdmin.setup do |config|
   # == User Authentication
   #
   # Active Admin will automatically call an authentication
-  # method in a before filter of all controller actions to
+  # method in a before filter of all er actions to
   # ensure that there is a currently logged in admin user.
   #
   # This setting changes the method which Active Admin calls
-  # within the application controller.
-  config.authentication_method = :authenticate_admin_user!
-
+  # within the application er.
+  config.authentication_method = :authenticate_user!
   # == User Authorization
   #
   # Active Admin will automatically call an authorization
-  # method in a before filter of all controller actions to
+  # method in a before filter of all er actions to
   # ensure that there is a user with proper rights. You can use
   # CanCanAdapter or make your own. Please refer to documentation.
-  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  config.authorization_adapter = ActiveAdmin::CanCanAdapter
 
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
@@ -76,8 +75,8 @@ ActiveAdmin.setup do |config|
   # This is necessary in order to prevent a redirect loop which happens
   # because, by default, user gets redirected to Dashboard. If user
   # doesn't have access to Dashboard, he'll end up in a redirect loop.
-  # Method provided here should be defined in application_controller.rb.
-  # config.on_unauthorized_access = :access_denied
+  # Method provided here should be defined in application_er.rb.
+  config.on_unauthorized_access = :access_denied
 
   # == Current User
   #
@@ -85,8 +84,8 @@ ActiveAdmin.setup do |config|
   # user performing them.
   #
   # This setting changes the method which Active Admin calls
-  # (within the application controller) to return the currently logged in user.
-  config.current_user_method = :current_admin_user
+  # (within the application er) to return the currently logged in user.
+  config.current_user_method = :current_user
 
   # == Logging Out
   #
@@ -137,7 +136,7 @@ ActiveAdmin.setup do |config|
   #
   config.batch_actions = true
 
-  # == Controller Filters
+  # == er Filters
   #
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
@@ -205,12 +204,13 @@ ActiveAdmin.setup do |config|
   #
   # To change the default utility navigation to show a link to your website & a logout btn
   #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :utility_navigation do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #       admin.add_logout_button_to_menu menu
-  #     end
-  #   end
+  config.namespace :admin do |admin|
+    admin.build_menu :utility_navigation do |menu|
+      menu.add label: 'Vista de Campañas', url: "/"
+      admin.add_current_user_to_menu menu
+      admin.add_logout_button_to_menu menu
+    end
+  end
   #
   # If you wanted to add a static menu item to the default menu provided:
   #

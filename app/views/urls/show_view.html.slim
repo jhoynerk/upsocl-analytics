@@ -25,6 +25,8 @@ div#url_id data="{{ url.id }}"
 .wrapper.wrapper-content
   .ibox-content.m-b-sm.border-bottom
     .text-center.p-lg
+      button.btn.btn-success.btn-stadistic-update ng-click="update_stadistics()" ng-if="user.admin"
+        | Actualizar Estadísticas
       h2
         | {{ url.title }}
     .screenshot
@@ -268,7 +270,3 @@ scss:
       }
     }
   }
-
-
-
-

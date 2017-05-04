@@ -83,7 +83,7 @@ function make_bars_chart(data){
     arr_pageviews.push([moment(i.date).toDate(), parseInt(i.pageviews)])
   });
 
-  if(arr_pageviews.lenght > 0){
+  if(arr_pageviews.length > 0){
 
     $('#total-visits').html(totalize(arr_pageviews, 1));
 
