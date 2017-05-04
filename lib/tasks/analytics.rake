@@ -8,8 +8,8 @@ namespace :analytics do
       message("#{Time.now} Se inicio la tarea programada. Se van a actualizar #{@count} urls", MessageStatus::WAIT)
       @urls.each do |url|
         puts "|||||| --- Updating url with id [#{url.id}] --- |||||||"
-        UpdateAnalytic.new(url).search_data_and_update
-        UpdateDfp.new(url).search_data_and_update if url.has_dfp?
+        AnalyticsUpdater.new(url).search_data_and_update
+        DfpUpdater.new(url).search_data_and_update if url.has_dfp?
         url.update(attention: url.attention_last)
         url.update(data_updated_at: Time.now)
       end
