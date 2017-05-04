@@ -18,6 +18,7 @@ describe "analytics:update" do
       expect(DeviceStadistic.where(url:  url_branded).count).not_to eq(0)
       expect(TrafficStadistic.where(url:  url_branded).count).not_to eq(0)
       expect(CountryStadistic.where(url:  url_branded).count).not_to eq(0)
+      expect(DfpStadistic.where(url:  url_branded).count).not_to eq(0)
     end
 
   end
