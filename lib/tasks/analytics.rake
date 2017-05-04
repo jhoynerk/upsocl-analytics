@@ -2,7 +2,6 @@ namespace :analytics do
   desc "Call Google Analytics Api for get data of url"
   task :update, [:url_id] => :environment do |t, args|
     begin
-      time_range = TimeRange.new(args.time)
       @urls = SearchUrls.new(args.url_id).searh
       @count = @urls.count
       puts "|||| Se van a actualizar #{@count} Urls ||||"

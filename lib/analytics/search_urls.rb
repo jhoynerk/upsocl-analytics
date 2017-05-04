@@ -19,8 +19,4 @@ class SearchUrls
     def search_all_urls
       Url.search_urls_to_update
     end
-
-    def interval_range
-      IntervalRange.new(args.interval)
-    end
 end
