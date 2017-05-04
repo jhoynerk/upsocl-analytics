@@ -126,6 +126,33 @@ div#url_id data="{{ url.id }}"
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
         .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Impresiones
+        .ibox-content
+          h1.no-margins
+            | {{ url.facebook_shares }}
+          small Veces Mostrado
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Impresiones A-B
+        .ibox-content
+          h1.no-margins
+            | {{ url.facebook_likes }}
+          small En 3 facebook posts
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Personas Alcanzadas
+        .ibox-content
+          h1.no-margins
+            | {{ url.facebook_comments }}
+          small Personas Alcanzadas
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
           span.label.label-danger.pull-right Google Analytcis
           h5 Atención
         .ibox-content

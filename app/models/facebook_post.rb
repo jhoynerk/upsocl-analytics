@@ -70,13 +70,8 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def get_stadistic_facebook
-    if video?
-      self.attributes = AnalyticFacebook.new(self).update_attr_post_video
-      check_goal
-    else
-      self.attributes = AnalyticFacebook.new(self).update
-      check_goal
-    end
+    self.attributes = AnalyticFacebook.new(self).update_attr_post_video
+    check_goal
   end
 
 end

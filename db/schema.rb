@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503183627) do
+ActiveRecord::Schema.define(version: 20170504160246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,6 +206,8 @@ ActiveRecord::Schema.define(version: 20170503183627) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "post_video_views_10s",        default: 0.0
+    t.integer  "post_impressions",            default: 0
+    t.boolean  "original",                    default: false
   end
 
   add_index "facebook_posts", ["facebook_account_id"], name: "index_facebook_posts_on_facebook_account_id", using: :btree
