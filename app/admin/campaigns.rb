@@ -35,6 +35,9 @@ ActiveAdmin.register Campaign do
         row :urls do
           render 'url_list', urls: campaign.urls
         end
+        row :videos do
+          render 'video_list', videos: campaign.facebook_posts
+        end
         row :users do
           campaign.join_users
         end
