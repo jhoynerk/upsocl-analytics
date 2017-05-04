@@ -1,4 +1,4 @@
-class UpdateDfp
+class DfpUpdater
   include TimeUpdate
 
   def initialize(url, start_date = nil, end_date = nil)
