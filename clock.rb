@@ -16,7 +16,7 @@ module Clockwork
     add_log(error)
   end
 
-  every(1.day, "analytics:add_records", at: '10:40') do
+  every(1.day, "analytics:add_records", at: '9:30') do
     Rails.logger.tagged("Clockwork") { Rails.logger.debug("Running analytics:add_records") }
     begin
       Rake::Task['analytics:add_records'].reenable
