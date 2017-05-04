@@ -1,5 +1,16 @@
 ActiveAdmin.register User do
   permit_params :email, :name, :admin,:password, :password_confirmation, :role, campaign_ids: []
+
+  controller do
+    def update
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+        params[:user].delete("password")
+        params[:user].delete("password_confirmation")
+      end
+      super
+    end
+  end
+
   show do
     panel 'Detalles de Usuario' do
       attributes_table_for user do
