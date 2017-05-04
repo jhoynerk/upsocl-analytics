@@ -292,7 +292,11 @@ class Url < ActiveRecord::Base
   end
 
   def total_attention
-    (totals_stadistics[:avgtimeonpage].to_f * totals_stadistics[:pageviews]) / 60 unless totals_stadistics.nil?
+    calculate_attention unless totals_stadistics.nil?
+  end
+
+  def calculate_attention
+    (totals_stadistics[:avgtimeonpage].to_f * totals_stadistics[:pageviews]) / 60
   end
 
   def attention_last
