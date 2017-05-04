@@ -98,7 +98,7 @@ es:
       country_mark:
         agencies_countries_marks: agencias
       url:
-        committed_visits: Visita comprometidas
+        committed_visits: Visitas comprometidas
         status: Actualización
         line_id: Line ID (DFP)
         data: Url
