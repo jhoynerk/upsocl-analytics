@@ -1,10 +1,10 @@
 class DfpUpdater
   include TimeUpdate
 
-  def initialize(url, start_date = nil, end_date = nil)
+  def initialize(url)
     @model = 'DfpStadistic'
     @url = url
-    @start_date = start_date
+    @start_date = @url.publication_date
     @end_date = start_date
   end
 

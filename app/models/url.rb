@@ -38,22 +38,22 @@ class Url < ActiveRecord::Base
     not_page_statistics | update_daily_wich_not_reached_goal | update_week_wich_reached_goal | update_monthly
   }
 
-  scope :update_daily_wich_not_reached_goal, -> { update_active.not_reached_goal_for_page_stadistics }
+  scope :update_daily_wich_not_reached_goal, -> { update_active.after_publication.not_reached_goal_for_page_stadistics }
   scope :not_reached_goal_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
 
-  scope :update_week_wich_reached_goal, -> { update_active.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
+  scope :update_week_wich_reached_goal, -> { update_active.after_publication.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
   scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
 
-  scope :not_page_statistics, -> { update_active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
+  scope :not_page_statistics, -> { update_active.after_publication.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
 
 
-  scope :update_monthly, -> { update_active.last_update_greater_one_month.max_month_update(MONTH_LIMIT_TO_UPDATE) }
+  scope :update_monthly, -> { update_active.after_publication.last_update_greater_one_month.max_month_update(MONTH_LIMIT_TO_UPDATE) }
 
   scope :last_update_greater_one_week, -> { where( '(urls.data_updated_at < ? AND urls.created_at < ?)', 1.week.ago, 1.week.ago ) }
   scope :last_update_greater_one_month, -> { where( 'urls.data_updated_at < ?', 1.month.ago ) }
   scope :max_month_update, -> (number) {  where( 'urls.created_at > ?', number.month.ago ) }
   scope :update_active, -> { where( 'status = ? ', StatusUrls::ACTIVE ) }
-
+  scope :after_publication, -> { where( 'publication_date <= ?', 1.day.ago ) }
 
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
@@ -295,7 +295,7 @@ class Url < ActiveRecord::Base
   end
 
   def total_valid_with_data?
-    !(totals_stadistics.nil? && totals_stadistics[:pageviews].nil?)
+    (totals_stadistics.present? && totals_stadistics[:pageviews].present?)
   end
 
   def has_dfp?
@@ -303,7 +303,7 @@ class Url < ActiveRecord::Base
   end
 
   def total_attention
-    calculate_attention unless totals_stadistics.nil?
+    calculate_attention if totals_stadistics.present?
   end
 
   def calculate_attention
