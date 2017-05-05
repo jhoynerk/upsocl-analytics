@@ -78,6 +78,26 @@
         span.small.font-bold # Cliente / Pais / Agencia
         br/
         | {{ campaign.agencies_countries_mark_format }}
+    .row
+      .col-lg-12
+        .panel-collapse.collapse id="camp{{campaign.id}}"
+          .list-group
+            span.list-group-item ng-repeat="url in campaign.ordered_by_url_created"
+              .col-lg-2
+                a.btn.btn-outline.btn-info ui-sref='viewCampaignUrl({ id: url.id })'
+                  i.fa.fa-eye  Ver Campa&ntilde;a
+              .col-lg-10
+                a href="{{ url.data }}" target='_blank'
+                  | {{ url.title }}
+              .clearfix
+            span.list-group-item ng-repeat="video in campaign.facebook_posts_ordered_by_created"
+              .col-lg-2
+                a.btn.btn-outline.btn-success ui-sref='viewCampaignVideo({ id: video.id })'
+                  i.fa.fa-eye  Ver Video
+              .col-lg-10
+                a href="{{ video.post_id }}" target='_blank'
+                  | {{ video.title }}
+              .clearfix
 
   .faq-item ng-if="((!loading) && (campaigns.length > 0))"
     .row
@@ -105,26 +125,6 @@
             a Siguiente
           li#employees-table_last.paginate_button.last ng-click="lastPage()"
             a Último
-    .row
-      .col-lg-12
-        .panel-collapse.collapse id="camp{{campaign.id}}"
-          .list-group
-            span.list-group-item ng-repeat="url in campaign.ordered_by_url_created"
-              .col-lg-2
-                a.btn.btn-outline.btn-info ui-sref='viewCampaignUrl({ id: url.id })'
-                  i.fa.fa-eye  Ver Campa&ntilde;a
-              .col-lg-10
-                a href="{{ url.data }}" target='_blank'
-                  | {{ url.title }}
-              .clearfix
-            span.list-group-item ng-repeat="video in campaign.facebook_posts_ordered_by_created"
-              .col-lg-2
-                a.btn.btn-outline.btn-success ui-sref='viewCampaignVideo({ id: video.id })'
-                  i.fa.fa-eye  Ver Video
-              .col-lg-10
-                a href="{{ video.post_id }}" target='_blank'
-                  | {{ video.title }}
-              .clearfix
 
   .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="campaigns.length < 1"
     .ibox-content.m-b-sm.border-bottom.text-center
