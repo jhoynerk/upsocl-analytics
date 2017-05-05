@@ -25,6 +25,7 @@ class Url < ActiveRecord::Base
   validates :data, presence: true, url: { no_local: true, message: 'el formato no es correto' }
   validates :line_id, :profile_id, presence: true
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
+  validates :publication_date, presence: true, allow_blank: false
 
   before_save :set_title
   before_create :set_facebook
