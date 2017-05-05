@@ -7,49 +7,48 @@
       li.active
         strong Lista de Campa&ntilde;as
 
-
 .wrapper.wrapper-content.animated.fadeInRight
   ul.nav.nav-tabs
-    li.active role="presentation"
+    li.active role="presentation" ng-click="changeDateRange(1)"
       a href="#"  Campañas Actuales
-    li role="presentation"
-      a href="#"  Ultimas Campañas
-    li role="presentation"
-      a href="#"  Todas
+    li role="presentation" ng-click="changeDateRange(2)"
+      a href="#last"  Ultimas Campañas
+    li role="presentation" ng-click="changeDateRange(3)"
+      a href="#all"  Todas
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
-    .text-center
-      h2 LISTA DE CAMPA&Ntilde;AS
-      b
-    .row
-      .col-md-2
-        .container-search-chosen
-          select.chosen-input.hide#filter-by-tags multiple="multiple" data-placeholder="Nombre"
-            option ng-repeat="tag in tags" value="{{tag.id}}"
-             | {{tag.title}}
-      .col-md-2
-        .container-search-chosen
-          select.chosen-input.hide#filter-by-tags multiple="multiple" data-placeholder="Cliente"
-            option ng-repeat="tag in tags" value="{{tag.id}}"
-             | {{tag.title}}
-      .col-md-2
-        .container-search-chosen
-          select.chosen-input.hide#filter-by-tags multiple="multiple" data-placeholder="Etiqueta"
-            option ng-repeat="tag in tags" value="{{tag.id}}"
-             | {{tag.title}}
-      .col-md-2
-        .container-search-chosen
-          select.chosen-input.hide#filter-by-tags multiple="multiple" data-placeholder="Campaña"
-            option ng-repeat="tag in tags" value="{{tag.id}}"
-             | {{tag.title}}
-      .col-md-2
-        span.input-group-btn
-          button.btn.btn-default type="button" ng-click="searchTags()"  Buscar
-      .col-md-2
-        small
-          b
-            | {{campaigns.length}}
-          b.m-l-xs.m-t-xs Resultados
-  .faq-item ng-repeat="campaign in campaigns" ng-if="campaigns.length > 0"
+    form#search-campaign
+      .text-center
+        h2 LISTA DE CAMPA&Ntilde;AS
+        b
+      .row
+        .col-md-2
+          .container-search-chosen
+            input#filter-by-name.form-control ng-model="filters['filter_name']" placeholder="Nombre de Campaña"
+            input#filter-by-name.form-control type="hidden" ng-model="filters['filter_date_range']" placeholder="Nombre de Campaña"
+        .col-md-2
+          .container-search-chosen
+            select.chosen-input.hide#filter-by-users multiple="multiple" ng-model="filters['filter_client']" data-placeholder="Cliente"
+              option ng-repeat="client in users" value="{{client.id}}"
+               | {{client.name}}
+        .col-md-2
+          .container-search-chosen
+            select.chosen-input.hide#filter-by-tags multiple="multiple" ng-model="filters['filter_tag']" data-placeholder="Etiqueta"
+              option ng-repeat="tag in tags" value="{{tag.id}}"
+               | {{tag.title}}
+        .col-md-2
+          .container-search-chosen
+            select.chosen-input.hide#filter-by-agencies multiple="multiple" ng-model="filters['filter_agency']" data-placeholder="Agencia"
+              option ng-repeat="agency in agencies" value="{{agency.id}}"
+               | {{agency.name}}
+        .col-md-2
+          span.input-group-btn
+            button.btn.btn-default type="button" ng-click="searchTags()"  Buscar
+        .col-md-2.p-xs
+          small
+            b
+              | {{campaigns.length}}
+            b.m-l-xs.m-t-xs Resultados
+  .faq-item ng-repeat="campaign in campaigns" ng-if="((!loading) && (campaigns.length > 0))"
     .row
       .col-md-4
         div.pointer.faq-question data-toggle="collapse" href="#camp{{campaign.id}}"
@@ -94,3 +93,6 @@
   .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="campaigns.length < 1"
     .ibox-content.m-b-sm.border-bottom.text-center
       h3 No se ha encontrado ninguna campaña
+  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="loading"
+    .ibox-content.m-b-sm.border-bottom.text-center
+      h3 Cargando..

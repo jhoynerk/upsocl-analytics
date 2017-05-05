@@ -22,6 +22,10 @@ myApp.factory('Campaign', function($resource) {
   return $resource('/data_reactions.json', { method: 'GET', isArray: false });
 }).factory('Tags', function($resource) {
   return $resource('/tags.json', { method: 'GET', isArray: false });
+}).factory('Users', function($resource) {
+  return $resource('/users.json');
+}).factory('Agencies', function($resource) {
+  return $resource('/agencies.json');
 }).factory('CampaignFilter', function($resource) {
   return $resource('/campaigns.json');
 });

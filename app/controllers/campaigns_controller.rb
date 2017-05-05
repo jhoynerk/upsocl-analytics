@@ -8,10 +8,10 @@ class CampaignsController < ApplicationController
                                                         include: [:urls, users: { only: [:name] }]) }
     end
   end
-FacebookPost.find(1376).campaign.decorate.agencies_countries_mark_format
+
   def filter_by_tag
     @campaigns = checked_campaings
-    @campaigns = @campaigns.includes('tags').with_tags(params[:tags_ids]) unless params[:tags_ids].blank?
+    @campaigns = Campaign.search(params)
     respond_to do |format|
       format.html {}
       format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :agencies_countries_mark_format, :facebook_posts_ordered_by_created, :tag_titles ],
