@@ -1,0 +1,5 @@
+es:
+  enumerations:
+    status_urls:
+      active: 'Activo'
+      inactive: 'Inactivo'

@@ -1,6 +1,6 @@
 ActiveAdmin.register Campaign do
   permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [],
-                urls_attributes: [ :id, :data, :publicity, :screenshot, :line_id,
+                urls_attributes: [ :id, :status, :committed_visits, :data, :publicity, :screenshot, :line_id,
                                    :_destroy, :profile_id, :interval_status, :country_ids=> [],
                                    :tag_ids=> [],facebook_posts_attributes: [ :id, :post_id,
                                    :facebook_account_id, :_destroy ] ],
@@ -34,6 +34,9 @@ ActiveAdmin.register Campaign do
         end
         row :urls do
           render 'url_list', urls: campaign.urls
+        end
+        row :videos do
+          render 'video_list', videos: campaign.facebook_posts
         end
         row :users do
           campaign.join_users
@@ -76,9 +79,11 @@ ActiveAdmin.register Campaign do
     end
     f.inputs do
       f.has_many :urls, heading: 'Posts', allow_destroy: true, new_record: 'Añadir', class: 'panel_urls' do |a|
-        a.input :data, label: 'URL'
+        a.input :data
         a.input :screenshot
-        a.input :line_id, label: 'Line ID (DFP)', :input_html => { :type => 'text' }
+        a.input :status, as: :radio
+        a.input :committed_visits, as: :number
+        a.input :line_id, :input_html => { :type => 'text' }
         a.input :publicity, label: 'Con publicidad'
         a.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'
         a.input :tags, :as => :select, collection: Tag.type_tag_sub_category.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Sub-Categoría'

@@ -1,5 +1,8 @@
 class Url < ActiveRecord::Base
   include TagsUtil
+
+  MONTH_LIMIT_TO_UPDATE = 3
+
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
@@ -21,6 +24,7 @@ class Url < ActiveRecord::Base
 
   validates :data, presence: true, url: { no_local: true, message: 'el formato no es correto' }
   validates :line_id, :profile_id, presence: true
+  validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
 
   before_save :set_title
   before_create :set_facebook
@@ -28,6 +32,27 @@ class Url < ActiveRecord::Base
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
+
+  scope :search_urls_to_update, -> {
+    not_page_statistics | update_daily_wich_not_reached_goal | update_week_wich_reached_goal | update_monthly
+  }
+
+  scope :update_daily_wich_not_reached_goal, -> { update_active.not_reached_goal_for_page_stadistics }
+  scope :not_reached_goal_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
+
+  scope :update_week_wich_reached_goal, -> { update_active.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
+  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
+
+  scope :not_page_statistics, -> { update_active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
+
+
+  scope :update_monthly, -> { update_active.last_update_greater_one_month.max_month_update(MONTH_LIMIT_TO_UPDATE) }
+
+  scope :last_update_greater_one_week, -> { where( '(urls.data_updated_at < ? AND urls.created_at < ?)', 1.week.ago, 1.week.ago ) }
+  scope :last_update_greater_one_month, -> { where( 'urls.data_updated_at < ?', 1.month.ago ) }
+  scope :max_month_update, -> (number) {  where( 'urls.created_at > ?', number.month.ago ) }
+  scope :update_active, -> { where( 'status = ? ', StatusUrls::ACTIVE ) }
+
 
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
@@ -266,5 +291,25 @@ class Url < ActiveRecord::Base
     end
     copy_data << sum
     return copy_data
+  end
+
+  def total_valid_with_data?
+    !(totals_stadistics.nil? && totals_stadistics[:pageviews].nil?)
+  end
+
+  def has_dfp?
+    line_id != 0
+  end
+
+  def total_attention
+    calculate_attention unless totals_stadistics.nil?
+  end
+
+  def calculate_attention
+    (totals_stadistics[:avgtimeonpage].to_f * totals_stadistics[:pageviews]) / 60
+  end
+
+  def attention_last
+    (total_valid_with_data?) ? total_attention : 0
   end
 end
