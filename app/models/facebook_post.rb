@@ -12,6 +12,14 @@ class FacebookPost < ActiveRecord::Base
   scope :update_interval, -> (date) { where('created_at > ? or created_at IS NULL', date) }
   scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
 
+  scope :original_posts, -> { where(original: true) }
+  scope :sum_original_impressions, -> { original_posts.sum(:post_impressions) }
+
+  scope :ab_posts, -> { where(original: false) }
+  scope :sum_ab_impressions, -> { ab_posts.sum(:post_impressions) }
+
+  scope :sum_people_reached, -> { sum(:post_impressions_unique) }
+
   before_create :set_update_date
   before_validation :set_facebook
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
@@ -23,6 +31,7 @@ class FacebookPost < ActiveRecord::Base
   validates :url_video, url: true, if: :video?
   validates :title, presence: true, if: :video?
   validates :facebook_account, :goal, presence: true
+  validates_uniqueness_of :original, scope: :url_id, if: :original
   validates_numericality_of :post_id
   validates_numericality_of :goal, greater_than_or_equal_to: 1, if: :video?
 
@@ -69,13 +78,8 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def get_stadistic_facebook
-    if video?
-      self.attributes = AnalyticFacebook.new(self).update_attr_post_video
-      check_goal
-    else
-      self.attributes = AnalyticFacebook.new(self).update
-      check_goal
-    end
+    self.attributes = AnalyticFacebook.new(self).update_attr_post_video
+    check_goal
   end
 
 end

@@ -15,7 +15,7 @@ class UrlsController < ApplicationController
   def render_to_app
     respond_to do |format|
       format.html {}
-      format.json { render :json => @url.as_json( methods: [ :tags, :tag_names, :campaign, :social_count, :stadistics, :totals_stadistics, :next_url, :previous_url, :count_votes ]) }
+      format.json { render :json => @url.as_json( methods: [ :tags, :tag_names, :campaign, :social_count, :stadistics, :totals_stadistics, :next_url, :previous_url, :count_votes, :fb_posts_totals ]) }
     end
   end
 

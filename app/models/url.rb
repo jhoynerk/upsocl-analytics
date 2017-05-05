@@ -57,6 +57,16 @@ class Url < ActiveRecord::Base
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
 
+  def fb_posts_totals
+    {
+      impressions: facebook_posts.sum_original_impressions,
+      ab_impressions: facebook_posts.sum_ab_impressions,
+      people_reached: facebook_posts.sum_people_reached,
+      ab_posts_count: facebook_posts.ab_posts.count,
+      fb_posts_count: facebook_posts.count
+    }
+  end
+
   def update_stadistics
     AnalyticFacebook.new(self).save
   end
