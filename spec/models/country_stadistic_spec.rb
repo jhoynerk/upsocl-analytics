@@ -19,7 +19,7 @@ describe CountryStadistic do
   end
 
   it "should be valid with a pageviews" do
-    country_stadistic.pageviews = Faker::Number.number(3)
+    country_stadistic.pageviews = Faker::Number.number(4)
     expect(country_stadistic).to be_valid
   end
 end

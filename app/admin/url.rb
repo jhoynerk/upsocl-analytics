@@ -1,6 +1,6 @@
 ActiveAdmin.register Url do
   require 'rake'
-  UpsoclAnalytics::Application.load_tasks
+  #UpsoclAnalytics::Application.load_tasks
   menu label: 'Artículos'
   permit_params  :campaign_id, :title
   show title: 'Detalles del artículo' do |url|
