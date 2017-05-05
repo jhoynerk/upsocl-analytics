@@ -5,7 +5,7 @@ class DfpUpdater
     @model = 'DfpStadistic'
     @url = url
     @start_date = @url.publication_date
-    @end_date = start_date
+    @end_date = attr_end_date
   end
 
   def search_data_and_update
