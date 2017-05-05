@@ -5,7 +5,7 @@ ActiveAdmin.register Campaign do
                                    :tag_ids=> [],facebook_posts_attributes: [ :id, :post_id,
                                    :facebook_account_id, :_destroy ] ],
                 facebook_posts_attributes: [ :id, :title, :post_id, :url_video, :goal, :_destroy,
-                                             :facebook_account_id, :tag_ids=> [] ]
+                                             :facebook_account_id, :original, :tag_ids=> [] ]
 
   analytics = [ ["www.cutypaste.com", "41995195"],
       ["All Web Site Data", "70319478"],

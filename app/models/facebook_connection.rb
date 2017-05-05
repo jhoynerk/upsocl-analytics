@@ -7,7 +7,7 @@ class FacebookConnection
   end
 
   def self.insights_metrics
-    [:post_impressions_unique, :post_video_views, :post_video_views_10s,
+    [:post_impressions, :post_impressions_unique, :post_video_views, :post_video_views_10s,
      :post_video_avg_time_watched, :post_video_view_time]
   end
 
@@ -63,7 +63,7 @@ class FacebookConnection
 
   def query_data
     #api-2.9
-    "insights.metric(post_impressions_unique, post_video_views_10s, post_video_views, post_video_avg_time_watched, post_video_view_time).period(lifetime){name,values}, reactions.summary(true).limit(0), comments.summary(true).filter(stream).limit(0), shares"
+    "insights.metric(post_impressions, post_impressions_unique, post_video_views_10s, post_video_views, post_video_avg_time_watched, post_video_view_time).period(lifetime){name,values}, reactions.summary(true).limit(0), comments.summary(true).filter(stream).limit(0), shares"
   end
 
   def oauth_access_token
