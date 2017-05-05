@@ -632,6 +632,7 @@ DEPENDENCIES
   jquery-datatables-rails
   jquery-rails
   jquery-ui-rails (= 5.0.0)
+  kaminari
   koala (~> 2.2)
   legato
   momentjs-rails

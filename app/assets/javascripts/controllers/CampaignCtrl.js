@@ -7,6 +7,9 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   $scope.filters = {};
   $scope.loading = false;
   $scope.filters['filter_date_range'] = 1;
+  $scope.pagePerValues = [10,20,30];
+  $scope.filters['paginate_regs'] = $scope.pagePerValues[0];
+  $scope.filters['paginate_page'] = 1;
 
   $scope.user = User.get(function(data){
     setTimeout(function(){
@@ -28,14 +31,63 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
 
   $scope.changeDateRange = function(opt){
     $scope.filters['filter_date_range'] = opt
+    $scope.filters['paginate_page'] = 1;
     $scope.searchTags();
+  }
+
+  $scope.paginatePages = function(){
+    var data = [];
+    var checkMin = ($scope.paginate.current_page - 5);
+    var checkMax = ($scope.paginate.current_page + 5);
+    var min = (checkMin < 1)? 1 : checkMin
+    var max = (checkMax > $scope.paginate.total_pages)? $scope.paginate.total_pages : checkMax
+    for(var i = min; i <= max; i++) {
+      data.push(i);
+    }
+    return data;
+  }
+
+  $scope.firstRegPage = function(){
+    var isEndPage = ($scope.paginate.last_page || $scope.paginate.first_page);
+    return ($scope.paginate.first_page)? $scope.paginate.current_page : (($scope.paginate.current_page-1) * $scope.filters.paginate_regs)
+  }
+
+  $scope.lastRegPage = function(){
+    var lastReg = (($scope.paginate.first_page)? 0 : $scope.firstRegPage()) + Number($scope.filters.paginate_regs);
+    return (lastReg>$scope.paginate.count)? $scope.paginate.count : lastReg;
+  }
+
+  $scope.toPage = function(page){
+    $scope.filters['paginate_page'] = page;
+    $scope.searchTags();
+  }
+
+  $scope.lastPage = function(){
+    $scope.toPage($scope.paginate.total_pages)
+  }
+
+  $scope.firstPage = function(){
+    $scope.toPage(1)
+  }
+
+  $scope.nextPage = function(){
+    var nextPage = ($scope.filters['paginate_page'] + 1);
+    var navigateTo = (nextPage > $scope.paginate.total_pages)? $scope.paginate.total_pages : nextPage
+    $scope.toPage(navigateTo)
+  }
+
+  $scope.prevPage = function(){
+    var nextPage = ($scope.filters['paginate_page'] -1);
+    var navigateTo = (nextPage < 1)? 1 : nextPage
+    $scope.toPage(navigateTo);
   }
 
   $scope.searchTags = function(){
     var ids = $('.chosen-input').val();
     $scope.loading = true;
     $http.post('/campaigns/filter_by_tag.json', $scope.filters).then( function(response) {
-      $scope.campaigns = response.data;
+      $scope.campaigns = response.data.campaigns;
+      $scope.paginate = response.data.paginate;
       $scope.loading = false;
       setTimeout(function(){
       $('[data-toggle="tooltip"]').tooltip();

@@ -16,15 +16,28 @@
     li role="presentation" ng-click="changeDateRange(3)"
       a href="#all"  Todas
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
-    form#search-campaign
-      .text-center
-        h2 LISTA DE CAMPA&Ntilde;AS
-        b
+    form#search-campaign.form-inline
+      .row
+        .col-md-12
+          .text-center
+            div.pull-right
+              .form-group
+                label
+                  small.m-r-xs Registros por Página
+                select.form-control ng-model="filters['paginate_regs']" ng-change="searchTags()" data-placeholder="Cliente"
+                  option ng-repeat="value in pagePerValues" value="{{value}}"
+                    | {{value}}
+            h2.m-b-md LISTA DE CAMPA&Ntilde;AS
+            b
       .row
         .col-md-2
           .container-search-chosen
+            input#filter-by-name.form-control ng-model="filters['filter_by_url']" placeholder="Url Post o Url Video"
+        .col-md-2
+          .container-search-chosen
             input#filter-by-name.form-control ng-model="filters['filter_name']" placeholder="Nombre de Campaña"
-            input#filter-by-name.form-control type="hidden" ng-model="filters['filter_date_range']" placeholder="Nombre de Campaña"
+            input type="hidden" ng-model="filters['filter_date_range']"
+            input type="hidden" ng-model="filters['paginate_page']"
         .col-md-2
           .container-search-chosen
             select.chosen-input.hide#filter-by-users multiple="multiple" ng-model="filters['filter_client']" data-placeholder="Cliente"
@@ -42,12 +55,8 @@
                | {{agency.name}}
         .col-md-2
           span.input-group-btn
-            button.btn.btn-default type="button" ng-click="searchTags()"  Buscar
-        .col-md-2.p-xs
-          small
-            b
-              | {{campaigns.length}}
-            b.m-l-xs.m-t-xs Resultados
+            button.btn.btn-primary type="button" ng-click="searchTags()"  Buscar
+
   .faq-item ng-repeat="campaign in campaigns" ng-if="((!loading) && (campaigns.length > 0))"
     .row
       .col-md-4
@@ -69,6 +78,33 @@
         span.small.font-bold # Cliente / Pais / Agencia
         br/
         | {{ campaign.agencies_countries_mark_format }}
+
+  .faq-item ng-if="((!loading) && (campaigns.length > 0))"
+    .row
+      .col-md-5
+        | Mostrando registros del
+        b.m-xs
+          | {{ firstRegPage() }}
+        | al
+        b.m-xs
+          | {{ lastRegPage() }}
+        | de un total de
+        b.m-xs
+          | {{paginate.count}}
+        | registros
+      col-sm-7
+        ul.pagination.slim
+          li#employees-table_first.paginate_button.first ng-click="firstPage()"
+            a Primero
+          li#employees-table_previous.paginate_button.previous ng-click="prevPage()"
+            a Anterior
+          li.paginate_button ng-repeat="page in paginatePages()" ng-class="(page == paginate.current_page)? 'active': '' " ng-click="toPage(page)"
+            a
+              | {{ page }}
+          li#employees-table_next.paginate_button.next ng-click="nextPage()"
+            a Siguiente
+          li#employees-table_last.paginate_button.last ng-click="lastPage()"
+            a Último
     .row
       .col-lg-12
         .panel-collapse.collapse id="camp{{campaign.id}}"
