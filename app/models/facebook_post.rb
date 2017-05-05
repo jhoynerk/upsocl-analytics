@@ -32,7 +32,7 @@ class FacebookPost < ActiveRecord::Base
   validates :url_video, url: true, if: :video?
   validates :title, presence: true, if: :video?
   validates :facebook_account, :goal, presence: true
-  validates_uniqueness_of :original, scope: [:url]
+  validates_uniqueness_of :original, scope: :url_id, if: :original
   validates_numericality_of :post_id
   validates_numericality_of :goal, greater_than_or_equal_to: 1, if: :video?
 
