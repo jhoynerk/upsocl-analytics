@@ -96,6 +96,7 @@ ActiveAdmin.register Campaign do
         a.has_many :facebook_posts, heading: 'Post Facebook asociados', allow_destroy: true, new_record: 'Añadir Post Facebook' do |e|
           e.input :post_id, label: 'ID del post de facebook'
           e.input :facebook_account, :as => :select, :input_html => { :class => "chosen-input"}
+          e.input :original, label: 'Original'
         end
       end
     end
