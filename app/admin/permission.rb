@@ -14,7 +14,7 @@ ActiveAdmin.register ::ActiveAdmin::Permission do
     label: 'Nombre',
     collection: -> do
       collection = ::ActiveAdmin::ManagedResource.uniq.order(:class_name).pluck(:class_name)
-      collection.map! do |c|
+      collection.reject{|a| a.match('ActiveAdmin::Comment')}.map! do |c|
         c = c.constantize
         c.try(:model_name) ? [c.model_name.human, c] : [c, c]
       end

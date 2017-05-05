@@ -25,7 +25,7 @@ div#url_id data="{{ video.id }}"
 .wrapper.wrapper-content
   .ibox-content.m-b-sm.border-bottom
     .text-center.p-sm
-      button.btn.btn-success.btn-stadistic-update ng-click="update_stadistics()" ng-if="user.admin"
+      button.btn.btn-success.btn-stadistic-update ng-click="update_stadistics()" data-loading-text="Actualizando..."
         | Actualizar Estadísticas
       h2
         | {{ video.title }}
@@ -41,11 +41,6 @@ div#url_id data="{{ video.id }}"
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
         br
-        h3
-          b Reproducciones de Video  : 
-          strong
-            | {{ video.post_video_views }}
-        b
         span ng-if="user.admin"
           h4 Etiquetas
         div  ng-if="user.admin" ng-repeat="tag_name in video.tag_names"
@@ -54,6 +49,16 @@ div#url_id data="{{ video.id }}"
           span
             | {{ tag_name.value }}
 
+  .row
+    .col-md-12
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Reproducciones de Video
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_views }}
+          small Veces reproducido
   .row
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center

@@ -97,6 +97,11 @@ es:
         name: Nombre
       country_mark:
         agencies_countries_marks: agencias
+      url:
+        committed_visits: Visitas comprometidas
+        status: Actualización
+        line_id: Line ID (DFP)
+        data: Url
   datetime:
     distance_in_words:
       about_x_hours:

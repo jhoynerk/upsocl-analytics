@@ -1,5 +1,16 @@
 ActiveAdmin.register User do
   permit_params :email, :name, :admin,:password, :password_confirmation, :role, campaign_ids: []
+
+  controller do
+    def update
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+        params[:user].delete("password")
+        params[:user].delete("password_confirmation")
+      end
+      super
+    end
+  end
+
   show do
     panel 'Detalles de Usuario' do
       attributes_table_for user do
@@ -8,6 +19,7 @@ ActiveAdmin.register User do
         row :admin do
           t("#{user.admin}_value", scope: 'activerecord.attributes.user/admin')
         end
+        row :role
         row :campaigns do
           user.join_campaigns
         end
@@ -20,6 +32,7 @@ ActiveAdmin.register User do
     id_column
     column :email
     column :name
+    column :role
     column :current_sign_in_at
     column :created_at
     actions

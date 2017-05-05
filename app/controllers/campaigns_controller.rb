@@ -71,7 +71,7 @@ class CampaignsController < ApplicationController
   end
 
   def checked_campaings
-    if current_user.admin?
+    if current_user.admin? || current_user.country_manager?
       Campaign.all.order(:name)
     else
       current_user.campaigns

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503183627) do
+ActiveRecord::Schema.define(version: 20180421215339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,11 +130,11 @@ ActiveRecord::Schema.define(version: 20170503183627) do
     t.date     "date"
     t.string   "country_name"
     t.string   "country_code"
-    t.integer  "pageviews"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
-    t.float    "avgtimeonpage"
+    t.integer  "pageviews",     default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
+    t.float    "avgtimeonpage", default: 0.0
   end
 
   add_index "country_stadistics", ["url_id"], name: "index_country_stadistics_on_url_id", using: :btree
@@ -159,9 +159,9 @@ ActiveRecord::Schema.define(version: 20170503183627) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "device_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "pageviews",   default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "device_stadistics", ["url_id"], name: "index_device_stadistics_on_url_id", using: :btree
@@ -246,12 +246,12 @@ ActiveRecord::Schema.define(version: 20170503183627) do
   create_table "page_stadistics", force: :cascade do |t|
     t.integer  "url_id"
     t.date     "date"
-    t.float    "avgtimeonpage"
-    t.integer  "pageviews"
-    t.integer  "sessions"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
+    t.float    "avgtimeonpage", default: 0.0
+    t.integer  "pageviews",     default: 0
+    t.integer  "sessions",      default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
   end
 
   add_index "page_stadistics", ["url_id"], name: "index_page_stadistics_on_url_id", using: :btree
@@ -279,9 +279,9 @@ ActiveRecord::Schema.define(version: 20170503183627) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "traffic_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "pageviews",    default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "traffic_stadistics", ["url_id"], name: "index_traffic_stadistics_on_url_id", using: :btree
@@ -303,6 +303,8 @@ ActiveRecord::Schema.define(version: 20170503183627) do
     t.integer  "facebook_shares",   default: 0
     t.float    "attention",         default: 0.0
     t.boolean  "publico",           default: false
+    t.boolean  "status",            default: false
+    t.integer  "committed_visits",  default: 0
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree

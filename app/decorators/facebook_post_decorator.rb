@@ -38,7 +38,16 @@ class FacebookPostDecorator < Draper::Decorator
     format(object.total_shares)
   end
 
+  def url_video
+    video_embed_format(object.url_video)
+  end
+
   private
+  def video_embed_format(url)
+    id = url.split('/').last
+    "https://player.vimeo.com/video/#{id}"
+  end
+
   def format(number)
     number_with_delimiter(number)
   end
