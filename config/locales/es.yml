@@ -101,6 +101,7 @@ es:
         committed_visits: Visitas comprometidas
         status: Actualización
         line_id: Line ID (DFP)
+        publication_date: Fecha de publicación
         data: Url
   datetime:
     distance_in_words:
