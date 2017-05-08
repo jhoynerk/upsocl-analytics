@@ -14,8 +14,12 @@ class ApplicationController < ActionController::Base
     head :status => 200, :'Access-Control-Allow-Headers' => 'accept, content-type'
   end
 
-  def after_sign_in_path
-    campaigns_path
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || ''
+  end
+
+  def access_denied(exception)
+    redirect_to root_path, alert: exception.message
   end
 
   def user

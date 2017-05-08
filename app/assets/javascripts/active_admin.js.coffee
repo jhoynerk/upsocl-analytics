@@ -12,15 +12,13 @@ load_chosen = ->
       max_selected_options: max).bind 'chosen:maxselected', ->
       error = undefined
       span = undefined
-      error = $(this).parents('li').find('span.error')
+      error = $(this).parent('li').find('span.error')
       if error.size() < 1
         span = $('<span class=\'error\'>Usted ha alcanzado el límite para este tipo de etiqueta</span>')
         $(this).parents('li').append span
-        return setTimeout((->
-          span.remove()
-          return
+        setTimeout((->
+          span.parent('li').find('span.error').remove()
         ), 3000)
-      return
 
 $ ->
   load_chosen()

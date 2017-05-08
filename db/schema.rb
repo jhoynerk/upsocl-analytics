@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418211728) do
+ActiveRecord::Schema.define(version: 20170505190548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,22 @@ ActiveRecord::Schema.define(version: 20170418211728) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "active_admin_managed_resources", force: :cascade do |t|
+    t.string "class_name", null: false
+    t.string "action",     null: false
+    t.string "name"
+  end
+
+  add_index "active_admin_managed_resources", ["class_name", "action", "name"], name: "active_admin_managed_resources_index", unique: true, using: :btree
+
+  create_table "active_admin_permissions", force: :cascade do |t|
+    t.integer "managed_resource_id",                       null: false
+    t.integer "role",                limit: 2, default: 0, null: false
+    t.integer "state",               limit: 2, default: 0, null: false
+  end
+
+  add_index "active_admin_permissions", ["managed_resource_id", "role"], name: "active_admin_permissions_index", unique: true, using: :btree
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -114,11 +130,11 @@ ActiveRecord::Schema.define(version: 20170418211728) do
     t.date     "date"
     t.string   "country_name"
     t.string   "country_code"
-    t.integer  "pageviews"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
-    t.float    "avgtimeonpage"
+    t.integer  "pageviews",     default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
+    t.float    "avgtimeonpage", default: 0.0
   end
 
   add_index "country_stadistics", ["url_id"], name: "index_country_stadistics_on_url_id", using: :btree
@@ -143,9 +159,9 @@ ActiveRecord::Schema.define(version: 20170418211728) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "device_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "pageviews",   default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "device_stadistics", ["url_id"], name: "index_device_stadistics_on_url_id", using: :btree
@@ -170,13 +186,40 @@ ActiveRecord::Schema.define(version: 20170418211728) do
   end
 
   create_table "facebook_posts", force: :cascade do |t|
-    t.string  "post_id"
-    t.integer "url_id"
-    t.integer "facebook_account_id"
+    t.string   "post_id"
+    t.integer  "url_id"
+    t.integer  "facebook_account_id"
+    t.string   "title"
+    t.string   "url_video"
+    t.integer  "campaign_id"
+    t.integer  "interval_status",             default: 0
+    t.integer  "total_likes",                 default: 0
+    t.integer  "total_comments",              default: 0
+    t.integer  "total_shares",                default: 0
+    t.float    "post_impressions_unique",     default: 0.0
+    t.float    "post_video_avg_time_watched", default: 0.0
+    t.float    "post_video_views",            default: 0.0
+    t.float    "post_video_view_time",        default: 0.0
+    t.datetime "data_updated_at"
+    t.boolean  "goal_achieved",               default: false
+    t.float    "goal",                        default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "post_video_views_10s",        default: 0.0
+    t.integer  "post_impressions",            default: 0
+    t.boolean  "original",                    default: false
   end
 
   add_index "facebook_posts", ["facebook_account_id"], name: "index_facebook_posts_on_facebook_account_id", using: :btree
   add_index "facebook_posts", ["url_id"], name: "index_facebook_posts_on_url_id", using: :btree
+
+  create_table "facebook_posts_tags", force: :cascade do |t|
+    t.integer "facebook_post_id"
+    t.integer "tag_id"
+  end
+
+  add_index "facebook_posts_tags", ["facebook_post_id"], name: "index_facebook_posts_tags_on_facebook_post_id", using: :btree
+  add_index "facebook_posts_tags", ["tag_id"], name: "index_facebook_posts_tags_on_tag_id", using: :btree
 
   create_table "forms", force: :cascade do |t|
     t.string   "name"
@@ -205,12 +248,12 @@ ActiveRecord::Schema.define(version: 20170418211728) do
   create_table "page_stadistics", force: :cascade do |t|
     t.integer  "url_id"
     t.date     "date"
-    t.float    "avgtimeonpage"
-    t.integer  "pageviews"
-    t.integer  "sessions"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "users"
+    t.float    "avgtimeonpage", default: 0.0
+    t.integer  "pageviews",     default: 0
+    t.integer  "sessions",      default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "users",         default: 0
   end
 
   add_index "page_stadistics", ["url_id"], name: "index_page_stadistics_on_url_id", using: :btree
@@ -238,9 +281,9 @@ ActiveRecord::Schema.define(version: 20170418211728) do
     t.integer  "url_id"
     t.date     "date"
     t.string   "traffic_type"
-    t.integer  "pageviews"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "pageviews",    default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "traffic_stadistics", ["url_id"], name: "index_traffic_stadistics_on_url_id", using: :btree
@@ -262,6 +305,9 @@ ActiveRecord::Schema.define(version: 20170418211728) do
     t.integer  "facebook_shares",   default: 0
     t.float    "attention",         default: 0.0
     t.boolean  "publico",           default: false
+    t.boolean  "status",            default: false
+    t.integer  "committed_visits",  default: 0
+    t.date     "publication_date"
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree
@@ -281,6 +327,7 @@ ActiveRecord::Schema.define(version: 20170418211728) do
     t.datetime "updated_at",                             null: false
     t.string   "name"
     t.boolean  "admin",                  default: false
+    t.integer  "role",                   default: 0,     null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

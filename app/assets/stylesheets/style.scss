@@ -81,6 +81,8 @@
 
 .container-search-in-title{
   position: relative;
+  border-color: #1bb394;
+  border-width: 3px 0px;
   .search-in-title{
     position: absolute;
     top: 10px;
@@ -97,5 +99,15 @@
     padding-bottom: 3px;
     padding-top: 2px;
   }
+}
+
+.btn-stadistic-update{
+  float: right;
+  margin-left: -170px;
+}
+
+.pagination.slim{
+  margin: 0 12px;
+  float: right;
 }
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe FacebookConnection do
   let!(:facebook_account) { create(:facebook_account) }
   let!(:post_id) { "631142877053929" }
-  let!(:fbc) { FacebookConnection.new(post_id, facebook_account.facebook_id) }
+  let!(:fbc) { FacebookConnection.new(facebook_account.facebook_id, post_id) }
 
   it "facebook comments should be greater than 0" do
     expect(fbc.count_comments).to be > 0
