@@ -4,12 +4,11 @@ class FacebookPost < ActiveRecord::Base
   belongs_to :url
   belongs_to :facebook_account
   belongs_to :campaign
-  has_many :urls, dependent: :delete_all
   has_and_belongs_to_many :tags
 
   scope :urls, -> { where.not(campaign_id: nil) }
-  scope :goal_achieveds, -> { where(goal_achieved: true) }
-  scope :unreached_goals, -> { where(goal_achieved: false) }
+  scope :goal_achieveds, -> { urls.where(goal_achieved: true) }
+  scope :unreached_goals, -> { urls.where(goal_achieved: false) }
   scope :update_interval, -> (date) { where('created_at > ? or created_at IS NULL', date) }
   scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
 

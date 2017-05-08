@@ -4,18 +4,18 @@ class CampaignsController < ApplicationController
     @campaigns = checked_campaings.decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :facebook_posts_ordered_by_created, :tag_titles ],
+      format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :agencies_countries_mark_format, :facebook_posts_ordered_by_created, :tag_titles ],
                                                         include: [:urls, users: { only: [:name] }]) }
     end
   end
 
   def filter_by_tag
-    @campaigns = checked_campaings
-    @campaigns = @campaigns.includes('tags').with_tags(params[:tags_ids]) unless params[:tags_ids].blank?
+    @campaigns_filtered = Campaign.search(params)
+    @campaigns = CampaignsDecorator.new(@campaigns_filtered.order(:name).page(params[:paginate_page]).per(params[:paginate_regs]))
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :tag_titles ],
-                                                        include: [:urls, users: { only: [:name] }]) }
+      format.json { render :json => {paginate: data_paginate, campaigns: @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :agencies_countries_mark_format, :facebook_posts_ordered_by_created, :tag_titles ],
+                                                        include: [:urls, users: { only: [:name] }]) } }
     end
   end
 
@@ -47,6 +47,16 @@ class CampaignsController < ApplicationController
   end
 
   private
+
+  def data_paginate
+    {
+      total_pages: @campaigns.total_pages,
+      current_page: @campaigns.current_page,
+      first_page: @campaigns.first_page?,
+      last_page: @campaigns.last_page?,
+      count: @campaigns_filtered.count
+    }
+  end
 
   def builder_data
     @urls.map do |url|

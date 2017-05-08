@@ -8,6 +8,13 @@ var app = angular.module('upsocl',[
   'localytics.directives'
 ])
 
+app.filter('arrayToName', function() {
+  return function(input) {
+    var output = input.map(function(u){return u.name}).join(', ')
+    return output;
+  }
+});
+
 app.config(function($stateProvider) {
   $stateProvider.state('campaigns', {
     url: '/',

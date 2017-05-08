@@ -41,7 +41,7 @@ class Url < ActiveRecord::Base
   scope :not_reached_goal_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
 
   scope :update_week_wich_reached_goal, -> { update_active.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
-  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
+  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) >= urls.committed_visits').group('urls.id') }
 
   scope :not_page_statistics, -> { update_active.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
 
