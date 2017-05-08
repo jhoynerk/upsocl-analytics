@@ -8,7 +8,7 @@ ActiveAdmin.register CountryStadistic do
       u.url_campaign_name
     end
     column(:url) do |u|
-      link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, stadistic_date: u.date), method: :post
+      link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, country: u.country_code), method: :post
     end
     column :date
     column :country_code

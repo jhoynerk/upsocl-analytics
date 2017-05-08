@@ -7,6 +7,5 @@ class Country < ActiveRecord::Base
   scope :has_url, -> { includes(:urls).where.not(urls: { id: nil }) }
 
   scope :for_select, -> { has_url.pluck(:name, :code).to_h }
-  end
 
 end

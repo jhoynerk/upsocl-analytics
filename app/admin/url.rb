@@ -49,10 +49,10 @@ ActiveAdmin.register Url do
 
   member_action :details, method: :post do
     @url = resource
-    @stadistic_date = DateTime.parse(params[:stadistic_date]).strftime("%Y-%m-%d") rescue nil
-    if @stadistic_date
-      @country_stadistics = @url.country_stadistics.by_date(@stadistic_date)
-      @page_stadistics  = @url.dfp_stadistics.by_date(@stadistic_date).first
+    @country = params[:country]
+    @countries = @url.country_stadistics.countries_for_select
+    if @country
+      @country_stadistics = @url.country_stadistics.by_country(@country)
     end
     @page_title = "Estadísticas para articulo id: #{resource.id}"
   end
