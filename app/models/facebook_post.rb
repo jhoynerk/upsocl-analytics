@@ -17,7 +17,7 @@ class FacebookPost < ActiveRecord::Base
 
   scope :ab_posts, -> { where(original: false) }
   scope :sum_ab_impressions, -> { ab_posts.sum(:post_impressions) }
-  socpe :count_clicks, -> { sum(:post_clicks) }
+  scope :count_clicks, -> { sum(:post_clicks) }
 
   scope :sum_people_reached, -> { sum(:post_impressions_unique) }
 
