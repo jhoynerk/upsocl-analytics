@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   get 'data_reactions', to: 'reactions#data_reactions'
 
   resources :reactions, only: [:index]
+  resources :users, only: [:index]
+  resources :agencies, only: [:index]
+  resources :reactions, only: [:index]
   resources :tags, only: [:index]
   get 'votes', to: 'votes#create'
   get 'change_vote', to: 'votes#change_vote'

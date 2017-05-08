@@ -17,10 +17,9 @@ module Clockwork
   end
 
   every(1.day, "analytics:add_records", at: '9:30') do
-    Rails.logger.tagged("Clockwork") { Rails.logger.debug("Running analytics:add_records") }
+    Rails.logger.tagged("Clockwork") { Rails.logger.debug("Running analytics:update") }
     begin
-      Rake::Task['analytics:add_records'].reenable
-      Rake::Task["analytics:add_records"].invoke('week', 'day')
+      Rake::Task['analytics:update'].execute
     rescue Exception => e
       Raygun.track_exception(e)
     end
