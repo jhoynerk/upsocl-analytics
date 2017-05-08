@@ -13,7 +13,7 @@ class FacebookPost < ActiveRecord::Base
   scope :upgradable, -> { unreached_goals.urls.update_interval(1.month.ago) }
 
   scope :original_posts, -> { where(original: true) }
-  scope :sum_original_impressions, -> { original_posts.sum(:post_impressions) }
+  scope :sum_total_impressions, -> { sum(:post_impressions) }
 
   scope :ab_posts, -> { where(original: false) }
   scope :sum_ab_impressions, -> { ab_posts.sum(:post_impressions) }
@@ -49,6 +49,11 @@ class FacebookPost < ActiveRecord::Base
 
   def update_stadistics
     update!(data_updated_at: Time.now)
+  end
+
+  def self.count_post_clicks(pageviews)
+    clicks = sum(:post_clicks)
+    clicks > pageviews ? pageviews : clicks
   end
 
   private
