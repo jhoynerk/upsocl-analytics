@@ -8,7 +8,7 @@ ActiveAdmin.register CountryStadistic do
       u.url_campaign_name
     end
     column(:url) do |u|
-      truncate(u.url_title, length: 50)
+      link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, stadistic_date: u.date), method: :post
     end
     column :date
     column :country_code
@@ -16,14 +16,11 @@ ActiveAdmin.register CountryStadistic do
     column :avgtimeonpage
     actions
   end
-
   filter :url, label: 'Nombre del articulo', as: :select, input_html: {class: 'chosen-input'}
-  #filter :url_id, label: 'URL ID', as: :number
   filter :date
   filter :country_code, as: :select, collection: Country.for_select, input_html: {class: 'chosen-input'}
-
   form do |f|
-    f.inputs "Estadisticas de país" do
+    f.inputs "Estadisticas de País" do
       f.input :url, :as => :select, :input_html => { :class => "chosen-input"}
       f.input :date
       f.input :country_name
@@ -33,11 +30,5 @@ ActiveAdmin.register CountryStadistic do
       f.input :avgtimeonpage
     end
     f.actions
-  end
-
-  controller do
-    def scoped_collection
-      CountryStadistic.by_assigned_country
-    end
   end
 end

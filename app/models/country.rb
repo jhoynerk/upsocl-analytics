@@ -6,8 +6,7 @@ class Country < ActiveRecord::Base
   scope :in_mark, -> { joins(:marks) }
   scope :has_url, -> { includes(:urls).where.not(urls: { id: nil }) }
 
-  def self.for_select
-  	has_url.pluck(:name, :code).to_h
+  scope :for_select, -> { has_url.pluck(:name, :code).to_h }
   end
 
 end

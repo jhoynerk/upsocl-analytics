@@ -1,0 +1,25 @@
+= form_tag("#{details_admin_url_path(@url.id)}", method: :post )
+	.form-group
+		label Fecha:
+    = text_field_tag(:stadistic_date, "#{@stadistic_date}", {class: "datepicker", style: "width: auto;"})
+	button type="submit" Consultar
+	br
+	br
+- if @page_stadistics
+	p Impresiones: #{@page_stadistics.impressions}
+	p Clicks: #{@page_stadistics.clicks}
+- if @country_stadistics.blank?
+	h3 style="text-align: center;" No hay datos para esta fecha
+- else
+	table
+		thead
+			tr
+				th País
+				th Páginas Vistas
+				th Tiempo Página
+		tbody
+		  - @country_stadistics.each do |cs|
+		  	tr
+					td = " #{cs.country_name}"
+					td = " #{cs.pageviews}"
+					td = " #{cs.avgtimeonpage}"

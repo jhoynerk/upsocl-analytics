@@ -1,6 +1,4 @@
 ActiveAdmin.register Url do
-  require 'rake'
-  UpsoclAnalytics::Application.load_tasks
   filter :title
   filter :campaign
   menu label: 'Artículos'
@@ -27,6 +25,7 @@ ActiveAdmin.register Url do
     end
     column() {|u| link_to('Editar', edit_admin_url_path(u))}
     column() {|u| link_to('Actualizar Metricas', update_metrics_admin_url_path(u), method: :post)}
+    column() {|u| link_to('Detalle Estadísticas', details_admin_url_path(u), method: :post)}
   end
 
   form do |f|
@@ -47,5 +46,17 @@ ActiveAdmin.register Url do
       redirect_to resource_path(url), notice: "facebook no se ha actualizado"
     end
   end
+
+  member_action :details, method: :post do
+    @url = resource
+    @stadistic_date = DateTime.parse(params[:stadistic_date]).strftime("%Y-%m-%d") rescue nil
+    if @stadistic_date
+      @country_stadistics = @url.country_stadistics.by_date(@stadistic_date)
+      @page_stadistics  = @url.dfp_stadistics.by_date(@stadistic_date).first
+    end
+    @page_title = "Estadísticas para articulo id: #{resource.id}"
+  end
+
+
 
 end
