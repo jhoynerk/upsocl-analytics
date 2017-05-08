@@ -61,10 +61,9 @@ class Url < ActiveRecord::Base
 
   def fb_posts_totals
     {
-      impressions: facebook_posts.sum_original_impressions,
-      ab_impressions: facebook_posts.sum_ab_impressions,
+      impressions: facebook_posts.sum_total_impressions,
       people_reached: facebook_posts.sum_people_reached,
-      ab_posts_count: facebook_posts.ab_posts.count,
+      post_clicks: facebook_posts.count_post_clicks(total_pageviews),
       fb_posts_count: facebook_posts.count
     }
   end
@@ -313,5 +312,9 @@ class Url < ActiveRecord::Base
 
   def attention_last
     (total_valid_with_data?) ? total_attention : 0
+  end
+
+  def total_pageviews
+    totals_stadistics[:pageviews].present? ? totals_stadistics[:pageviews] : 0
   end
 end

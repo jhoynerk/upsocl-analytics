@@ -17,7 +17,7 @@ end
 
 def urls_to_check(args)
   urls = if args.url_id.nil?
-    Url.where("id > ? ", 4100).update_interval(@start_interval, @end_interval, @interval.upcase).order(id: :desc)
+    Url.update_interval(@start_interval, @end_interval, @interval.upcase).order(id: :desc)
   else
     [Url.find(args.url_id)]
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505190548) do
+ActiveRecord::Schema.define(version: 20170508153708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 20170505190548) do
     t.float    "post_video_views_10s",        default: 0.0
     t.integer  "post_impressions",            default: 0
     t.boolean  "original",                    default: false
+    t.integer  "post_clicks",                 default: 0
   end
 
   add_index "facebook_posts", ["facebook_account_id"], name: "index_facebook_posts_on_facebook_account_id", using: :btree
