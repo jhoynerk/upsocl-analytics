@@ -12,15 +12,12 @@ describe "analytics:update" do
     before{ subject.invoke }
 
 
-    it "generate a message report wait" do
+    it "generate a message report wait and success" do
       expect(Message.where(status:  MessageStatus::WAIT).count).not_to eq(0)
-    end
-
-    it "generate a message report success" do
       expect(Message.where(status:  MessageStatus::SUCCESS).count).not_to eq(0)
     end
 
-    it 'Analytics count greater than by 0 to url_branded' do
+    it 'Check the result of different types of urls to be updated' do
       expect(PageStadistic.where(url:  url_branded).count).not_to eq(0)
       expect(DeviceStadistic.where(url:  url_branded).count).not_to eq(0)
       expect(TrafficStadistic.where(url:  url_branded).count).not_to eq(0)

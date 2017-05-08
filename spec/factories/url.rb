@@ -15,5 +15,6 @@ FactoryGirl.define do
     publico { false }
     status { false }
     committed_visits { 1000 }
+    publication_date { 7.day.ago }
   end
 end

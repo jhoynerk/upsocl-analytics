@@ -46,8 +46,12 @@ describe Url do
       it { expect( Url.update_monthly ).to eq( [ url_active_month ] ) }
     end
 
-    describe 'search all urls to update' do
+    describe 'Find all urls to update' do
       it { expect( Url.search_urls_to_update ).to eq([ url_active, url_active_week, url_active_month ])}
+    end
+
+    describe 'Find all urls with active date of publication' do
+      it { expect( Url.update_active.after_publication ).to eq([ url_active, url_active_week, url_active_month ])}
     end
 
   end

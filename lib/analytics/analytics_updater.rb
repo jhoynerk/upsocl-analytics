@@ -1,11 +1,11 @@
 class AnalyticsUpdater
   include TimeUpdate
 
-  def initialize(url, start_date = nil, end_date = nil)
+  def initialize(url)
     @stadistics = ['PageStadistic', 'CountryStadistic', 'TrafficStadistic', 'DeviceStadistic']
     @url = url
-    @start_date = start_date
-    @end_date = start_date
+    @start_date = @url.publication_date
+    @end_date = attr_end_date
   end
 
   def search_data_and_update

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504160246) do
+ActiveRecord::Schema.define(version: 20170505190548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20170504160246) do
     t.boolean  "publico",           default: false
     t.boolean  "status",            default: false
     t.integer  "committed_visits",  default: 0
+    t.date     "publication_date"
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree

@@ -1,6 +1,6 @@
 ActiveAdmin.register Campaign do
   permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [],
-                urls_attributes: [ :id, :status, :committed_visits, :data, :publicity, :screenshot, :line_id,
+                urls_attributes: [ :id, :publication_date, :status, :committed_visits, :data, :publicity, :screenshot, :line_id,
                                    :_destroy, :profile_id, :interval_status, :country_ids=> [],
                                    :tag_ids=> [],facebook_posts_attributes: [ :id, :post_id,
                                    :facebook_account_id, :original, :_destroy ] ],
@@ -81,6 +81,7 @@ ActiveAdmin.register Campaign do
       f.has_many :urls, heading: 'Posts', allow_destroy: true, new_record: 'Añadir', class: 'panel_urls' do |a|
         a.input :data
         a.input :screenshot
+        a.input :publication_date, as: :datepicker
         a.input :status, as: :radio
         a.input :committed_visits, as: :number
         a.input :line_id, :input_html => { :type => 'text' }
