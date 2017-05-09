@@ -1,6 +1,7 @@
 ActiveAdmin.register FacebookAccount do
   menu parent: "Ajustes"
   permit_params :name, :facebook_id
+  config.clear_sidebar_sections!
 
   form do |f|
     f.inputs "Facebook Account" do
