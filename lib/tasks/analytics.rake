@@ -11,7 +11,6 @@ namespace :analytics do
         AnalyticsUpdater.new(url).search_data_and_update
         DfpUpdater.new(url).search_data_and_update if url.has_dfp?
         url.update(attention: url.attention_last)
-        url.update(data_updated_at: Time.now)
       end
       puts "Task complete... Updated #{@count} urls"
       message("#{Time.now} Tarea completa... Se actualizaron #{@count} urls", MessageStatus::SUCCESS)

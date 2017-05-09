@@ -30,7 +30,6 @@ class Url < ActiveRecord::Base
 
   before_save :set_title
   before_create :set_facebook
-  before_create :set_update_date
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
@@ -52,12 +51,12 @@ class Url < ActiveRecord::Base
     }
   end
 
-  def update_stadistics
-    AnalyticFacebook.new(self).save
+  def last_update_date
+    (page_stadistics.any?) ? page_stadistics.last&.created_at : updated_at
   end
 
-  def social_count
-    SocialShares.selected data, %w(facebook google twitter)
+  def update_stadistics
+    AnalyticFacebook.new(self).save
   end
 
   def set_facebook
@@ -68,10 +67,6 @@ class Url < ActiveRecord::Base
     if data_changed?
       self.title = Pismo[data].titles.last.split(' | ').first
     end
-  end
-
-  def set_update_date
-    self.data_updated_at = self.created_at
   end
 
   def run_bg_task

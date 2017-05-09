@@ -39,7 +39,7 @@ class AnalyticFacebook
 
   def update
     get_data_facebook
-    { facebook_likes: @likes, facebook_comments: @comments, facebook_shares: @shares, data_updated_at: Time.now }
+    { facebook_likes: @likes, facebook_comments: @comments, facebook_shares: @shares }
   end
 
   def update_attr_post_video

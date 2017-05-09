@@ -23,7 +23,7 @@ class CampaignsController < ApplicationController
     @campaign = current_user.campaigns.find(params[:id]).decorate
     respond_to do |format|
       format.html {}
-      format.json { render :json => @campaign.as_json(include: { urls: { methods: [ :social_count, :stadistics, :totals_stadistics, :count_votes] }}) }
+      format.json { render :json => @campaign.as_json(include: { urls: { methods: [ :stadistics, :totals_stadistics, :count_votes] }}) }
     end
   end
 

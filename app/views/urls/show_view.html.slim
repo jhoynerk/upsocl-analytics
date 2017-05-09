@@ -34,7 +34,7 @@ div#url_id data="{{ url.id }}"
         h3
           | Ultima Actualizacion:
           strong#data_updated_at.color_updated_at data-date="{{ url.created_at }}"
-            | {{ url.data_updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
+            | {{ url.last_update_date | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
         span.color_updated_at
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
@@ -149,7 +149,7 @@ div#url_id data="{{ url.id }}"
             h1.no-margins
               | {{ url.fb_posts_totals.ab_impressions }}
             small En {{ url.fb_posts_totals.ab_posts_count }} facebook posts
-      
+
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
         .ibox-title

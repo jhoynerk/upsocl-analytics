@@ -297,7 +297,6 @@ ActiveRecord::Schema.define(version: 20180421215339) do
     t.integer  "line_id"
     t.string   "screenshot"
     t.boolean  "publicity",                  default: true
-    t.datetime "data_updated_at"
     t.string   "profile_id",                 default: "111669814"
     t.integer  "interval_status",            default: 0
     t.integer  "facebook_likes",             default: 0
