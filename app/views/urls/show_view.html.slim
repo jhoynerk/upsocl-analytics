@@ -40,9 +40,9 @@ div#url_id data="{{ url.id }}"
           span#text-updated-at
         br
         b
-        span ng-if="user.admin"
+        span ng-if="#{current_user.can_view_admin?}"
           h4 Etiquetas
-        div  ng-if="user.admin" ng-repeat="tag_name in url.tag_names"
+        div  ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in url.tag_names"
           b
             |  {{ tag_name.key }} :
           span
