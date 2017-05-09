@@ -1,0 +1,22 @@
+= form_tag("#{details_admin_url_path(@url.id)}", method: :post, style: "width: 200px;" )
+  .form-group
+    label País:
+    = select_tag(:country, options_from_collection_for_select(@countries, :country_code, :country_name, @country), {class: "chosen-input"})
+  button type="submit" Consultar
+  br
+  br
+- if @country_stadistics.blank?
+  h3 style="text-align: center;" No hay datos para esta fecha
+- else
+  table
+    thead
+      tr
+        th Fecha
+        th Páginas Vistas
+        th Tiempo Página
+    tbody
+      - @country_stadistics.each do |cs|
+        tr
+          td = " #{cs.date}"
+          td = " #{cs.pageviews}"
+          td = " #{cs.avgtimeonpage}"
