@@ -32,7 +32,7 @@ class Campaign < ActiveRecord::Base
 
   def self.unreached_goals_ids
     campaign_by_facebook = FacebookPost.unreached_goals.pluck(:campaign_id)
-    campaign_by_url = Url.reached_goal_for_page_stadistics.pluck(:campaign_id)
+    campaign_by_url = Url.search_urls_to_update.pluck(:campaign_id)
     campaign_by_facebook + campaign_by_url
     campaign_by_facebook
   end
