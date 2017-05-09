@@ -1,4 +1,6 @@
 ActiveAdmin.register CountryStadistic do
+  include AvgUtils
+
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :country_code, :country_name
   menu parent: "Estadisticas URL"
 
@@ -30,7 +32,7 @@ ActiveAdmin.register CountryStadistic do
       f.input :country_code
       f.input :pageviews
       f.input :users
-      f.input :avgtimeonpage
+      f.input :avgtimeonpage, as: :time_picker, input_html: { step: :second }
     end
     f.actions
   end
