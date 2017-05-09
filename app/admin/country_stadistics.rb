@@ -29,7 +29,7 @@ ActiveAdmin.register CountryStadistic do
 
   controller do
     def scoped_collection
-      end_of_association_chain.group(:country_code, "campaigns.name", "urls.title","urls.id").joins(url: :campaign).select("campaigns.name as campaign_name, urls.title as url_title, urls.id as url_id, country_code, SUM(country_stadistics.pageviews) as pageviews, SUM(country_stadistics.avgtimeonpage) as avgtimeonpage").order("country_code")
+      end_of_association_chain.grouped_by_country
     end
   end
 

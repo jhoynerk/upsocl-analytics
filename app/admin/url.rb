@@ -51,9 +51,7 @@ ActiveAdmin.register Url do
     @url = resource
     @country = params[:country]
     @countries = @url.country_stadistics.countries_for_select
-    if @country
-      @country_stadistics = @url.country_stadistics.by_country(@country)
-    end
+    @country_stadistics = @url.country_stadistics.by_country(@country)
     @page_title = "Estadísticas para articulo id: #{resource.id}"
   end
 
