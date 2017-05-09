@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :name, :admin,:password, :password_confirmation, :role, campaign_ids: []
+  permit_params :email, :name, :password, :password_confirmation, :role, campaign_ids: []
 
   controller do
     def update
@@ -16,9 +16,6 @@ ActiveAdmin.register User do
       attributes_table_for user do
         row :id
         row :name
-        row :admin do
-          t("#{user.admin}_value", scope: 'activerecord.attributes.user/admin')
-        end
         row :role
         row :campaigns do
           user.join_campaigns
@@ -48,7 +45,6 @@ ActiveAdmin.register User do
       f.input :email
       f.input :name
       f.input :campaigns, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}
-      f.input :admin
       f.input :role
       f.input :password
       f.input :password_confirmation
