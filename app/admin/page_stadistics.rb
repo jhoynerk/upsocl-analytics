@@ -1,6 +1,6 @@
 ActiveAdmin.register PageStadistic do
   include AvgUtils
-  
+
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :sessions
   menu parent: "Estadisticas URL"
 
@@ -26,7 +26,7 @@ ActiveAdmin.register PageStadistic do
     f.inputs "Estadisticas de pagina" do
       f.input :url, :as => :select, :input_html => { :class => "chosen-input"}
       f.input :date
-      f.input :avgtimeonpage
+      f.input :avgtimeonpage, as: :time_picker, input_html: { step: :second }
       f.input :pageviews
       f.input :users
       f.input :sessions
