@@ -1,6 +1,5 @@
 class CountryStadistic < ActiveRecord::Base
   include RecordAnalytics
-
   validates_presence_of :url, :date, :country_code, :country_name, :pageviews, :avgtimeonpage, :users
   validates :date, uniqueness: { scope: [ :url, :country_code ] }
   validates :avgtimeonpage, numericality: { greater_than_or_equal_to: :avgtimeonpage_was }, allow_blank: true
