@@ -9,14 +9,14 @@
 	h3 style="text-align: center;" No hay datos para esta fecha
 - else
 	table
-		thead
-			tr
-				th Fecha
-				th Páginas Vistas
-				th Tiempo Página
-		tbody
-			- @country_stadistics.each do |cs|
-				tr
-					td = " #{cs.date}"
-					td = " #{cs.pageviews}"
-					td = " #{cs.avgtimeonpage}"
+    thead
+      tr
+        th Fecha
+        th Páginas Vistas
+        th Tiempo Página
+    tbody
+      - @country_stadistics.each do |cs|
+        tr
+          td = " #{cs.date}"
+          td = " #{cs.pageviews}"
+          td = " #{cs.avgtimeonpage}"
