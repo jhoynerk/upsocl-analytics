@@ -37,9 +37,6 @@ class CountryStadistic < ActiveRecord::Base
   def search_parameters(**args)
     args.extract!(:country_name, :avgtimeonpage, :pageviews, :users)
   end
-<<<<<<< HEAD
-end
-=======
 
 end
->>>>>>> dev
+
