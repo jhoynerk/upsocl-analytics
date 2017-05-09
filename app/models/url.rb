@@ -156,8 +156,8 @@ class Url < ActiveRecord::Base
   end
 
   def toClock(secs)
-    t = Time.gm(2000,1,1) + secs.to_i
-    return "#{t.strftime("%M.%S")}"
+    integer_secs = secs&.to_i
+    DateTime.strptime(integer_secs.to_s, '%s').strftime("%M:%S")
   end
 
   def compute_avg(sum, count)
