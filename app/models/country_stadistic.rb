@@ -16,8 +16,8 @@ class CountryStadistic < ActiveRecord::Base
   scope :totals_filtered_by, -> (countries) { where('country_code in (?)', countries).select('SUM(pageviews) as pageviews', 'SUM(users) as users', 'SUM(avgtimeonpage) as avgtimeonpage') }
   scope :totals_filtered_count, -> (countries) { where('country_code in (?)', countries).count }
   scope :by_assigned_country, ->  { joins(url: :countries).where("country_code = countries.code") }
+  scope :countries_for_select, -> { joins('INNER JOIN countries ON (country_code = countries.code)').select("country_name","country_code","countries.id").distinct }
 
-  scope :countries_for_select, -> { joins("INNER JOIN countries ON (country_code = countries.code)").select("country_name","country_code","countries.id").distinct }
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
 
   def self.to_percent(val, countries)
