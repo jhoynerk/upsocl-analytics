@@ -1,4 +1,6 @@
 ActiveAdmin.register CountryStadistic do
+  include AvgUtils
+
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :country_code, :country_name
   menu parent: "Estadisticas URL"
 
@@ -30,9 +32,16 @@ ActiveAdmin.register CountryStadistic do
       f.input :country_code
       f.input :pageviews
       f.input :users
-      f.input :avgtimeonpage
+      f.input :avgtimeonpage, as: :time_picker, input_html: { step: :second }
     end
     f.actions
   end
+  def avg_from_params(params, resource)
+    params[resource.model_name.param_key][:avgtimeonpage]
+  end
 
+  def time_converted_to_integer(params, resource)
+    time_avg = avg_from_params(params, resource)
+    DateTime.strptime("1970-01-01 #{time_avg}", '%Y-%m-%d %H:%M:%S').strftime("%s")
+  end
 end

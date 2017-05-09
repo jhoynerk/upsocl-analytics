@@ -1,4 +1,6 @@
 ActiveAdmin.register PageStadistic do
+  include AvgUtils
+  
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :sessions
   menu parent: "Estadisticas URL"
 
