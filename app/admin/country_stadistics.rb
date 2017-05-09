@@ -2,6 +2,7 @@ ActiveAdmin.register CountryStadistic do
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :country_code, :country_name
   menu parent: "Estadisticas URL"
   config.sort_order = 'campaign_name_asc'
+
   index do
     selectable_column
     column :campaign_name
@@ -28,8 +29,8 @@ ActiveAdmin.register CountryStadistic do
   end
 
   controller do
-    def scoped_collection
-      end_of_association_chain.grouped_by_country
+    def index
+      @country_stadistics = collection.page(params[:page]).per(15).grouped_by_country
     end
   end
 
