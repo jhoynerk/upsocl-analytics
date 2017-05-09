@@ -90,9 +90,7 @@ ActiveAdmin.register Campaign do
         a.input :tags, :as => :select, collection: Tag.type_tag_type_content.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 3 }, label: 'Tipo de Contenido'
         a.input :tags, :as => :select, collection: Tag.type_tag_tone.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Tono'
         a.input :tags, :as => :select, collection: Tag.type_tag_format.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 1 }, label: 'Formato'
-        #a.input :profile_id, label: 'Account Analytics', as: :select, collection: AnalyticConnection.new.all_profiles{|u| ["#{u.name}", u.id]}, input_html: { class: 'chosen-input'}
         a.input :profile_id, label: 'Account Analytics', as: :select, collection: analytics, input_html: { class: 'chosen-input'}
-        a.input :interval_status, label: 'Frecuencia de actualización', as: :select, collection: IntervalStatus.to_a, input_html: { class: 'chosen-input' }
         a.has_many :facebook_posts, heading: 'Post Facebook asociados', allow_destroy: true, new_record: 'Añadir Post Facebook' do |e|
           e.input :post_id, label: 'ID del post de facebook'
           e.input :facebook_account, :as => :select, :input_html => { :class => "chosen-input"}

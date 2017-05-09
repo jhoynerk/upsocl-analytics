@@ -43,10 +43,9 @@ class Url < ActiveRecord::Base
 
   def fb_posts_totals
     {
-      impressions: facebook_posts.sum_original_impressions,
-      ab_impressions: facebook_posts.sum_ab_impressions,
+      impressions: facebook_posts.sum_total_impressions,
       people_reached: facebook_posts.sum_people_reached,
-      ab_posts_count: facebook_posts.ab_posts.count,
+      post_clicks: facebook_posts.count_post_clicks(total_pageviews),
       fb_posts_count: facebook_posts.count
     }
   end
@@ -124,19 +123,17 @@ class Url < ActiveRecord::Base
 
   def totals_stadistics
     if countries.any?
-      data = country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)[0]
-      data[:avgtimeonpage] = compute_avg(data[:avgtimeonpage], country_stadistics.where( date: datetime ).totals_filtered_count(associated_countries)) unless data[:avgtimeonpage].nil?
-      data
+      data = country_stadistics.where( date: datetime ).totals_filtered_by(associated_countries)
     else
       data = page_stadistics.where( date: datetime ).totals_in_range
     end
     data[:avgtimeonpage] = toClock(data[:avgtimeonpage])
-    return data
+    data
   end
 
   def toClock(secs)
-    t = Time.gm(2000,1,1) + secs.to_i
-    return "#{t.strftime("%M.%S")}"
+    integer_secs = secs&.to_i
+    DateTime.strptime(integer_secs.to_s, '%s').strftime("%M:%S")
   end
 
   def compute_avg(sum, count)
@@ -291,5 +288,9 @@ class Url < ActiveRecord::Base
 
   def attention_last
     (total_valid_with_data?) ? total_attention : 0
+  end
+
+  def total_pageviews
+    totals_stadistics[:pageviews].present? ? totals_stadistics[:pageviews] : 0
   end
 end

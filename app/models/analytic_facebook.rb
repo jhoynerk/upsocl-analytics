@@ -49,6 +49,7 @@ class AnalyticFacebook
       total_comments: fpc.count_comments,
       total_shares: fpc.count_shares,
       post_impressions: fpc.post_impressions,
+      post_clicks: fpc.post_consumptions,
       post_impressions_unique: fpc.post_impressions_unique,
       post_video_avg_time_watched: fpc.post_video_avg_time_watched,
       post_video_views: fpc.post_video_views,

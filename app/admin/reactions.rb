@@ -1,6 +1,7 @@
 ActiveAdmin.register Reaction do
   permit_params :title, :avatar
   menu parent: "Ajustes"
+  config.clear_sidebar_sections!
 
   index do
     selectable_column

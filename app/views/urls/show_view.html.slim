@@ -40,9 +40,9 @@ div#url_id data="{{ url.id }}"
           span#text-updated-at
         br
         b
-        span ng-if="user.admin"
+        span ng-if="#{current_user.can_view_admin?}"
           h4 Etiquetas
-        div  ng-if="user.admin" ng-repeat="tag_name in url.tag_names"
+        div  ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in url.tag_names"
           b
             |  {{ tag_name.key }} :
           span
@@ -121,35 +121,33 @@ div#url_id data="{{ url.id }}"
           h1.no-margins
             | {{ url.facebook_comments }}
           small Veces Comentado
-    div ng-if="url.fb_posts_totals.fb_posts_count >= 1"
-      .col-lg-4.col-md-4.col-sm-6
-        .ibox.float-e-margins.text-center
-          .ibox-title
-            span.label.label-success.pull-right Facebook
-            h5 Personas Alcanzadas
-          .ibox-content
-            h1.no-margins
-              | {{ url.fb_posts_totals.people_reached }}
-            small Personas Alcanzadas
-      .col-lg-4.col-md-4.col-sm-6
-        .ibox.float-e-margins.text-center
-          .ibox-title
-            span.label.label-success.pull-right Facebook
-            h5 Impresiones
-          .ibox-content
-            h1.no-margins
-              | {{ url.fb_posts_totals.impressions }}
-            small Veces Mostrado
-      .col-lg-4.col-md-4.col-sm-6
-        .ibox.float-e-margins.text-center
-          .ibox-title
-            span.label.label-success.pull-right Facebook
-            h5 Impresiones A-B
-          .ibox-content
-            h1.no-margins
-              | {{ url.fb_posts_totals.ab_impressions }}
-            small En {{ url.fb_posts_totals.ab_posts_count }} facebook posts
-
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Personas Alcanzadas
+        .ibox-content
+          h1.no-margins
+            | {{ url.fb_posts_totals.people_reached }}
+          small En {{ url.fb_posts_totals.fb_posts_count }} facebook posts
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Impresiones
+        .ibox-content
+          h1.no-margins
+            | {{ url.fb_posts_totals.impressions }}
+          small En {{ url.fb_posts_totals.fb_posts_count }} facebook posts
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Clicks
+        .ibox-content
+          h1.no-margins
+            | {{ url.fb_posts_totals.post_clicks }}
+          small Interacciones del articulo, no implica visitas
     .col-lg-4.col-md-4.col-sm-6
       .ibox.float-e-margins.text-center
         .ibox-title

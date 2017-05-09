@@ -41,9 +41,9 @@ div#url_id data="{{ video.id }}"
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at
         br
-        span ng-if="user.admin"
+        span ng-if="#{current_user.can_view_admin?}"
           h4 Etiquetas
-        div  ng-if="user.admin" ng-repeat="tag_name in video.tag_names"
+        div  ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in video.tag_names"
           b
             | {{ tag_name.key }} :
           span
@@ -111,8 +111,8 @@ div#url_id data="{{ video.id }}"
       .ibox.float-e-margins.text-center
         .ibox-title
           span.label.label-success.pull-right Facebook
-          h5 Veces que se Reprodujo tu Video
+          h5 Reproducciones Mayor a 10seg
         .ibox-content
           h1.no-margins
             | {{ video.post_video_views_10s }}
-          small Mayor a 10 segundos
+          small reproduciones 
