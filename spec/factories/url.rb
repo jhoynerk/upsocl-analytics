@@ -14,6 +14,6 @@ FactoryGirl.define do
     attention { 0.0 }
     publico { false }
     publication_date { 20.day.ago }
-    date_publication_completed { 6.day.ago }
+    publication_end_date { 6.day.ago }
   end
 end

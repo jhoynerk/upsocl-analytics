@@ -5,9 +5,9 @@ describe "analytics:update" do
   context 'Update Analytics' do
 
     let!(:url_not_active) { create(:url) }
-    let!(:url_active_week) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 8.days.ago, date_publication_completed: 1.days.ago) }
-    let!(:url_active_month) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 32.days.ago, date_publication_completed: 1.days.ago) }
-    let!(:url_active_not_dfp) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 0, publication_date: 8.days.ago, date_publication_completed: 1.days.ago) }
+    let!(:url_active_week) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 8.days.ago, publication_end_date: 1.days.ago) }
+    let!(:url_active_month) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 32.days.ago, publication_end_date: 1.days.ago) }
+    let!(:url_active_not_dfp) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 0, publication_date: 8.days.ago, publication_end_date: 1.days.ago) }
     before{ subject.invoke }
 
 

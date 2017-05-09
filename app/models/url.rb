@@ -26,7 +26,7 @@ class Url < ActiveRecord::Base
   validates :line_id, :profile_id, presence: true
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
   validates :publication_date, presence: true, allow_blank: false
-  validates :date_publication_completed, presence: true, allow_blank: false
+  validates :publication_end_date, presence: true, allow_blank: false
 
   before_save :set_title
   before_create :set_facebook
@@ -36,7 +36,7 @@ class Url < ActiveRecord::Base
 
   scope :search_urls_to_update, -> { update_start_date.update_end_date }
 
-  scope :update_end_date, -> { where( 'date_publication_completed >= ?', DAY_LIMIT_TO_UPDATE ) }
+  scope :update_end_date, -> { where( 'publication_end_date >= ?', DAY_LIMIT_TO_UPDATE ) }
   scope :update_start_date, -> { where( 'publication_date <= ?', DAY_LIMIT_TO_UPDATE ) }
 
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
