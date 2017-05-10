@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20180421215339) do
     t.boolean  "publico",              default: false
     t.date     "publication_date"
     t.date     "publication_end_date"
+    t.datetime "data_updated_at"
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree
