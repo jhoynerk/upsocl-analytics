@@ -12,8 +12,8 @@ ActiveAdmin.register CountryStadistic do
       link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, country: u.country_code), method: :post
     end
     column :country_name
-    column :pageviews
-    column :avgtimeonpage
+    column :pageviews, sortable: 'sum(pageviews)'
+    column :avgtimeonpage, sortable: 'sum(avgtimeonpage)'
   end
   filter :url, label: 'Nombre del articulo', as: :select, input_html: {class: 'chosen-input'}
   filter :country_code, as: :select, collection: Country.for_select, input_html: {class: 'chosen-input'}
