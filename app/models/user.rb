@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :campaigns
 
-  validates :name, presence: true
+  validates :name, presence: true, format: { with: /\A[a-zA-Z\s]*\z/,
+    message: "Se permiten solo letras" }
   validates :password, :password_confirmation, presence: true, on: :create
   validates :email, uniqueness: true
 
