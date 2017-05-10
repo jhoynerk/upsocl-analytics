@@ -50,9 +50,9 @@ ActiveAdmin.register Url do
   member_action :details, method: :post do
     @url = resource
     @country = params[:country]
-    @countries = @url.country_stadistics.countries_for_select
+    @countries = @url.country_stadistics.countries_for_select.order(country_name: :asc)
     @country_stadistics = @url.country_stadistics.by_country(@country)
-    @page_title = "Estadísticas para articulo id: #{resource.id}"
+    @page_title = "Estadísticas para articulo: #{resource.title}"
   end
 
 

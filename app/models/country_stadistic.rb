@@ -20,8 +20,8 @@ class CountryStadistic < ActiveRecord::Base
   scope :by_assigned_country, ->  { joins(url: :countries).where("country_code = countries.code") }
   scope :countries_for_select, -> { joins('INNER JOIN countries ON (country_code = countries.code)').select("country_name","country_code","countries.id").distinct }
 
-  scope :select_for_country, -> { select("campaigns.name as campaign_name, urls.title as url_title, urls.id as url_id, country_code, SUM(country_stadistics.pageviews) as pageviews, SUM(country_stadistics.avgtimeonpage) as avgtimeonpage") }
-  scope :grouped_by_country, -> { group(:country_code, "campaigns.name", "urls.title","urls.id").joins(url: :campaign).select_for_country.order("country_code") }
+  scope :select_for_country, -> { select("campaigns.name as campaign_name, urls.title as url_title, urls.id as url_id, country_name, country_code, SUM(country_stadistics.pageviews) as pageviews, SUM(country_stadistics.avgtimeonpage) as avgtimeonpage") }
+  scope :grouped_by_country, -> { group(:country_name, :country_code, "campaigns.name", "urls.title","urls.id").joins(url: :campaign).select_for_country.order("country_name") }
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
 
   def self.compute_avg( sum, count )
