@@ -11,7 +11,7 @@ ActiveAdmin.register CountryStadistic do
     column(:url) do |u|
       link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, country: u.country_code), method: :post
     end
-    column :country_code
+    column :country_name
     column :pageviews
     column :avgtimeonpage
   end
@@ -32,7 +32,7 @@ ActiveAdmin.register CountryStadistic do
 
   controller do
     def index
-      @country_stadistics = collection.page(params[:page]).grouped_by_country
+      @country_stadistics = collection.page(params[:page]).by_assigned_country.grouped_by_country
     end
   end
 
