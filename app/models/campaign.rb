@@ -33,8 +33,7 @@ class Campaign < ActiveRecord::Base
   def self.unreached_goals_ids
     campaign_by_facebook = FacebookPost.unreached_goals.pluck(:campaign_id)
     campaign_by_url = Url.search_urls_to_update.pluck(:campaign_id)
-    campaign_by_facebook + campaign_by_url
-    campaign_by_facebook
+    campaign_by_facebook || campaign_by_url
   end
 
   def self.filter_date_in_date(range)
