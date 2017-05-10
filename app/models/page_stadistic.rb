@@ -1,5 +1,6 @@
 class PageStadistic < ActiveRecord::Base
   include RecordAnalytics
+  include UrlsUtils
 
   validates_presence_of :url, :date, :pageviews, :avgtimeonpage, :sessions, :users
   validates :date, uniqueness: { scope: :url }

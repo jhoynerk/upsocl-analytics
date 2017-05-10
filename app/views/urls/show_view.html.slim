@@ -34,7 +34,7 @@ div#url_id data="{{ url.id }}"
         h3
           | Ultima Actualizacion:
           strong#data_updated_at.color_updated_at data-date="{{ url.created_at }}"
-            | {{ url.last_update_date | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
+            | {{ url.updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
         span.color_updated_at
           i.fa.fa-info-circle.fa-lg
           span#text-updated-at

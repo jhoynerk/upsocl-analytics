@@ -50,10 +50,6 @@ class Url < ActiveRecord::Base
     }
   end
 
-  def last_update_date
-    (page_stadistics.any?) ? page_stadistics.last&.created_at : updated_at
-  end
-
   def update_stadistics
     AnalyticFacebook.new(self).save
   end
