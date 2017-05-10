@@ -30,7 +30,7 @@ ActiveAdmin.register CountryStadistic do
 
   controller do
     def index
-      @country_stadistics = collection.page(params[:page]).per(15).grouped_by_country
+      @country_stadistics = collection.page(params[:page]).grouped_by_country
     end
   end
 
