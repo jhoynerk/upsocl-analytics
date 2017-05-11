@@ -1,5 +1,6 @@
 class DeviceStadistic < ActiveRecord::Base
   include RecordAnalytics
+  include UrlsUtils
 
   validates_presence_of :url, :date, :device_type, :pageviews
   validates :date, uniqueness: { scope: [ :url, :device_type ] }

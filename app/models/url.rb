@@ -1,7 +1,7 @@
 class Url < ActiveRecord::Base
   include TagsUtil
 
-  MONTH_LIMIT_TO_UPDATE = 3
+  DAY_LIMIT_TO_UPDATE = 1.day.ago.to_date
 
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
@@ -26,37 +26,19 @@ class Url < ActiveRecord::Base
   validates :line_id, :profile_id, presence: true
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
   validates :publication_date, presence: true, allow_blank: false
+  validates :publication_end_date, presence: true, allow_blank: false
 
   before_save :set_title
   before_create :set_facebook
-  before_create :set_update_date
   after_create :make_screenshot, :run_analytics_task
   before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
 
-  scope :search_urls_to_update, -> {
-    not_page_statistics | update_daily_wich_not_reached_goal | update_week_wich_reached_goal | update_monthly
-  }
+  scope :search_urls_to_update, -> { update_start_date.update_end_date }
 
-  scope :update_daily_wich_not_reached_goal, -> { update_active.after_publication.not_reached_goal_for_page_stadistics }
-  scope :not_reached_goal_for_page_stadistics, -> { joins( :page_stadistics ).having( 'SUM(page_stadistics.pageviews) < urls.committed_visits' ).group( 'urls.id' ) }
+  scope :update_end_date, -> { where( 'publication_end_date >= ?', DAY_LIMIT_TO_UPDATE ) }
+  scope :update_start_date, -> { where( 'publication_date <= ?', DAY_LIMIT_TO_UPDATE ) }
 
-  scope :update_week_wich_reached_goal, -> { update_active.after_publication.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
-  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) > urls.committed_visits').group('urls.id') }
-  scope :update_week_wich_reached_goal, -> { update_active.after_publication.last_update_greater_one_week.reached_goal_for_page_stadistics.max_month_update( 1 ) }
-  scope :reached_goal_for_page_stadistics, ->{ joins(:page_stadistics).having('SUM(page_stadistics.pageviews) >= urls.committed_visits').group('urls.id') }
-
-  scope :not_page_statistics, -> { update_active.after_publication.joins( 'LEFT JOIN page_stadistics on urls.id = page_stadistics.url_id' ).where( page_stadistics: { url_id: nil } ) }
-
-  scope :update_monthly, -> { update_active.after_publication.last_update_greater_one_month.max_month_update(MONTH_LIMIT_TO_UPDATE) }
-
-  scope :last_update_greater_one_week, -> { where( '(urls.data_updated_at < ? AND urls.created_at < ?)', 1.week.ago, 1.week.ago ) }
-  scope :last_update_greater_one_month, -> { where( 'urls.data_updated_at < ?', 1.month.ago ) }
-  scope :max_month_update, -> (number) {  where( 'urls.created_at > ?', number.month.ago ) }
-  scope :update_active, -> { where( 'status = ? ', StatusUrls::ACTIVE ) }
-  scope :after_publication, -> { where( 'publication_date <= ?', 1.day.ago ) }
-
-  scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
 
   def fb_posts_totals
@@ -72,10 +54,6 @@ class Url < ActiveRecord::Base
     AnalyticFacebook.new(self).save
   end
 
-  def social_count
-    SocialShares.selected data, %w(facebook google twitter)
-  end
-
   def set_facebook
     self.attributes = AnalyticFacebook.new(self).update if publico == false
   end
@@ -84,10 +62,6 @@ class Url < ActiveRecord::Base
     if data_changed?
       self.title = Pismo[data].titles.last.split(' | ').first
     end
-  end
-
-  def set_update_date
-    self.data_updated_at = self.created_at
   end
 
   def run_bg_task

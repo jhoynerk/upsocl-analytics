@@ -1,6 +1,7 @@
 class DfpStadistic < ActiveRecord::Base
   include RecordAnalytics
-  belongs_to :url
+  include UrlsUtils
+
   validates :date, uniqueness: { scope: [ :url, :line_id ] }
 
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true

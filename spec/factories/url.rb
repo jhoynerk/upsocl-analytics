@@ -13,8 +13,7 @@ FactoryGirl.define do
     facebook_shares { 0 }
     attention { 0.0 }
     publico { false }
-    status { false }
-    committed_visits { 1000 }
-    publication_date { 7.day.ago }
+    publication_date { 20.day.ago }
+    publication_end_date { 6.day.ago }
   end
 end
