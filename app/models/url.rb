@@ -192,11 +192,15 @@ class Url < ActiveRecord::Base
   end
 
   def datetime
-    unless @params.nil?
-      @params[:start_date]..@params[:end_date]
-    else
+    if nil_value_in?(@params)
       Date.today.ago(2.year)..Date.today
+    else
+      @params[:start_date]..@params[:end_date]
     end
+  end
+
+  def nil_value_in?(params)
+    params.values.any? {|param| param.nil?}
   end
 
   def has_facebook_post?

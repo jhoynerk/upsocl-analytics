@@ -101,18 +101,16 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
 })
 
 myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Reactions, Url, UrlUpdateStadistics, User) {
-  $scope.date = { startDate: moment().subtract(2, "year"), endDate: moment() };
+  $scope.date = { startDate: null, endDate: null };
   $scope.opts = run_datepicker();
   $scope.user = User.get();
   $scope.reactions = Reactions.query();
   $scope.$watch('date', function(newDate) {
-    var startDate = newDate.startDate.format('YYYY-MM-DD');
-    var endDate = newDate.endDate.format('YYYY-MM-DD');
+      var startDate = date_format($scope.date.startDate);
+      var endDate = date_format($scope.date.endDate);
       Url.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
         class_updated_at(data.created_at);
         draw_graphics($stateParams.id, data.stadistics);
-        $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
-        $('#daterange').data('daterangepicker').setEndDate(moment());
         $scope.url = data
         if($scope.datePicker != void 0){
           $scope.datePicker.date = {startDate: null, endDate: null};
@@ -122,13 +120,11 @@ myApp.controller('CampaignUrlViewController', function($scope, $stateParams, Rea
 
   $scope.update_stadistics = function(){
     var $btn = $('.btn-stadistic-update').button('loading');
-    var startDate = $scope.date.startDate.format('YYYY-MM-DD');
-    var endDate = $scope.date.endDate.format('YYYY-MM-DD');
+    var startDate = date_format($scope.date.startDate);
+    var endDate = date_format($scope.date.endDate);
     UrlUpdateStadistics.get({id: $stateParams.id, startDate: startDate, endDate: endDate}, function(data){
         class_updated_at(data.created_at);
         draw_graphics($stateParams.id, data.stadistics);
-        $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
-        $('#daterange').data('daterangepicker').setEndDate(moment());
         $scope.url = data
         if($scope.datePicker != void 0){
           $scope.datePicker.date = {startDate: null, endDate: null};
@@ -145,12 +141,10 @@ myApp.controller('CampaignVideoViewController', function($scope, $sce, $statePar
   $scope.user = User.get();
   $scope.reactions = Reactions.query();
   $scope.$watch('date', function(newDate) {
-    var startDate = newDate.startDate.format('YYYY-MM-DD');
-    var endDate = newDate.endDate.format('YYYY-MM-DD');
+    var startDate = date_format(newDate.startDate);
+    var endDate = date_format(newDate.endDate);
     Video.get({ id: $stateParams.id, startDate: startDate, endDate: endDate }, function(data){
       class_updated_at(data.created_at);
-      $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
-      $('#daterange').data('daterangepicker').setEndDate(moment());
       $scope.detailFrame = $sce.trustAsResourceUrl(data.url_video)
       $scope.video = data
       if($scope.datePicker != void 0){
@@ -163,8 +157,6 @@ myApp.controller('CampaignVideoViewController', function($scope, $sce, $statePar
     var $btn = $('.btn-stadistic-update').button('loading');
     VideoUpdateStadistics.get({id: $stateParams.id}, function(data){
       class_updated_at(data.created_at);
-      $('#daterange').data('daterangepicker').setStartDate(moment().startOf("year"));
-      $('#daterange').data('daterangepicker').setEndDate(moment());
       $scope.detailFrame = $sce.trustAsResourceUrl(data.url_video);
       $scope.video = data;
       $btn.button('reset');
@@ -231,7 +223,7 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
   $scope.addVote = function(reaction_id, url_path){
     if($scope.new_vote == true && url_path != null){
       $http({
-        url: '/votes.json', 
+        url: '/votes.json',
         method: "GET",
         params: {reaction_id: reaction_id, url_path: url_path}
       }).then(function(response) {
@@ -257,4 +249,3 @@ myApp.controller('ReactionsController', function($scope, $http, $stateParams, Re
 myApp.controller('MyUser',function($scope, User) {
     $scope.user = User.get();
 });
-
