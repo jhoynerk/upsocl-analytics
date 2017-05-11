@@ -1,5 +1,7 @@
 #= require active_admin/base
 #= require chosen.jquery.min
+#= require datetimepicker/jquery-ui-timepicker-addon.js
+#= require datetimepicker/jquery-ui-timepicker-es.js
 
 load_chosen = ->
   $('.chosen-input').each ->
@@ -22,7 +24,7 @@ load_chosen = ->
 
 $ ->
   load_chosen()
-
+  $('.timepicker').timepicker hourMin: 0,	hourMax: 23, timeFormat: 'HH:mm:ss'
   $('.inputs').delegate '.has_many_add', 'click', ->
     setTimeout load_chosen, 100
 
@@ -76,5 +78,3 @@ $ ->
     $(this).parent().append(button)
     panel.hide()
     return
-
-

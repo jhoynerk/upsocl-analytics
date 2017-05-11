@@ -25,7 +25,7 @@ ActiveAdmin.register CountryStadistic do
       f.input :country_code
       f.input :pageviews
       f.input :users
-      f.input :avgtimeonpage, as: :time_picker, input_html: { step: :second }
+      f.input :avgtimeonpage, as: :string, input_html: { class: 'timepicker' }
     end
     f.actions
   end
