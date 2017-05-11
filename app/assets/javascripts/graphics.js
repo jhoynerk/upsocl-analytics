@@ -106,9 +106,9 @@ function make_bars_chart(data){
     var options = {
         xaxis: {
             mode: "time",
+            timeformat: "%d-%b-%Y",
             tickSize: [size_legend(data), "day"],
             tickLength: 0,
-            axisLabel: "Date",
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Arial',
