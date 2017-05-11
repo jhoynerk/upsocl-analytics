@@ -51,7 +51,6 @@ function make_pie_charts(info, legend_id, canvas_id, label){
       label: i[label]
     });
   });
-  console.log(arr);
   var total = totalize(info, 'pageviews');
 
   var myPieChart = new Chart(ctx).Pie(arr, {
@@ -83,67 +82,65 @@ function make_bars_chart(data){
     arr_pageviews.push([moment(i.date).toDate(), parseInt(i.pageviews)])
   });
 
-  if(arr_pageviews.length > 0){
 
-    $('#total-visits').html(totalize(arr_pageviews, 1));
 
-    set_process_data(progress_percent(arr_pageviews, 1, 'normal'), '#visits-percent');
-    var dataset = [
-        {
-            label: "Paginas Vistas",
-            data: arr_pageviews,
-            color: "#1ab394",
-            bars: {
-                show: true,
-                align: "center",
-                barWidth: 24 * 60 * 60 * 600,
-                lineWidth: 0
-            }
+  $('#total-visits').html(totalize(arr_pageviews, 1));
 
-        }
-    ];
+  set_process_data(progress_percent(arr_pageviews, 1, 'normal'), '#visits-percent');
+  var dataset = [
+      {
+          label: "Paginas Vistas",
+          data: arr_pageviews,
+          color: "#1ab394",
+          bars: {
+              show: true,
+              align: "center",
+              barWidth: 24 * 60 * 60 * 600,
+              lineWidth: 0
+          }
 
-    var options = {
-        xaxis: {
-            mode: "time",
-            tickSize: [size_legend(data), "day"],
-            tickLength: 0,
-            axisLabel: "Date",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Arial',
-            axisLabelPadding: 10,
-            color: "#d5d5d5"
-        },
-        yaxes: [{
-            position: "left",
-            color: "#d5d5d5",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Arial',
-            axisLabelPadding: 1
-        }, {
-            position: "right",
-            clolor: "#d5d5d5",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: ' Arial',
-            axisLabelPadding: 67
-        }
-        ],
-        legend: {
-            noColumns: 1,
-            labelBoxBorderColor: "#000000",
-            position: "nw"
-        },
-        grid: {
-            hoverable: false,
-            borderWidth: 0
-        }
-    };
+      }
+  ];
 
-    $.plot($("#flot-dashboard-chart"), dataset, options);
+  var options = {
+      xaxis: {
+          mode: "time",
+          timeformat: "%d-%b-%Y",
+          tickSize: [size_legend(data), "day"],
+          tickLength: 0,
+          axisLabelUseCanvas: true,
+          axisLabelFontSizePixels: 12,
+          axisLabelFontFamily: 'Arial',
+          axisLabelPadding: 10,
+          color: "#d5d5d5"
+      },
+      yaxes: [{
+          position: "left",
+          color: "#d5d5d5",
+          axisLabelUseCanvas: true,
+          axisLabelFontSizePixels: 12,
+          axisLabelFontFamily: 'Arial',
+          axisLabelPadding: 1
+      }, {
+          position: "right",
+          clolor: "#d5d5d5",
+          axisLabelUseCanvas: true,
+          axisLabelFontSizePixels: 12,
+          axisLabelFontFamily: ' Arial',
+          axisLabelPadding: 67
+      }
+      ],
+      legend: {
+          noColumns: 1,
+          labelBoxBorderColor: "#000000",
+          position: "nw"
+      },
+      grid: {
+          hoverable: false,
+          borderWidth: 0
+      }
+  };
 
-  }
+  $.plot($("#flot-dashboard-chart"), dataset, options);
 
 }
