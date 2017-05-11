@@ -200,7 +200,7 @@ class Url < ActiveRecord::Base
   end
 
   def nil_value_in?(params)
-    params.values.any? {|param| param.nil?}
+    params.values.include?(nil)
   end
 
   def has_facebook_post?
