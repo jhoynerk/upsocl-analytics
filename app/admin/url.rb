@@ -1,7 +1,7 @@
 ActiveAdmin.register Url do
   filter :title
   filter :campaign
-  menu label: 'Artículos', parent: "Gestor de Comapañas"
+  menu label: 'Artículos', parent: "Gestor de Campañas"
 
   config.clear_action_items!
   permit_params  :campaign_id, :title

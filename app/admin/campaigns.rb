@@ -1,6 +1,6 @@
 ActiveAdmin.register Campaign do
-  menu parent: "Gestor de Comapañas"
-  
+  menu parent: "Gestor de Campañas"
+
   permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [],
                 urls_attributes: [ :id, :publication_date, :publication_end_date, :data, :publicity, :screenshot, :line_id,
                                    :_destroy, :profile_id, :interval_status, :country_ids=> [],
