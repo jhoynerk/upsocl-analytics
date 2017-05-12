@@ -132,10 +132,6 @@ class Url < ActiveRecord::Base
     DateTime.strptime(integer_secs.to_s, '%s').strftime("%M:%S")
   end
 
-  def compute_avg(sum, count)
-    count.zero? ? 0.0 : (((sum / count)) rescue 0)
-  end
-
   def associated_countries
     countries.map(&:code)
   end

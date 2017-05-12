@@ -52,6 +52,52 @@ describe Url do
     expect(url_inactive.only_path).to eq('/branded/10-cosas-que-suceden-cuando-comienzas-a-tomar-tus-propias-decisiones/')
   end
 
+  it 'When consulting statistics should' do
+    expect( url_active.stadistics ).to include('device_stadistics' => [], 'traffic_stadistics' => [], 'country_stadistics' => [], 'page_stadistics' => ActiveRecord::AssociationRelation, 'dfp_stadistics' => Hash)
+  end
+
+  it 'When consulting total statistics should' do
+    expect( url_active.totals_stadistics ).to include(pageviews: Integer, users: Integer, avgtimeonpage: String)
+    expect( url_active.totals_stadistics ).not_to include(pageviews: nil, users: nil, avgtimeonpage: nil)
+    expect( url_active.totals_stadistics ).not_to match(pageviews: Integer, users: Integer, avgtimeonpage: nil)
+    expect( url_active.totals_stadistics ).not_to match(pageviews: Integer, users: nil, avgtimeonpage: String)
+    expect( url_active.totals_stadistics ).not_to match(pageviews: nil, users: Integer, avgtimeonpage: String)
+  end
+
+  it 'When consulting total statistics should' do
+    url_with_country = create(:url_with_country)
+    expect( url_with_country.totals_stadistics ).to include(pageviews: Integer, users: Integer, avgtimeonpage: String)
+  end
+
+  it 'Convert seconds to minutes and seconds' do
+    expect( Url.new().toClock(1) ).to eq("00:01")
+    expect( Url.new().toClock(10) ).to eq("00:10")
+    expect( Url.new().toClock(60) ).to eq("01:00")
+  end
+
+  it 'Count votes to reactions' do
+    reaction = create(:reaction)
+    expect( Url.last.count_votes ).to match([{ title: reaction.title, reaction_id: reaction.id, counts: Integer }])
+    reaction = create(:reaction)
+    expect( Url.last.count_votes ).to match(Reaction.all.map{ |r| {title: r.title, reaction_id: r.id, counts: Integer} })
+
+    expect( Url.last.builder_reactions ).to match( {"#{Reaction.last.title}" => Integer, "#{Reaction.first.title}" => Integer} )
+  end
+
+  it 'When multiple URLs from the same campaign' do
+    campaign = create(:campaign)
+    url_campaign_1 = create(:url, campaign: campaign)
+    url_campaign_2 = create(:url, campaign: campaign)
+    url_campaign_3 = create(:url, campaign: campaign)
+    expect( url_campaign_1.campaign_urls ).to match_array([ url_campaign_1, url_campaign_2, url_campaign_3 ])
+
+    expect( url_campaign_2.next_url ).to eq( url_campaign_3 )
+    expect( url_campaign_2.previous_url ).to eq( url_campaign_1 )
+    expect( url_campaign_3.previous_url ).to eq( url_campaign_2 )
+    expect( url_campaign_3.next_url ).to eq( nil )
+    expect( url_campaign_1.previous_url ).to eq( nil )
+  end
+
   describe 'Search for urls to update' do
     it { expect( Url.search_urls_to_update ).to match_array([url_active, url_active_week, url_active_month ]) }
 

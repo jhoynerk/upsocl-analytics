@@ -27,6 +27,10 @@ FactoryGirl.define do
         create_list(:facebook_post, evaluator.post_count, url: url, post_id: evaluator.post_id)
       end
     end
+
+    factory :url_with_country do
+      countries {[FactoryGirl.create(:country)]}
+    end
   end
 
 end
