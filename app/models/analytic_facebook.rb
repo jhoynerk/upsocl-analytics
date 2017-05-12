@@ -2,9 +2,9 @@ class AnalyticFacebook
 
   def initialize(url)
     @url = url
-    @likes = (url.facebook_likes > 0) ? url.facebook_likes : 0
-    @comments = (url.facebook_comments > 0) ? url.facebook_comments : 0
-    @shares = (url.facebook_shares > 0) ? url.facebook_shares : 0
+    @likes = (url.facebook_likes.present? ) ? url.facebook_likes : 0
+    @comments = (url.facebook_comments.present?) ? url.facebook_comments : 0
+    @shares = (url.facebook_shares.present?) ? url.facebook_shares : 0
   end
 
   def get_data_facebook
