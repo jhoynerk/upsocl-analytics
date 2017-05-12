@@ -27,27 +27,35 @@ div#url_id data="{{ url.id }}"
     .text-center.p-lg
       h2
         | {{ url.title }}
+      span.color_updated_at
+        i.fa.fa-info-circle.fa-lg
+        span#text-updated-at
     .screenshot
       img.center-block.img-responsive ng-src="{{ url.screenshot.url }}"
     .row
-      .text-center.p-lg
-        h3
-          | Ultima Actualizacion:
-          strong#data_updated_at.color_updated_at data-date="{{ url.created_at }}"
-            | {{ url.data_updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
-        span.color_updated_at
-          i.fa.fa-info-circle.fa-lg
-          span#text-updated-at
-        br
-        b
-        span ng-if="#{current_user.can_view_admin?}"
-          h4 Etiquetas
-        div  ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in url.tag_names"
-          b
-            |  {{ tag_name.key }} :
-          span
-            |  {{ tag_name.value }}
-
+      .col-md-6
+        .text-center.p-lg
+          h4
+            | Ultima Actualizacion: 
+            strong#data_updated_at.color_updated_at data-date="{{ url.created_at }}"
+              | {{ url.data_updated_at | date:'dd-MM-yyyy, h:mm:ss a UTC-3' }}
+          h4
+            | Fecha de Publicación: 
+            strong
+              | {{ url.publication_date | date:'dd-MM-yyyy' }}
+          h4
+            | Fecha de fin de Publicación: 
+            strong
+              | {{ url.publication_end_date | date:'dd-MM-yyyy' }}          
+      .col-md-6
+        .text-center.p-lg
+          div ng-if="#{current_user.can_view_admin?}"
+            h4 Etiquetas
+            div ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in url.tag_names"
+              b
+                |  {{ tag_name.key }} :
+              span
+                |  {{ tag_name.value }}
   .row
     .col-lg-12
       .ibox.float-e-margins.text-center
