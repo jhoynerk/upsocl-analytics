@@ -34,11 +34,15 @@ class AnalyticFacebook
 
   def save
     get_data_facebook
-    @url.update!(facebook_likes: @likes, facebook_comments: @comments, facebook_shares: @shares)
+    @url.update!(attributes_update_url)
   end
 
   def update
     get_data_facebook
+    attributes_update_url
+  end
+
+  def attributes_update_url
     { facebook_likes: @likes, facebook_comments: @comments, facebook_shares: @shares, data_updated_at: Time.now }
   end
 

@@ -1,5 +1,6 @@
 class TrafficStadistic < ActiveRecord::Base
   include RecordAnalytics
+  include UrlsUtils
 
   validates_presence_of :url, :date, :traffic_type, :pageviews
   validates :date, uniqueness: { scope: [ :url, :traffic_type] }

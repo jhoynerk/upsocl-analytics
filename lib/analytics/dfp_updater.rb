@@ -22,8 +22,8 @@ class DfpUpdater
         date: data[:date],
         line_id: data[:line_id],
         impressions: data[:impressions],
-        clicks: data['clicks'],
-        ctr: data['ctr']
+        clicks: data[:clicks],
+        ctr: data[:ctr]
       }
     end
 
