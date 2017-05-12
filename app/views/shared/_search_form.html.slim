@@ -1,0 +1,41 @@
+form#search-campaign.form-inline
+  .row
+    .col-md-12
+      .text-center
+        div.pull-right
+          .form-group
+            label
+              small.m-r-xs Registros por Página
+            select.form-control ng-model="filters['paginate_regs']" ng-change="searchTags()" data-placeholder="Cliente"
+              option ng-repeat="value in pagePerValues" value="{{value}}"
+                | {{value}}
+        h2.m-b-md
+          | {{page_title}}
+        b
+  .row
+    .col-md-2
+      .container-search-chosen
+        input#filter-by-name.form-control ng-model="filters['filter_by_url']" placeholder="Url Post o Url Video"
+    .col-md-2
+      .container-search-chosen
+        input#filter-by-name.form-control ng-model="filters['filter_name']" placeholder="Nombre de Campaña"
+        input type="hidden" ng-model="filters['filter_date_range']"
+        input type="hidden" ng-model="filters['paginate_page']"
+    .col-md-2
+      .container-search-chosen
+        select.chosen-input.hide#filter-by-users multiple="multiple" ng-model="filters['filter_client']" data-placeholder="Cliente"
+          option ng-repeat="client in users" value="{{client.id}}"
+           | {{client.name}}
+    .col-md-2
+      .container-search-chosen
+        select.chosen-input.hide#filter-by-tags multiple="multiple" ng-model="filters['filter_tag']" data-placeholder="Etiqueta"
+          option ng-repeat="tag in tags" value="{{tag.id}}"
+           | {{tag.title}}
+    .col-md-2
+      .container-search-chosen
+        select.chosen-input.hide#filter-by-agencies multiple="multiple" ng-model="filters['filter_agency']" data-placeholder="Agencia"
+          option ng-repeat="agency in agencies" value="{{agency.id}}"
+           | {{agency.name}}
+    .col-md-2
+      span.input-group-btn
+        button.btn.btn-primary type="button" ng-click="searchTags()"  Buscar

@@ -1,5 +1,6 @@
 class Url < ActiveRecord::Base
   include TagsUtil
+  include Searchable
 
   MONTH_LIMIT_TO_UPDATE = 3
 
@@ -58,6 +59,12 @@ class Url < ActiveRecord::Base
 
   scope :update_interval, -> (interval_start, interval_end, interval) { where( '(created_at between ? and ? AND interval_status = ?) or (interval_status = ?)', interval_start, interval_end, IntervalStatus::DEFAULT ,IntervalStatus.value_for( interval ) ) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+
+  def goal_status
+    pageviews = totals_stadistics[:pageviews]
+
+  end
 
   def fb_posts_totals
     {

@@ -10,6 +10,8 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   $scope.pagePerValues = [10,20,30];
   $scope.filters['paginate_regs'] = $scope.pagePerValues[0];
   $scope.filters['paginate_page'] = 1;
+  $scope.page_title = "Lista de Campañas"
+  $scope.model_name = "Campañas"
 
   $scope.user = User.get(function(data){
     setTimeout(function(){
@@ -34,6 +36,19 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
     $scope.filters['paginate_page'] = 1;
     $scope.searchTags();
   }
+
+  $scope.searchTags = function(){
+    var ids = $('.chosen-input').val();
+    $scope.loading = true;
+    $http.post('/campaigns/filter_by_tag.json', $scope.filters).then( function(response) {
+      $scope.campaigns = response.data.campaigns;
+      $scope.paginate = response.data.paginate;
+      $scope.loading = false;
+      setTimeout(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    }, 500);
+    })
+  };
 
   $scope.paginatePages = function(){
     var data = [];
@@ -81,19 +96,6 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
     var navigateTo = (nextPage < 1)? 1 : nextPage
     $scope.toPage(navigateTo);
   }
-
-  $scope.searchTags = function(){
-    var ids = $('.chosen-input').val();
-    $scope.loading = true;
-    $http.post('/campaigns/filter_by_tag.json', $scope.filters).then( function(response) {
-      $scope.campaigns = response.data.campaigns;
-      $scope.paginate = response.data.paginate;
-      $scope.loading = false;
-      setTimeout(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    }, 500);
-    })
-  };
 
   $scope.searchTags();
 
