@@ -36,6 +36,10 @@ class FacebookPost < ActiveRecord::Base
   validates_numericality_of :post_id
   validates_numericality_of :goal, greater_than_or_equal_to: 1, if: :video?
 
+  def update_metrics
+    set_facebook
+  end
+
   def account_id
     facebook_account.facebook_id
   end
