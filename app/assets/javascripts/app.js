@@ -24,17 +24,17 @@ app.config(function($stateProvider) {
     templateUrl: 'index_view',
     controller: 'CampaignListController'
   })
-  .state('viewCampaignUrl', { //state for showing single movie
+  .state('viewCampaignUrl', { 
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
   })
-  .state('viewCampaignVideo', { //state for showing single movie
+  .state('viewCampaignVideo', {
     url: '/campaign/videos/:id',
     templateUrl: 'facebook_posts_view',
     controller: 'CampaignVideoViewController'
   })
-  .state('viewAllCampaignUrl', { //state for showing single movie
+  .state('viewAllCampaignUrl', { 
     url: '/campaigns',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
@@ -49,7 +49,7 @@ app.config(function($stateProvider) {
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
   })
-  .state('viewAllUrlCampaign', { //state for showing single movie
+  .state('viewAllUrlCampaign', { 
     url: '/urls',
     templateUrl: 'url_index_view',
     controller: 'UrlListController'});
