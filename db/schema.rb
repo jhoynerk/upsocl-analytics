@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512191247) do
+
+ActiveRecord::Schema.define(version: 20170512132901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +310,7 @@ ActiveRecord::Schema.define(version: 20170512191247) do
     t.date     "publication_date"
     t.date     "publication_end_date"
     t.datetime "data_updated_at"
+    t.integer  "committed_visits",     default: 0
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree

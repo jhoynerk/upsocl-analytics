@@ -19,4 +19,32 @@ class UrlsController < ApplicationController
     end
   end
 
+  def filter_by_tag
+    @urls_filtered = Url.search(params)
+    @urls = UrlsDecorator.new(@urls_filtered.order(:title).page(params[:paginate_page]).per(params[:paginate_regs]))
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json:{
+          paginate: data_paginate,
+          urls: @urls.as_json(
+            methods: [ :goal_status, :tag_titles, :agencies_countries_mark_format ],
+            include: [ :countries, campaign: { include:{ users: { only: [:name] }}}]
+        )}
+      }
+    end
+  end
+
+  private
+
+  def data_paginate
+    {
+      total_pages: @urls.total_pages,
+      current_page: @urls.current_page,
+      first_page: @urls.first_page?,
+      last_page: @urls.last_page?,
+      count: @urls_filtered.count
+    }
+  end
+
 end
