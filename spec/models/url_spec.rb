@@ -81,13 +81,13 @@ describe Url do
   end
 
   it 'When consult total pageviews eq 20' do
-    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 20)
+    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 20, date: 3.days.ago)
     expect( url_active.total_pageviews ).to eq(20)
   end
 
   it 'When consult total pageviews eq 70' do
-    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 20)
-    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 50)
+    page_stadistic = create( :page_stadistic, url: url_active, pageviews: 20, date: 1.days.ago )
+    page_stadistic = create( :page_stadistic, url: url_active, pageviews: 50, date: 2.days.ago )
     expect( url_active.total_pageviews ).to eq(70)
   end
 
