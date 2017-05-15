@@ -26,7 +26,7 @@ form#search-campaign.form-inline
         select.chosen-input.hide#filter-by-users multiple="multiple" ng-model="filters['filter_client']" data-placeholder="Cliente"
           option ng-repeat="client in users" value="{{client.id}}"
            | {{client.name}}
-    .col-md-2
+    .col-md-2 ng-if="#{current_user.not_client?}"
       .container-search-chosen
         select.chosen-input.hide#filter-by-tags multiple="multiple" ng-model="filters['filter_tag']" data-placeholder="Etiqueta"
           option ng-repeat="tag in tags" value="{{tag.id}}"

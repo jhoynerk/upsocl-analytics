@@ -19,10 +19,6 @@
           span.badge.badge-warning
             | {{ url.goal_status }}
       .col-md-2.text-center
-        span.small.font-bold Etiquetas
-        br/
-        | {{ url.tag_titles }}
-      .col-md-2.text-center
         div data-toggle="tooltip" title="Usuarios: {{ url.campaign.users | arrayToName }}   |   Cliente/Pais/Agencia: {{ url.agencies_countries_mark_format }}"
           span.small.font-bold Campaña
           br/
@@ -35,6 +31,10 @@
         span.small.font-bold País
         br/
         | {{ url.countries | arrayToName }}
+      .col-md-2.text-center ng-if="#{current_user.not_client?}"
+        span.small.font-bold Etiquetas
+        br/
+        | {{ url.tag_titles }}
     .row
       .col-lg-12
         .panel-collapse.collapse id="camp{{campaign.id}}"
