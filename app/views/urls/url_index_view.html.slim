@@ -12,12 +12,8 @@
       .col-md-1.text-center
         span.small.font-bold Estado
         br/
-        p ng-if="(url.goal_status == 'Completada')"
-          span.badge.badge-primary
-            | {{ url.goal_status }}
-        p ng-if="(url.goal_status == 'Sirviendo')"
-          span.badge.badge-warning
-            | {{ url.goal_status }}
+        span.badge ng-class="(url.goal_status == 'Completada') ? 'badge-primary' : 'badge-warning'"
+          | {{ url.goal_status }}
       .col-md-2.text-center
         div data-toggle="tooltip" title="Usuarios: {{ url.campaign.users | arrayToName }}   |   Cliente/Pais/Agencia: {{ url.agencies_countries_mark_format }}"
           span.small.font-bold Campaña
@@ -31,7 +27,7 @@
         span.small.font-bold País
         br/
         | {{ url.countries | arrayToName }}
-      .col-md-2.text-center ng-if="#{current_user.not_client?}"
+      .col-md-2.text-center ng-if="#{!current_user.cliente?}"
         span.small.font-bold Etiquetas
         br/
         | {{ url.tag_titles }}

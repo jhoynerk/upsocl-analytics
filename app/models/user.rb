@@ -19,10 +19,6 @@ class User < ActiveRecord::Base
     [:country_manager, :admin].include?(role.to_sym)
   end
 
-  def not_client?
-    ![:cliente].include?(role.to_sym)
-  end
-
   def join_campaigns
     campaigns.map(&:name).join(', ')
   end
