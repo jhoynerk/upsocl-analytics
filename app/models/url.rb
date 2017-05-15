@@ -38,8 +38,10 @@ class Url < ActiveRecord::Base
 
   scope :update_end_date, -> { where( 'publication_end_date >= ?', DAY_LIMIT_TO_UPDATE ) }
   scope :update_start_date, -> { where( 'publication_date <= ?', DAY_LIMIT_TO_UPDATE ) }
-
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  scope :active, -> { where('publication_end_date >= ?', Date.today) }
+  scope :finished, -> { where('publication_end_date <= ?', Date.today) }
 
   def fb_posts_totals
     {

@@ -1,7 +1,7 @@
 = form_tag("#{details_admin_url_path(@url.id)}", method: :post, style: "width: 200px;" )
   .form-group
     label País:
-    = select_tag(:country, options_from_collection_for_select(@countries, :country_code, :country_name, @country), {class: "chosen-input"})
+    = select_tag(:country, options_for_select(@countries), {class: "chosen-input"})
   button#admin_country_submit type="submit" Consultar
 - if @country_stadistics.blank?
   h3 style="text-align: center;" No hay datos para esta fecha

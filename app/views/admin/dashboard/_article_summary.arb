@@ -1,0 +1,32 @@
+panel "Articulos" do
+  paginated_collection(articles.page(params[:article_page]), param_name: 'article_page', download_links: false) do
+    table_for collection do
+      column :title
+      column 'Campaña' do |url|
+        url.campaign.name.titleize
+      end
+      column 'Visitas' do |url|
+        url.totals_stadistics[:pageviews]
+      end
+      column :publication_date
+      column :publication_end_date
+    end
+  end
+  status_tag ''
+end
+
+panel "Videos" do
+  paginated_collection(videos.page(params[:video_page]), param_name: 'video_page', download_links: false) do
+    table_for videos do
+      column :title
+      column 'Campaña' do |video|
+        video.campaign.name.titleize
+      end
+      column :goal
+      column :post_video_views
+      column :post_impressions
+      column :post_impressions_unique
+    end
+  end
+  status_tag ''
+end
