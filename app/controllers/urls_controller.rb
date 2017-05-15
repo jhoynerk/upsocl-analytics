@@ -26,11 +26,10 @@ class UrlsController < ApplicationController
       format.html {}
       format.json {
         render json:{
+          paginate: data_paginate,
           urls: @urls.as_json(
-            methods: [ :goal_status ],
-            include: {
-              campaign: { include: { users: { only: [:name] }}}
-            }
+            methods: [ :goal_status, :tag_titles, :agencies_countries_mark_format ],
+            include: [ :countries, campaign: { include:{ users: { only: [:name] }}}]
         )}
       }
     end
@@ -44,7 +43,7 @@ class UrlsController < ApplicationController
       current_page: @urls.current_page,
       first_page: @urls.first_page?,
       last_page: @urls.last_page?,
-      count: @urls.count
+      count: @urls_filtered.count
     }
   end
 

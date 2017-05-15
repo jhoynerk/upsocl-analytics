@@ -15,7 +15,7 @@ form#search-campaign.form-inline
   .row
     .col-md-2
       .container-search-chosen
-        input#filter-by-name.form-control ng-model="filters['filter_by_url']" placeholder="Url Post o Url Video"
+        input#filter-by-name.form-control ng-model="filters['filter_by_url']" placeholder="{{ (model_name == 'Articulos') ? 'Título del artículo' : 'Url Post o Url Video'}}"
     .col-md-2
       .container-search-chosen
         input#filter-by-name.form-control ng-model="filters['filter_name']" placeholder="Nombre de Campaña"

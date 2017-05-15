@@ -37,15 +37,40 @@ class Url < ActiveRecord::Base
 
   scope :search_urls_to_update, -> { update_start_date.update_end_date }
 
+  scope :filter_by_url, -> (url_title){ where(id: ids_finding_by_title(url_title)) }
+  scope :filter_name, -> (campaign_name){ joins(:campaign).where('lower("campaigns"."name") LIKE :query ', query: "%#{campaign_name.downcase}%") }
+  scope :filter_client, -> (id){ joins(campaign: :users).where("users.id": id) }
+  scope :filter_tag, -> (id){ joins(:tags).where(tags: { id: id }) }
+  scope :filter_agency, -> (id){ joins(campaign: :agency).where(agencies: { id: id }) }
+
   scope :update_end_date, -> { where( 'publication_end_date >= ?', DAY_LIMIT_TO_UPDATE ) }
   scope :update_start_date, -> { where( 'publication_date <= ?', DAY_LIMIT_TO_UPDATE ) }
-
+  scope :filter_date_range, -> (date) { filter_date_in_date(date) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
 
+  def self.ids_finding_by_title(url_title)
+    where('lower("urls"."title") LIKE :query ', query: "%#{url_title.downcase}%").pluck(:id)
+  end
+
+  def self.filter_date_in_date(range)
+    case range
+    when 1
+      where("'#{Date.today}' between publication_date  and  publication_end_date ")
+    when 2
+      where(publication_end_date: 3.week.ago .. Date.today)
+    else
+      all
+    end
+  end
+
+
+  def tag_titles
+    tags.map(&:title).join(', ')
+  end
 
   def goal_status
     pageviews = totals_stadistics[:pageviews]
-
+    (pageviews > committed_visits) ? 'Completada' : 'Sirviendo'
   end
 
   def fb_posts_totals

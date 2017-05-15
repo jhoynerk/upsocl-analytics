@@ -51,7 +51,6 @@ myApp.controller('UrlListController', function($scope, $state, $http, $window,
     }, 500);
     })
   };
-
   $scope.paginatePages = function(){
     var data = [];
     var checkMin = ($scope.paginate.current_page - 5);
@@ -70,8 +69,8 @@ myApp.controller('UrlListController', function($scope, $state, $http, $window,
   }
 
   $scope.lastRegPage = function(){
-    var lastReg = (($scope.paginate.first_page)? 0 : $scope.firstRegPage()) + Number($scope.filters.paginate_regs);
-    return (lastReg>$scope.paginate.count)? $scope.paginate.count : lastReg;
+    var lastReg = Number($scope.filters.paginate_regs) + (($scope.paginate.first_page) ? 0 : $scope.firstRegPage()) ;
+    return (lastReg > $scope.paginate.count) ? $scope.paginate.count : lastReg;
   }
 
   $scope.toPage = function(page){
