@@ -2,6 +2,7 @@ ActiveAdmin.register DfpStadistic do
   permit_params :impressions, :clicks
   config.clear_action_items!
   menu parent: "Estadisticas URL"
+  actions :index, :show, :update, :edit, :destroy
 
   index do
     selectable_column
