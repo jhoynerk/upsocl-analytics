@@ -36,7 +36,7 @@ class Url < ActiveRecord::Base
   before_destroy { |record| clean_screenshot(record.id) }
 
   scope :search_urls_to_update, -> { update_start_date.update_end_date }
-
+  scope :currents, -> { where("'#{Date.today}' between publication_date  and  publication_end_date ") }
   scope :filter_by_url, -> (url_title){ where(id: ids_finding_by_title(url_title)) }
   scope :filter_name, -> (campaign_name){ joins(:campaign).where('lower("campaigns"."name") LIKE :query ', query: "%#{campaign_name.downcase}%") }
   scope :filter_client, -> (id){ joins(campaign: :users).where("users.id": id) }
@@ -55,7 +55,7 @@ class Url < ActiveRecord::Base
   def self.filter_date_in_date(range)
     case range
     when DateFilter::CURRENTS
-      where("'#{Date.today}' between publication_date  and  publication_end_date ")
+      currents
     when DateFilter::WEEKS_AGO
       where(publication_end_date: 3.week.ago .. Date.today)
     else
@@ -69,8 +69,7 @@ class Url < ActiveRecord::Base
   end
 
   def goal_status
-    pageviews = totals_stadistics[:pageviews]
-    (pageviews > committed_visits) ? 'Completada' : 'Sirviendo'
+    (total_pageviews > committed_visits) ? 'Completada' : 'Sirviendo'
   end
 
   def fb_posts_totals
