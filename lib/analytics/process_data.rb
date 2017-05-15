@@ -19,13 +19,13 @@ class ProcessData
         pageviews: data&.pageviews.to_i,
         users: data&.users.to_i,
         country_code: data&.countryIsoCode,
-        country_id: country_id_from(data&.countryIsoCode),
+        country_id: country_id_by(data&.countryIsoCode),
         traffic_type: data&.traffictype,
         device_type: data&.deviceCategory
       }
     end
 
-    def country_id_from(country_code)
+    def country_id_by(country_code)
       Country.find_by(code: country_code)&.id
     end
 end
