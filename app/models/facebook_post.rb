@@ -6,6 +6,9 @@ class FacebookPost < ActiveRecord::Base
   belongs_to :campaign
   has_and_belongs_to_many :tags
 
+  scope :active, -> { where('goal >= post_impressions') }
+  scope :finished, -> { where('goal <= post_impressions') }
+
   scope :urls, -> { where.not(campaign_id: nil) }
   scope :goal_achieveds, -> { urls.where(goal_achieved: true) }
   scope :unreached_goals, -> { urls.where(goal_achieved: false) }

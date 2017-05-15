@@ -16,18 +16,22 @@ class CountryStadistic < ActiveRecord::Base
   scope :select_for_date, -> { select('date, SUM(pageviews) as pageviews, SUM(users) as users, SUM(avgtimeonpage) as avgtimeonpage') }
 
   scope :by_date, -> (date) { where(date: date) }
-  scope :by_country, -> (country) { where(country_code: country) }
+  scope :by_country, -> (country) { joins(:country).where('countries.id': country) }
 
   scope :totals_in_range, -> { { pageviews: sum(:pageviews), users: sum(:users), avgtimeonpage: compute_avg(sum(:avgtimeonpage), count) } }
   scope :totals_filtered_by, -> (countries) { where('country_code in (?)', countries).totals_in_range }
 
   scope :totals_filtered_count, -> (countries) { where('country_code in (?)', countries).count }
   scope :by_assigned_country, ->  { joins(url: :countries).where("country_code = countries.code") }
-  scope :countries_for_select, -> { joins('INNER JOIN countries ON (country_code = countries.code)').select("country_name","country_code","countries.id").distinct }
+  scope :countries_for_select, -> { joins(:country).distinct.select("countries.name, country_code, countries.id").order("countries.name ASC") }
 
   scope :select_for_country, -> { select("campaigns.name as campaign_name, urls.title as url_title, urls.id as url_id, countries.name as country_name, country_code, SUM(country_stadistics.pageviews) as pageviews, SUM(country_stadistics.avgtimeonpage) as avgtimeonpage") }
   scope :grouped_by_country, -> { group("countries.name", :country_code, "campaigns.name", "urls.title","urls.id").joins(url: [:campaign, :countries]).select_for_country.order("country_name") }
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
+
+  def self.country_select_collection
+    countries_for_select.pluck('countries.name', 'country_id')
+  end
 
   def self.compute_avg( sum, count )
     count.zero? ? 0.0 : (sum / count) rescue 0
