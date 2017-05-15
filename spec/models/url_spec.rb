@@ -75,6 +75,22 @@ describe Url do
     expect( Url.new().toClock(60) ).to eq("01:00")
   end
 
+  it 'When consult total pageviews eq 0' do
+
+    expect( url_active.total_pageviews ).to eq(0)
+  end
+
+  it 'When consult total pageviews eq 20' do
+    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 20)
+    expect( url_active.total_pageviews ).to eq(20)
+  end
+
+  it 'When consult total pageviews eq 70' do
+    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 20)
+    page_stadistic = create(:page_stadistic, url: url_active, pageviews: 50)
+    expect( url_active.total_pageviews ).to eq(70)
+  end
+
   it 'Count votes to reactions' do
     reaction = create(:reaction)
     expect( Url.last.count_votes ).to match([{ title: reaction.title, reaction_id: reaction.id, counts: Integer }])
