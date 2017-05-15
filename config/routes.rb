@@ -22,7 +22,11 @@ Rails.application.routes.draw do
       post 'filter_by_tag', to: 'campaigns#filter_by_tag'
     end
   end
-  resources :urls, only: [:show]
+  resources :urls, only: [:show] do
+    collection do
+      post 'filter_by_tag', to: 'urls#filter_by_tag'
+    end
+  end
   resources :facebook_posts, only: [:show]
   get 'facebook_posts/:id/update_stadistics', to: 'facebook_posts#update_stadistics'
   get 'urls/:id/update_stadistics', to: 'urls#update_stadistics'
@@ -30,6 +34,7 @@ Rails.application.routes.draw do
   get 'facebook_posts_view', to: 'facebook_posts#show_view'
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
+  get 'url_index_view', to: 'urls#url_index_view'
   get 'show_all_view', to: 'urls#show_all_view'
 
   get 'template', to: 'template#reactions'

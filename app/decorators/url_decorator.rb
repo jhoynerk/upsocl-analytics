@@ -5,4 +5,8 @@ class UrlDecorator < Draper::Decorator
    object.campaign.decorate.tag_names + object.active_tag_names
   end
 
+  def agencies_countries_mark_format
+  	object.campaign.decorate.agencies_countries_mark_format
+  end
+
 end

@@ -3,27 +3,34 @@
   = render 'shared/current_nav_tabs'
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
     = render 'shared/search_form'
-  .faq-item ng-repeat="campaign in campaigns" ng-if="((!loading) && (campaigns.length > 0))"
+
+  .faq-item ng-repeat="url in urls" ng-if="((!loading) && (urls.length > 0))"
     .row
-      .col-md-4
-        div.pointer.faq-question data-toggle="collapse" href="#camp{{campaign.id}}"
-          | {{ campaign.name }}
-      .col-md-3.text-center ng-if="#{!current_user.cliente?}"
+      .col-md-3
+        h3
+          | {{ url.title }}
+      .col-md-1.text-center
+        span.small.font-bold Estado
+        br/
+        span.badge ng-class="(url.goal_status == 'Completada') ? 'badge-primary' : 'badge-warning'"
+          | {{ url.goal_status }}
+      .col-md-2.text-center
+        div data-toggle="tooltip" title="Usuarios: {{ url.campaign.users | arrayToName }}   |   Cliente/Pais/Agencia: {{ url.agencies_countries_mark_format }}"
+          span.small.font-bold Campaña
+          br/
+          | {{ url.campaign.name }}
+      .col-md-2.text-center
+        br/
+        a href="{{url.data}}"  target="_blank"
+          | Ver Articulo
+      .col-md-2.text-center
+        span.small.font-bold País
+        br/
+        | {{ url.countries | arrayToName }}
+      .col-md-2.text-center ng-if="#{!current_user.cliente?}"
         span.small.font-bold Etiquetas
         br/
-        | {{ campaign.tag_titles }}
-      .col-md-3
-        div data-toggle="tooltip" title="{{ campaign.users | arrayToName }}"
-          span.small.font-bold Usuarios en esta Campa&ntilde;a
-          .tag-list
-            span.glyphicon.glyphicon-user
-            span.m-l-sm
-              | {{ campaign.users.length }}
-              span.m-l-xs Usuarios
-      .col-md-2.text-right
-        span.small.font-bold # Cliente / Pais / Agencia
-        br/
-        | {{ campaign.agencies_countries_mark_format }}
+        | {{ url.tag_titles }}
     .row
       .col-lg-12
         .panel-collapse.collapse id="camp{{campaign.id}}"
@@ -45,7 +52,7 @@
                   | {{ video.title }}
               .clearfix
 
-  .faq-item ng-if="((!loading) && (campaigns.length > 0))"
+  .faq-item ng-if="((!loading) && (urls.length > 0))"
     .row
       .col-md-5
         | Mostrando registros del
@@ -72,9 +79,9 @@
           li#employees-table_last.paginate_button.last ng-click="lastPage()"
             a Último
 
-  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="campaigns.length < 1"
+  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="urls.length < 1"
     .ibox-content.m-b-sm.border-bottom.text-center
-      h3 No se ha encontrado ninguna campaña
+      h3 No se ha encontrado ninguna url
   .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="loading"
     .ibox-content.m-b-sm.border-bottom.text-center
       h3 Cargando..

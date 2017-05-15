@@ -1,6 +1,7 @@
 var app = angular.module('upsocl',[
   'ngResource',
   'upsocl.controllers',
+  'upsocl.controllers.url',
   'upsocl.services',
   'daterangepicker',
   'ui.router',
@@ -10,7 +11,9 @@ var app = angular.module('upsocl',[
 
 app.filter('arrayToName', function() {
   return function(input) {
-    var output = input.map(function(u){return u.name}).join(', ')
+    var names = input.map(function(u){return u.name});
+    var output = "";
+    if(names.length > 0) {output = names.join(', ');}
     return output;
   }
 });
@@ -20,19 +23,24 @@ app.config(function($stateProvider) {
     url: '/',
     templateUrl: 'index_view',
     controller: 'CampaignListController'
-  }).state('viewCampaignUrl', { //state for showing single movie
+  })
+  .state('viewCampaignUrl', { 
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
-  }).state('viewCampaignVideo', { //state for showing single movie
+  })
+  .state('viewCampaignVideo', {
     url: '/campaign/videos/:id',
     templateUrl: 'facebook_posts_view',
     controller: 'CampaignVideoViewController'
-  }).state('viewAllCampaignUrl', { //state for showing single movie
+  })
+  .state('viewAllCampaignUrl', { 
     url: '/campaigns',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
-  }).state('viewReactions', {
+
+  })
+  .state('viewReactions', {
     url: '/reactions?url&post_id&publico',
     params: {
         url: null,
@@ -40,7 +48,12 @@ app.config(function($stateProvider) {
     },
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
-  });
-}).run(function($state) {
+  })
+  .state('viewAllUrlCampaign', { 
+    url: '/urls',
+    templateUrl: 'url_index_view',
+    controller: 'UrlListController'});
+})
+.run(function($state) {
   $state.go('campaigns');
 });

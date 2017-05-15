@@ -16,7 +16,7 @@ class CountryStadistic < ActiveRecord::Base
   scope :select_for_date, -> { select('date, SUM(pageviews) as pageviews, SUM(users) as users, SUM(avgtimeonpage) as avgtimeonpage') }
 
   scope :by_date, -> (date) { where(date: date) }
-  scope :by_country, -> (country) { where(country_code: country) }
+  scope :by_country, -> (country) { joins(:country).where('countries.id': country) }
 
   scope :totals_in_range, -> { { pageviews: sum(:pageviews), users: sum(:users), avgtimeonpage: compute_avg(sum(:avgtimeonpage), count) } }
   scope :totals_filtered_by, -> (countries) { where('country_code in (?)', countries).totals_in_range }
@@ -30,7 +30,7 @@ class CountryStadistic < ActiveRecord::Base
   delegate :title, :campaign_name, to: :url, allow_nil: true, prefix: true
 
   def self.country_select_collection
-    countries_for_select.pluck('countries.name', 'country_code')
+    countries_for_select.pluck('countries.name', 'country_id')
   end
 
   def self.compute_avg( sum, count )
