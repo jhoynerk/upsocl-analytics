@@ -8,6 +8,7 @@ panel "Articulos" do
       column 'Visitas' do |url|
         url.totals_stadistics[:pageviews]
       end
+      column :committed_visits
       column :publication_date
       column :publication_end_date
     end
