@@ -54,9 +54,9 @@ class Url < ActiveRecord::Base
 
   def self.filter_date_in_date(range)
     case range
-    when 1
+    when DateFilter::CURRENTS
       where("'#{Date.today}' between publication_date  and  publication_end_date ")
-    when 2
+    when DateFilter::WEEKS_AGO
       where(publication_end_date: 3.week.ago .. Date.today)
     else
       all
