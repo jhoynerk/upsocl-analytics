@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170512132901) do
 
   # These are extensions that must be enabled in order to support this database
@@ -128,15 +129,16 @@ ActiveRecord::Schema.define(version: 20170512132901) do
   create_table "country_stadistics", force: :cascade do |t|
     t.integer  "url_id"
     t.date     "date"
-    t.string   "country_name"
     t.string   "country_code"
     t.integer  "pageviews",     default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "users",         default: 0
     t.float    "avgtimeonpage", default: 0.0
+    t.integer  "country_id"
   end
 
+  add_index "country_stadistics", ["country_id"], name: "index_country_stadistics_on_country_id", using: :btree
   add_index "country_stadistics", ["url_id"], name: "index_country_stadistics_on_url_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -341,4 +343,5 @@ ActiveRecord::Schema.define(version: 20170512132901) do
   add_index "votes", ["reaction_id"], name: "index_votes_on_reaction_id", using: :btree
   add_index "votes", ["url_id"], name: "index_votes_on_url_id", using: :btree
 
+  add_foreign_key "country_stadistics", "countries"
 end

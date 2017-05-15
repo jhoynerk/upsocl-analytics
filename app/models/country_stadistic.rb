@@ -1,13 +1,17 @@
 class CountryStadistic < ActiveRecord::Base
   include RecordAnalytics
   include UrlsUtils
-  validates_presence_of :url, :date, :country_code, :country_name, :pageviews, :avgtimeonpage, :users
+
+  belongs_to :url
+  belongs_to :country
+
+  validates_presence_of :url, :date, :country_code, :pageviews, :avgtimeonpage, :users
   validates :date, uniqueness: { scope: [ :url, :country_code ] }
   validates :avgtimeonpage, numericality: { greater_than_or_equal_to: :avgtimeonpage_was }, allow_blank: true
   validates :pageviews, numericality: { greater_than_or_equal_to: :pageviews_was }, allow_blank: true
   validates :users, numericality: { greater_than_or_equal_to: :users_was }, allow_blank: true
 
-  scope :totals, -> (countries) { (countries.any? ? where('country_code in (?)', countries) : self ).group(:country_name, :country_code).sum(:pageviews).map {|c| { name: c[0][0], code: c[0][1], pageviews: c[1], pageviews_percent: to_percent(c[1], countries) } } }
+  scope :totals, -> (countries) { (countries.any? ? where('country_code in (?)', countries) : self ).group(:country_code).sum(:pageviews).map {|c| { name: c[0][0], code: c[0][1], pageviews: c[1], pageviews_percent: to_percent(c[1], countries) } } }
   scope :totals_by_date, -> (countries) { (countries.any? ? where('country_code in (?)', countries) : self ).select_for_date.group(:date).order(:date) }
   scope :select_for_date, -> { select('date, SUM(pageviews) as pageviews, SUM(users) as users, SUM(avgtimeonpage) as avgtimeonpage') }
 
@@ -38,8 +42,7 @@ class CountryStadistic < ActiveRecord::Base
   end
 
   def search_parameters(**args)
-    args.extract!(:country_name, :avgtimeonpage, :pageviews, :users)
+    args.extract!(:avgtimeonpage, :pageviews, :users, :country_id)
   end
 
 end
-
