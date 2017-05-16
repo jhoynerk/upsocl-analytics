@@ -57,7 +57,7 @@ class Url < ActiveRecord::Base
   end
 
   def reached_the_goal?
-    status == UrlStatus::ACTIVE && totals_stadistics[:pageviews] >= committed_visits
+    status.status_active? && total_pageviews >= committed_visits
   end
 
   def self.ids_finding_by_title(url_title)
