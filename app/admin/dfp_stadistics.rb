@@ -1,5 +1,5 @@
 ActiveAdmin.register DfpStadistic do
-  permit_params :impressions, :clicks
+  permit_params :impressions, :clicks, :ctr
   config.clear_action_items!
   menu parent: "Estadisticas URL"
   actions :index, :show, :update, :edit, :destroy
@@ -15,6 +15,7 @@ ActiveAdmin.register DfpStadistic do
     column :date
     column :impressions
     column :clicks
+    column :ctr
     actions
   end
 
@@ -26,7 +27,7 @@ ActiveAdmin.register DfpStadistic do
     f.inputs "Estadistica de dfp" do
       f.input :impressions
       f.input :clicks
-      t.input :ctr
+      f.input :ctr
     end
     f.actions
   end
