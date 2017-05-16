@@ -67,7 +67,6 @@ gem 'cloudinary'
 #Save img to S3
 gem 'carrierwave'
 
-gem 'railroady'
 # Shedule task
 gem 'clockwork'
 
