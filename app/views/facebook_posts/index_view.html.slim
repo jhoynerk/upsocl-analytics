@@ -4,35 +4,34 @@
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
     = render 'shared/search_form'
 
-  .faq-item ng-repeat="url in urls" ng-if="((!loading) && (urls.length > 0))"
+  .faq-item ng-repeat="video in facebook_posts" ng-if="((!loading) && (facebook_posts.length > 0))"
     .row
       .col-md-3
         h3.faq-question
-          | {{ url.title }}
+          | {{ video.title }}
       .col-md-1.text-center
         span.small.font-bold Estado
         br/
-        span.badge ng-class="(url.goal_status == 'Completada') ? 'badge-primary' : 'badge-warning'"
-          | {{ url.goal_status }}
+        span.badge ng-class="(video.goal_achieved == true) ? 'badge-primary' : 'badge-warning'"
+          | {{ video.goal_status }}
       .col-md-2.text-center
-        div data-toggle="tooltip" title="Usuarios: {{ url.campaign.users | arrayToName }}   |   Cliente/Pais/Agencia: {{ url.agencies_countries_mark_format }}"
+        div data-toggle="tooltip" title="Usuarios: {{ video.campaign.users | arrayToName }}   "
           span.small.font-bold Campaña
           br/
-          | {{ url.campaign.name }}
+          | {{ video.campaign.name }}
       .col-md-2.text-center
         br/
-        a href="{{url.data}}"  target="_blank"
+        a href="{{video.url_video}}"  target="_blank"
           | Ver Articulo
-      .col-md-2.text-center
-        span.small.font-bold País
-        br/
-        | {{ url.countries | arrayToName }}
       .col-md-2.text-center ng-if="#{!current_user.cliente?}"
         span.small.font-bold Etiquetas
         br/
-        | {{ url.tag_titles }}
-
-  .faq-item ng-if="((!loading) && (urls.length > 0))"
+        | {{ video.tag_titles }}
+      .col-md-2.text-right
+        span.small.font-bold # Cliente / Pais / Agencia
+        br/
+        | {{ video.agencies_countries_mark_format }}
+  .faq-item ng-if="((!loading) && (facebook_posts.length > 0))"
     .row
       .col-md-5
         | Mostrando registros del
@@ -59,9 +58,9 @@
           li#employees-table_last.paginate_button.last ng-click="lastPage()"
             a Último
 
-  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="urls.length < 1"
+  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="facebook_posts.length < 1"
     .ibox-content.m-b-sm.border-bottom.text-center
-      h3 No se ha encontrado ninguna url
+      h3 No se ha encontrado ningun video
   .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="loading"
     .ibox-content.m-b-sm.border-bottom.text-center
       h3 Cargando..

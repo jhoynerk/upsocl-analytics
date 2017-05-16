@@ -1,6 +1,7 @@
 myApp = angular.module('upsocl.controllers', [])
 
-myApp.controller('CampaignListController', function($scope, $state, $http, $window, Campaign, Tags, User, Users, Agencies, CampaignFilter) {
+myApp.controller('CampaignListController', function($scope, $state, $http, $window,
+ Campaign, Tags, User, Users, Agencies, CampaignFilter, searchTags, paginatePages) {
   $scope.tags = Tags.query();
   $scope.users = Users.query();
   $scope.agencies = Agencies.query();
@@ -12,6 +13,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   $scope.filters['paginate_page'] = 1;
   $scope.page_title = "Lista de Campañas"
   $scope.model_name = "Campañas"
+  $scope.real_model_name = "campaigns"
 
   $scope.user = User.get(function(data){
     setTimeout(function(){
@@ -32,34 +34,17 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   });
 
   $scope.changeDateRange = function(opt){
-    $scope.filters['filter_date_range'] = opt
+    $scope.filters['filter_date_range'] = opt;
     $scope.filters['paginate_page'] = 1;
-    $scope.searchTags();
+    searchTags($scope, $scope.real_model_name);
   }
 
   $scope.searchTags = function(){
-    var ids = $('.chosen-input').val();
-    $scope.loading = true;
-    $http.post('/campaigns/filter_by_tag.json', $scope.filters).then( function(response) {
-      $scope.campaigns = response.data.campaigns;
-      $scope.paginate = response.data.paginate;
-      $scope.loading = false;
-      setTimeout(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    }, 500);
-    })
-  };
+    searchTags($scope, $scope.real_model_name);
+  }
 
   $scope.paginatePages = function(){
-    var data = [];
-    var checkMin = ($scope.paginate.current_page - 5);
-    var checkMax = ($scope.paginate.current_page + 5);
-    var min = (checkMin < 1)? 1 : checkMin
-    var max = (checkMax > $scope.paginate.total_pages)? $scope.paginate.total_pages : checkMax
-    for(var i = min; i <= max; i++) {
-      data.push(i);
-    }
-    return data;
+    paginatePages($scope);
   }
 
   $scope.firstRegPage = function(){
@@ -74,7 +59,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
 
   $scope.toPage = function(page){
     $scope.filters['paginate_page'] = page;
-    $scope.searchTags();
+    searchTags($scope, $scope.real_model_name);
   }
 
   $scope.lastPage = function(){
@@ -97,7 +82,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
     $scope.toPage(navigateTo);
   }
 
-  $scope.searchTags();
+  searchTags($scope, $scope.real_model_name);
 
 
 })

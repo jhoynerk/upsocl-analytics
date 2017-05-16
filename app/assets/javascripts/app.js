@@ -1,7 +1,9 @@
 var app = angular.module('upsocl',[
   'ngResource',
+  'upsocl.shared',
   'upsocl.controllers',
   'upsocl.controllers.url',
+  'upsocl.controllers.video',
   'upsocl.services',
   'daterangepicker',
   'ui.router',
@@ -19,8 +21,12 @@ app.filter('arrayToName', function() {
 });
 
 app.config(function($stateProvider) {
-  $stateProvider.state('campaigns', {
+  $stateProvider.state('viewAllUrlCampaign', { 
     url: '/',
+    templateUrl: 'url_index_view',
+    controller: 'UrlListController'})
+  .state('campaigns', {
+    url: '/campaigns',
     templateUrl: 'index_view',
     controller: 'CampaignListController'
   })
@@ -35,7 +41,7 @@ app.config(function($stateProvider) {
     controller: 'CampaignVideoViewController'
   })
   .state('viewAllCampaignUrl', { 
-    url: '/campaigns',
+    url: '/campaigns2',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
 
@@ -49,11 +55,11 @@ app.config(function($stateProvider) {
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
   })
-  .state('viewAllUrlCampaign', { 
-    url: '/urls',
-    templateUrl: 'url_index_view',
-    controller: 'UrlListController'});
+  .state('viewAllVideoCampaign', { 
+    url: '/videos',
+    templateUrl: 'video_index_view',
+    controller: 'VideoListController'});
 })
 .run(function($state) {
-  $state.go('campaigns');
+  $state.go('viewAllUrlCampaign');
 });
