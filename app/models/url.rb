@@ -29,6 +29,7 @@ class Url < ActiveRecord::Base
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
   validates :publication_date, presence: true, allow_blank: false
   validates :publication_end_date, presence: true, allow_blank: false
+  validate :publication_dates_valid?
 
   before_save :set_title
   before_create :set_facebook
@@ -51,6 +52,12 @@ class Url < ActiveRecord::Base
 
   scope :filter_date_range, -> (date) { filter_date_in_date(date) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  def publication_dates_valid?
+    if publication_end_date < publication_date
+      errors.add(:publication_date, 'Debe ser menor a fecha fin de publicacion')
+    end
+  end
 
   def set_status
     self.update(status: UrlStatus::FINISHED) if reached_the_goal?
