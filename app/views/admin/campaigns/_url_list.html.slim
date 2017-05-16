@@ -1,38 +1,49 @@
 ul
   - urls.each do |u|
-    li
-      p
-        strong Url Id
-        span = " = #{u.id}"
-      p
-        strong Url
-        span = " = #{u.data}"
-      p
-        strong Line ID
-        span = " = #{u.line_id}"
-      p
-        strong Pais
-        span = " = #{u.countries.map(&:name).to_s} "
-      p
-        strong Tags
-        span = " = #{u.tags.map(&:title).to_s} "
-      p
-        strong Account Analytics
-        span = " = #{u.profile_id}"
-      p
-        strong Frecuencia de actualización
-        span = " = #{u.interval_status_humanize}"
-      p
-        strong Facebook Post Count
-        span = " = #{u.facebook_posts.count}"
-        ul
-          - u.facebook_posts.each do |fb|
-            li
-              p
-                strong User facebook
-                - if fb.facebook_account.nil?
-                  span No selecciono el facebook.
-                - else
-                  span = " = #{fb.facebook_account.name}  "
-                strong Post ID facebook
-                span = " = #{fb.post_id}"
+    li.panel_contents
+      table.panel
+        tr
+          td
+            p
+              strong Url Id
+              span = " = #{u.id}"
+            p
+              strong Url
+              span = " = #{u.data}"
+            p
+              strong Fecha de Publicación
+              span = " = #{u.publication_date}"
+            p
+              strong Fecha fin de Publicación
+              span = " = #{u.publication_end_date}"
+            p
+              strong Pais
+              span = " = #{u.countries.map(&:name).to_s} "
+            p
+              strong Tags
+              span = " = #{u.tags.map(&:title).to_s} "
+          
+          td
+            p
+              strong Line ID
+              span = " = #{u.line_id}"
+            p
+              strong Account Analytics
+              span = " = #{u.profile_id}"
+            p
+              strong Frecuencia de actualización
+              span = " = #{u.interval_status_humanize}"
+            p
+              strong Facebook Post Count
+              span = " = #{u.facebook_posts.count}"
+            ul
+              - u.facebook_posts.each do |fb|
+                li
+                  p
+                    strong User facebook
+                    - if fb.facebook_account.nil?
+                      span No selecciono el facebook.
+                    - else
+                      span = " = #{fb.facebook_account.name}  "
+                    strong Post ID facebook
+                    span = " = #{fb.post_id}"
