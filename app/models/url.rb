@@ -5,6 +5,7 @@ class Url < ActiveRecord::Base
   DAY_LIMIT_TO_UPDATE = 1.day.ago.to_date
 
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
+  has_enumeration_for :status, with: UrlStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :tags
@@ -31,8 +32,8 @@ class Url < ActiveRecord::Base
 
   before_save :set_title
   before_create :set_facebook
+  after_save :set_status
   after_create :make_screenshot, :run_analytics_task
-  before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
 
   scope :search_urls_to_update, -> { update_start_date.update_end_date }
@@ -48,11 +49,16 @@ class Url < ActiveRecord::Base
 
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
 
-  scope :active, -> { where('publication_end_date >= ?', Date.today) }
-  scope :finished, -> { where('publication_end_date <= ?', Date.today) }
-
   scope :filter_date_range, -> (date) { filter_date_in_date(date) }
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  def set_status
+    self.update(status: UrlStatus::FINISHED) if reached_the_goal?
+  end
+
+  def reached_the_goal?
+    status.status_active? && total_pageviews >= committed_visits
+  end
 
   def self.ids_finding_by_title(url_title)
     where('lower("urls"."title") LIKE :query ', query: "%#{url_title.downcase}%").pluck(:id)
@@ -63,7 +69,7 @@ class Url < ActiveRecord::Base
       when DateFilter::CURRENTS
         currents
       when DateFilter::WEEKS_AGO
-        where(publication_end_date: 3.week.ago .. Date.today)
+        where(publication_end_date: 3.week.ago..Date.today)
       else
         all
     end
@@ -97,13 +103,6 @@ class Url < ActiveRecord::Base
   def set_title
     if data_changed?
       self.title = Pismo[data].titles.last.split(' | ').first
-    end
-  end
-
-  def run_bg_task
-    if self.data_changed?
-      make_screenshot
-      run_analytics_task
     end
   end
 
