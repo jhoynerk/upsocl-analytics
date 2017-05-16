@@ -10,7 +10,7 @@ class AnalyticConnection
 
   def historical_data_for( source:'', url:'', start_date: 1.week.ago , end_date: Time.now )
     if Rails.env.test?
-      AnalyticTest.new(source, start_date, end_date, url).results
+      AnalyticData.new(source, start_date, end_date, url).results
     else
       ('Analytic::' + source).constantize.results( @profile, start_date: start_date, end_date: end_date ).path( url ).each { |d| p d }
     end

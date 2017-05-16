@@ -29,7 +29,7 @@ class AnalyticFacebook
   end
 
   def social_shares
-    @shares = SocialShares.facebook @url.data
+    @shares = SocialShares.facebook @url.data unless Rails.env.test?
   end
 
   def save
