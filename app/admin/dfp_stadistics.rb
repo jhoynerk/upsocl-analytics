@@ -26,6 +26,7 @@ ActiveAdmin.register DfpStadistic do
     f.inputs "Estadistica de dfp" do
       f.input :impressions
       f.input :clicks
+      t.input :ctr
     end
     f.actions
   end
