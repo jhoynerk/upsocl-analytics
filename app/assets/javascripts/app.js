@@ -41,7 +41,7 @@ app.config(function($stateProvider) {
     controller: 'CampaignVideoViewController'
   })
   .state('viewAllCampaignUrl', { 
-    url: '/campaigns2',
+    url: '/campaigns_index',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
 
