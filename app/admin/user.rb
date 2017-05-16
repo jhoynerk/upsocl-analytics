@@ -39,6 +39,7 @@ ActiveAdmin.register User do
   filter :name
   filter :current_sign_in_at
   filter :created_at
+  filter :role, as: :select, collection: User.roles.to_a
 
   form do |f|
     f.inputs "User Details" do

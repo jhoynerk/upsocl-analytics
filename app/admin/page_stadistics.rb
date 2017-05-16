@@ -18,8 +18,7 @@ ActiveAdmin.register PageStadistic do
     actions
   end
 
-  filter :url
-  filter :url_id
+  filter :url, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
   filter :date
 
   form do |f|

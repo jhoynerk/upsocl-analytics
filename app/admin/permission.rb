@@ -1,17 +1,17 @@
 ActiveAdmin.register ::ActiveAdmin::Permission do
   actions :index
 
-  filter :state, as: :select, label: 'Estado', collection: controller.resource_class.states
+  filter :state, as: :select, label: 'Estado', input_html: { class: 'chosen-input' }, collection: controller.resource_class.states
 
   filter :managed_resource_action_equals, as: :select,
-    label: 'Acción',
+    label: 'Acción', input_html: { class: 'chosen-input' },
     collection: -> do
       actions = ::ActiveAdmin::ManagedResource.uniq.order(:action).pluck(:action)
       actions.map! { |a| [t("actions.#{a}"), a] }
     end
 
   filter :managed_resource_class_name_equals, as: :select,
-    label: 'Nombre',
+    label: 'Nombre', input_html: { class: 'chosen-input' },
     collection: -> do
       collection = ::ActiveAdmin::ManagedResource.uniq.order(:class_name).pluck(:class_name)
       collection.reject{|a| a.match('ActiveAdmin::Comment')}.map! do |c|
@@ -45,13 +45,13 @@ ActiveAdmin.register ::ActiveAdmin::Permission do
   index do
     selectable_column
     column :role
-    column(:state) do |record|
+    column :state, sortable: 'state' do |record|
       status_tag(t("active_admin.batch_actions.labels.#{record.state}"), record.can? ? :ok : nil)
     end
-    column :action do |record|
+    column :action, sortable: 'active_admin_managed_resources.action' do |record|
       t("actions.#{record.action}")
     end
-    column :nombre do |record|
+    column :nombre, sortable: 'active_admin_managed_resources.class_name' do |record|
       c = record.class_name.constantize
       c.try(:model_name) ? c.model_name.human : c
     end
