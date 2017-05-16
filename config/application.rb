@@ -31,5 +31,7 @@ module UpsoclAnalytics
     }
     config.autoload_paths << Rails.root.join('lib/analytics')
     config.autoload_paths << Rails.root.join('lib/analytics/helpers')
+    #helpers test
+    config.autoload_paths << Rails.root.join('spec/support/API')
   end
 end
