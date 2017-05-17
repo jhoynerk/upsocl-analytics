@@ -1,5 +1,8 @@
 ---
 es:
+  status:
+    complete: Completada
+    serving: Sirviendo
   actions:
     new: Nuevo
     edit: Editar

@@ -7,7 +7,7 @@ class FacebookPostDecorator < Draper::Decorator
   end
 
   def goal_status
-    object.goal_achieved ? "Completada" : "Sirviendo"
+    object.goal_achieved ? I18n.t('status.complete') : I18n.t('status.serving')
   end
 
   def agencies_countries_mark_format
@@ -52,7 +52,7 @@ class FacebookPostDecorator < Draper::Decorator
 
   private
   def video_embed_format(url)
-    id = url.split('/').last if url
+    id = url ? url.split('/').last : ""
     "https://player.vimeo.com/video/#{id}"
   end
 
