@@ -84,7 +84,7 @@ class CampaignsController < ApplicationController
     if current_user.admin? || current_user.country_manager?
       Campaign.all.order(:name)
     else
-      current_user.campaigns
+      current_user.campaigns.order(:name)
     end
   end
 end
