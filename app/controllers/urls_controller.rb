@@ -1,5 +1,23 @@
 class UrlsController < ApplicationController
-  layout false
+  layout false, except: :index
+
+  def index
+    @urls_filtered = Url.all
+    @urls = UrlsDecorator.new(@urls_filtered.order(:title).page(1).per(10))
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json:{
+          paginate: data_paginate,
+          records: @urls.as_json(
+            methods: [ :goal_status, :tag_titles, :agencies_countries_mark_format ],
+            include: [ :countries, campaign: { include:{ users: { only: [:name] }}}]
+        )}
+      }
+    end
+  end
+
+
   def show
     @url = Url.find(params[:id]).decorate
     @url.params = { :start_date => params[:startDate]&.to_time, :end_date => params[:endDate]&.to_time }
@@ -27,7 +45,7 @@ class UrlsController < ApplicationController
       format.json {
         render json:{
           paginate: data_paginate,
-          urls: @urls.as_json(
+          records: @urls.as_json(
             methods: [ :goal_status, :tag_titles, :agencies_countries_mark_format ],
             include: [ :countries, campaign: { include:{ users: { only: [:name] }}}]
         )}

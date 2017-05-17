@@ -1,7 +1,7 @@
-myApp = angular.module('upsocl.controllers.url', [])
+myApp = angular.module('upsocl.controllers.video', [])
 
-myApp.controller('UrlListController', function($scope, $state, $http, $window,
-	Url, Tags, User, Users, Agencies, UrlFilter, searchTags, paginatePages) {
+myApp.controller('VideoListController', function($scope, $state, $http, $window,
+	Video, Tags, User, Users, Agencies, searchTags, paginatePages) {
 
   $scope.tags = Tags.query();
   $scope.users = Users.query();
@@ -12,9 +12,9 @@ myApp.controller('UrlListController', function($scope, $state, $http, $window,
   $scope.pagePerValues = [10,20,30];
   $scope.filters['paginate_regs'] = $scope.pagePerValues[0];
   $scope.filters['paginate_page'] = 1;
-  $scope.page_title = "Lista de Articulos"
-  $scope.model_name = "Articulos"
-  $scope.real_model_name = "urls"
+  $scope.page_title = "Lista de Videos"
+  $scope.model_name = "Videos"
+  $scope.real_model_name = "facebook_posts"
 
   $scope.user = User.get(function(data){
     setTimeout(function(){
@@ -35,7 +35,7 @@ myApp.controller('UrlListController', function($scope, $state, $http, $window,
   });
 
   $scope.changeDateRange = function(opt){
-    $scope.filters['filter_date_range'] = opt;
+    $scope.filters['filter_date_range'] = opt
     $scope.filters['paginate_page'] = 1;
     searchTags($scope, $scope.real_model_name);
   }
@@ -61,6 +61,7 @@ myApp.controller('UrlListController', function($scope, $state, $http, $window,
   $scope.toPage = function(page){
     $scope.filters['paginate_page'] = page;
     searchTags($scope, $scope.real_model_name);
+
   }
 
   $scope.lastPage = function(){
