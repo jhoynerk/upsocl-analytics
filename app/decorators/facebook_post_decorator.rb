@@ -6,6 +6,14 @@ class FacebookPostDecorator < Draper::Decorator
    object.campaign.decorate.tag_names + object.active_tag_names
   end
 
+  def goal_status
+    object.goal_achieved ? I18n.t('status.complete') : I18n.t('status.serving')
+  end
+
+  def agencies_countries_mark_format
+    object.campaign.decorate.agencies_countries_mark_format if object.campaign
+  end
+
   def post_impressions_unique
     format(object.post_impressions_unique.ceil.to_i)
   end
@@ -44,7 +52,7 @@ class FacebookPostDecorator < Draper::Decorator
 
   private
   def video_embed_format(url)
-    id = url.split('/').last
+    id = url ? url.split('/').last : ""
     "https://player.vimeo.com/video/#{id}"
   end
 

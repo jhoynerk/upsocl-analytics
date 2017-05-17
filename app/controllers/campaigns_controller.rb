@@ -14,7 +14,7 @@ class CampaignsController < ApplicationController
     @campaigns = CampaignsDecorator.new(@campaigns_filtered.order(:name).page(params[:paginate_page]).per(params[:paginate_regs]))
     respond_to do |format|
       format.html {}
-      format.json { render :json => {paginate: data_paginate, campaigns: @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :agencies_countries_mark_format, :facebook_posts_ordered_by_created, :tag_titles ],
+      format.json { render :json => {paginate: data_paginate, records: @campaigns.as_json( methods: [ :num_urls, :ordered_by_url_created, :agencies_countries_mark_format, :facebook_posts_ordered_by_created, :tag_titles ],
                                                         include: [:urls, users: { only: [:name] }]) } }
     end
   end
@@ -84,7 +84,7 @@ class CampaignsController < ApplicationController
     if current_user.admin? || current_user.country_manager?
       Campaign.all.order(:name)
     else
-      current_user.campaigns
+      current_user.campaigns.order(:name)
     end
   end
 end
