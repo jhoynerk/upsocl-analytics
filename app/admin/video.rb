@@ -1,7 +1,7 @@
 ActiveAdmin.register FacebookPost do
   scope "Videos", :urls, default: true
   actions :index, :edit, :update
-  menu label: 'Video', parent: "Gestor de Campañas"
+  menu  label: 'Video', parent: "Gestor de Campañas"
 
   config.clear_action_items!
   permit_params  :campaign_id

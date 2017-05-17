@@ -1,4 +1,5 @@
 ActiveAdmin.register ::ActiveAdmin::Permission do
+  menu  priority: 6
   actions :index
 
   filter :state, as: :select, label: 'Estado', input_html: { class: 'chosen-input' }, collection: controller.resource_class.states

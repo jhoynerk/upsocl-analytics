@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Logs" do
-
+  menu  priority: 8
   content title: 'Logs' do
     columns do
       column do
