@@ -1,7 +1,9 @@
 class AnalyticConnection
   def initialize(profile_id = "92974712")
-    @user = Legato::User.new GoogleOauth2Installed.access_token
-    @profile = search_profile(profile_id)
+    unless Rails.env.test?
+      @user = Legato::User.new GoogleOauth2Installed.access_token
+      @profile = search_profile(profile_id)
+    end
   end
 
   def data_for(source:'', url:'')
