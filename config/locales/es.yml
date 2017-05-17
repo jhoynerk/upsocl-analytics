@@ -68,6 +68,9 @@ es:
       agencies_countries_marks:
         one: Agencias
         other: Agencias
+      url:
+        one: Articulo
+        other: Articulos
     attributes:
       facebook_post:
         tltle: Titulo
@@ -107,6 +110,14 @@ es:
       country_mark:
         agencies_countries_marks: agencias
       url:
+        title: Titulo
+        committed_visits: Visitas comprometidas
+        status: Actualización
+        line_id: Line ID (DFP)
+        publication_date: Fecha de publicación
+        publication_end_date: Fecha fin de publicación
+        data: 
+      urls:
         title: Titulo
         committed_visits: Visitas comprometidas
         status: Actualización
