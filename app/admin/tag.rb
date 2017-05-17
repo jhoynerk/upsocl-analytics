@@ -2,7 +2,7 @@ ActiveAdmin.register Tag do
   menu parent: "Ajustes"
   permit_params :title, :type_tag
 
-  filter :title
+  filter :title, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
   filter :type_tag, label: 'Tipo', as: :select, collection: proc { TagType.to_a }, input_html: { :multiple => true, class: 'chosen-input select_search'}
 
   index do

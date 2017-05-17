@@ -1,7 +1,7 @@
 ActiveAdmin.register Agency do
   permit_params :name
   menu parent: "Utilidad"
-  filter :name
+  filter :name, label: 'Nombre', as: :select, input_html: { class: 'chosen-input' }
 
   controller do
     def destroy

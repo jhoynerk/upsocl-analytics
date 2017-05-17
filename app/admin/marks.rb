@@ -2,7 +2,7 @@ ActiveAdmin.register Mark do
   permit_params :name, countries_marks_attributes: [ :id, :country_id, :mark_id, :_destroy, agencies_countries_marks_attributes: [ :id, :agency_id, :countries_mark_id, :_destroy, campaign_ids: [] ] ]
   menu parent: "Utilidad"
 
-  filter :name
+  filter :name, label: 'Nombre', as: :select, input_html: { class: 'chosen-input' }
   filter :countries, label: 'Países', as: :select, collection: proc { Country.in_mark }, input_html: { class: 'chosen-input select_search'}
   filter :countries_marks, label: 'Marcas Países', as: :select, collection: proc { CountriesMark.all.map{|cm| ["#{cm.content_search}", cm.id]} }, input_html: { class: 'chosen-input select_search'}
   # show
@@ -16,6 +16,16 @@ ActiveAdmin.register Mark do
         end
       end
     end
+  end
+
+  index do
+    selectable_column
+    column :name
+    column 'Paises' do |mark|
+      mark.countries.pluck(:name).join(", ")
+    end
+    column :created_at
+    actions
   end
 
   # create and update

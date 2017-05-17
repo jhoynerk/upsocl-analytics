@@ -67,7 +67,7 @@ ActiveAdmin.register Campaign do
     actions
   end
 
-  filter :name
+  filter :name, label: 'Nombre', as: :select, input_html: { class: 'chosen-input' }
   filter :tags, label: 'Etiquetas', as: :select, collection: proc { Tag.all.to_a }, input_html: { :multiple => true, class: 'chosen-input select_search'}
 
   form do |f|

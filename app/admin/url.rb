@@ -1,5 +1,5 @@
 ActiveAdmin.register Url do
-  filter :title
+  filter :title, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
   filter :campaign
   menu label: 'Artículos', parent: "Gestor de Campañas"
 
@@ -20,7 +20,7 @@ ActiveAdmin.register Url do
     selectable_column
     id_column
     column :title
-    column 'Campaña' do |u|
+    column 'Campaña', sortable: 'campaign_id' do |u|
       u.campaign_name
     end
     column() {|u| link_to('Editar', edit_admin_url_path(u))}
