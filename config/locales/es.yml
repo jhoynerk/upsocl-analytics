@@ -69,8 +69,8 @@ es:
         one: Agencias
         other: Agencias
       url:
-        one: Articulo
-        other: Articulos
+        one: Artículo
+        other: Artículos
     attributes:
       facebook_post:
         tltle: Titulo
