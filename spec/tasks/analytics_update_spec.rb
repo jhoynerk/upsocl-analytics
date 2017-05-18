@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+include RakeHelpers
 
 describe "analytics:update" do
   include_context "rake"
