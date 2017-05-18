@@ -22,8 +22,8 @@ class FacebookPost < ActiveRecord::Base
   scope :ab_posts, -> { where(original: false) }
   scope :sum_ab_impressions, -> { ab_posts.sum(:post_impressions) }
   scope :count_clicks, -> { sum(:post_clicks) }
-  scope :currents, -> { where("goal > post_impressions") }
-  scope :recently_done, -> { where("goal <= post_impressions") }
+  scope :currents, -> { where("goal > post_video_views") }
+  scope :recently_done, -> { where("goal <= post_video_views") }
   scope :sum_people_reached, -> { sum(:post_impressions_unique) }
 
   scope :filter_date_range, -> (date) { filter_date_in_date(date) }
