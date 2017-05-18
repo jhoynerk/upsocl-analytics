@@ -2,119 +2,30 @@ describe "analytics:update" do
   include_context "rake"
 
   DatabaseCleaner.clean
-  context 'Update Analytics' do
 
-    let!(:url_week_ago) { create(:url, line_id: 437733004, publication_date: 15.days.ago, publication_end_date: 7.days.ago) }
-    let!(:url_month_ago) { create(:url, line_id: 437733004, publication_date: 2.month.ago, publication_end_date: 30.days.ago) }
-    let!(:url_published_week) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 7.days.ago, publication_end_date: 1.days.ago) }
-    let!(:url_published_6_days) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 6.days.ago, publication_end_date: 1.days.ago) }
-    let!(:url_published_5_days) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 5.days.ago, publication_end_date: 1.days.ago) }
-    let!(:url_published_4_days) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 4.days.ago, publication_end_date: 1.days.ago) }
-    let!(:url_published_1_days) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 1.days.ago, publication_end_date: 14.days.since) }
-    let!(:url_published_in_week) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: 7.days.since, publication_end_date: 14.days.since) }
-    let!(:url_published_today) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 437733004, publication_date: Date.today, publication_end_date: 14.days.since) }
-    let!(:url_published_week_not_dfp) { create(:url, data: 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/', line_id: 0, publication_date: 8.days.ago, publication_end_date: 1.days.ago) }
-    before do
-      subject.invoke
-      @count = (@count.nil?) ? 1 : @count + 1
-    end
+  before do
+    subject.invoke
+    @count = (@count.nil?) ? 1 : @count + 1
+  end
 
-    describe 'Check Rake analytics:updated' do
+  context 'When the article has already passed a week of its date to be able to update.' do
+    count_messages_status(@count)
+    #testing({ start_date: 15.days.ago, end_date: 7.days.ago, analytics: 0, dfp: 0, count: @count })
+  end
 
-      it "generate a message report wait and success" do
-        count_messages_status(@count)
-      end
+end
 
-      it 'When the article has already passed a week of its date to be able to update.' do
-        expect(PageStadistic.where(url:  url_week_ago).count).to eq(0)
-        expect(DeviceStadistic.where(url:  url_week_ago).count).to eq(0)
-        expect(TrafficStadistic.where(url:  url_week_ago).count).to eq(0)
-        expect(CountryStadistic.where(url:  url_week_ago).count).to eq(0)
-        expect(DfpStadistic.where(url:  url_week_ago).count).to eq(0)
-        count_messages_status(@count)
-      end
+def testing(args = {})
+    let!(:url) { 'http://www.upsocl.com/branded/10-looks-para-que-te-atrevas-a-usar-la-tendencia-que-se-tomo-instagram-pestanas-de-colores/' }
+    let!(:line_id) { 437733004 }
+    let!(:url_test) { create(:url, data: url, line_id: line_id, publication_date: args[:start_date], publication_end_date: args[:end_date] ) }
 
-      it 'When the article has already passed a month of its date to be able to update.' do
-        expect(PageStadistic.where(url:  url_month_ago).count).to eq(0)
-        expect(DeviceStadistic.where(url:  url_month_ago).count).to eq(0)
-        expect(TrafficStadistic.where(url:  url_month_ago).count).to eq(0)
-        expect(CountryStadistic.where(url:  url_month_ago).count).to eq(0)
-        expect(DfpStadistic.where(url:  url_month_ago).count).to eq(0)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated for 1 week' do
-        expect(PageStadistic.where(url:  url_published_week).count).to eq(7)
-        expect(DeviceStadistic.where(url:  url_published_week).count).to eq(7)
-        expect(TrafficStadistic.where(url:  url_published_week).count).to eq(7)
-        expect(CountryStadistic.where(url:  url_published_week).count).to eq(7)
-        expect(DfpStadistic.where(url:  url_published_week).count).to eq(7)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated for 6 days' do
-        expect(PageStadistic.where(url: url_published_6_days).count).to eq(6)
-        expect(DeviceStadistic.where(url:  url_published_6_days).count).to eq(6)
-        expect(TrafficStadistic.where(url:  url_published_6_days).count).to eq(6)
-        expect(CountryStadistic.where(url:  url_published_6_days).count).to eq(6)
-        expect(DfpStadistic.where(url:  url_published_6_days).count).to eq(6)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated for 5 days' do
-        expect(PageStadistic.where(url: url_published_5_days).count).to eq(5)
-        expect(DeviceStadistic.where(url:  url_published_5_days).count).to eq(5)
-        expect(TrafficStadistic.where(url:  url_published_5_days).count).to eq(5)
-        expect(CountryStadistic.where(url:  url_published_5_days).count).to eq(5)
-        expect(DfpStadistic.where(url:  url_published_5_days).count).to eq(5)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated for 4 days' do
-        expect(PageStadistic.where(url: url_published_4_days).count).to eq(4)
-        expect(DeviceStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(TrafficStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(CountryStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(DfpStadistic.where(url:  url_published_4_days).count).to eq(4)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated for 1 days' do
-        expect(PageStadistic.where(url: url_published_4_days).count).to eq(4)
-        expect(DeviceStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(TrafficStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(CountryStadistic.where(url:  url_published_4_days).count).to eq(4)
-        expect(DfpStadistic.where(url:  url_published_4_days).count).to eq(4)
-        count_messages_status(@count)
-      end
-
-      it 'When the url is published in a week, it should not obtain metrics.' do
-        expect(PageStadistic.where(url: url_published_in_week).count).to eq(0)
-        expect(DeviceStadistic.where(url:  url_published_in_week).count).to eq(0)
-        expect(TrafficStadistic.where(url:  url_published_in_week).count).to eq(0)
-        expect(CountryStadistic.where(url:  url_published_in_week).count).to eq(0)
-        expect(DfpStadistic.where(url:  url_published_in_week).count).to eq(0)
-        count_messages_status(@count)
-      end
-
-      it 'When the article is published today, it should not obtain metrics.' do
-        expect(PageStadistic.where(url: url_published_today).count).to eq(0)
-        expect(DeviceStadistic.where(url:  url_published_today).count).to eq(0)
-        expect(TrafficStadistic.where(url:  url_published_today).count).to eq(0)
-        expect(CountryStadistic.where(url:  url_published_today).count).to eq(0)
-        expect(DfpStadistic.where(url:  url_published_today).count).to eq(0)
-        count_messages_status(@count)
-      end
-
-      it 'When a url is published to be updated analytics, but not DFP' do
-        expect(PageStadistic.where(url:  url_published_week_not_dfp).count).to eq(7)
-        expect(DeviceStadistic.where(url:  url_published_week_not_dfp).count).to eq(7)
-        expect(TrafficStadistic.where(url:  url_published_week_not_dfp).count).to eq(7)
-        expect(CountryStadistic.where(url:  url_published_week_not_dfp).count).to eq(7)
-        expect(DfpStadistic.where(url:  url_published_week_not_dfp).count).to eq(0)
-        count_messages_status(@count)
-      end
+    it 'should be' do
+      expect(PageStadistic.where(url:  url_test).count).to eq(args[:analytics])
+      expect(DeviceStadistic.where(url:  url_test).count).to eq(args[:analytics])
+      expect(TrafficStadistic.where(url:  url_test).count).to eq(args[:analytics])
+      expect(CountryStadistic.where(url:  url_test).count).to eq(args[:analytics])
+      expect(DfpStadistic.where(url:  url_test).count).to eq(args[:dfp])
     end
   end
-end
 
