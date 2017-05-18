@@ -1,15 +1,8 @@
 require 'rails_helper'
-
 include RakeHelpers
-
-DatabaseCleaner.clean
 
 describe "analytics:update" do
   include_context "rake"
-
-  before do
-    subject.invoke
-  end
 
   context 'When the article has already passed a week of its date to be able to update.' do
     is_update({ start_date: 15.days.ago, end_date: 7.days.ago, analytics: 0, dfp: 0 })
