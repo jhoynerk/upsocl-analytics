@@ -34,7 +34,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   });
 
   $scope.changeDateRange = function(opt){
-    $scope.filters['filter_date_range'] = 3;
+    $scope.filters['filter_date_range'] = opt;
     $scope.filters['paginate_page'] = 1;
     searchTags($scope, $scope.real_model_name);
   }
