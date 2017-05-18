@@ -1,6 +1,5 @@
 = render 'shared/heading'
 .wrapper.wrapper-content.animated.fadeInRight
-  = render 'shared/current_nav_tabs'
   .ibox-content.m-b-sm.border-bottom.container-search-in-title
     = render 'shared/search_form'
   .faq-item ng-repeat="campaign in campaigns" ng-if="((!loading) && (campaigns.length > 0))"
