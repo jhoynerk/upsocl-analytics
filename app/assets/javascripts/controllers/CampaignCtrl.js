@@ -7,7 +7,7 @@ myApp.controller('CampaignListController', function($scope, $state, $http, $wind
   $scope.agencies = Agencies.query();
   $scope.filters = {};
   $scope.loading = false;
-  $scope.filters['filter_date_range'] = 1;
+  $scope.filters['filter_date_range'] = 3;
   $scope.pagePerValues = [10,20,30];
   $scope.filters['paginate_regs'] = $scope.pagePerValues[0];
   $scope.filters['paginate_page'] = 1;

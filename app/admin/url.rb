@@ -1,6 +1,6 @@
 ActiveAdmin.register Url do
   filter :title, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
-  filter :campaign
+  filter :campaign, label: 'Nombre de la compaña', as: :select, input_html: { class: 'chosen-input' }
   menu label: 'Artículos', parent: "Gestor de Campañas"
 
   config.clear_action_items!
