@@ -26,6 +26,8 @@ class Url < ActiveRecord::Base
 
   validates :data, presence: true, url: { no_local: true, message: 'el formato no es correto' }
   validates :line_id, :profile_id, presence: true
+  validates :committed_visits, numericality: { less_than_or_equal_to: 2147483647, only_integer: true }
+  validates :line_id, numericality: { less_than_or_equal_to: 9223372036854775807, only_integer: true }
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
   validates :publication_date, presence: true, allow_blank: false
   validates :publication_end_date, presence: true, allow_blank: false
