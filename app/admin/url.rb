@@ -1,7 +1,8 @@
 ActiveAdmin.register Url do
-  filter :title
+  filter :title, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
   filter :campaign
-  menu label: 'Artículos'
+  menu label: 'Artículos', parent: "Gestor de Campañas"
+
   config.clear_action_items!
   permit_params  :campaign_id, :title
   show title: 'Detalles del artículo' do |url|
@@ -15,12 +16,11 @@ ActiveAdmin.register Url do
     end
   end
 
-
   index title: 'Articulos' do |url|
     selectable_column
     id_column
     column :title
-    column 'Campaña' do |u|
+    column 'Campaña', sortable: 'campaign_id' do |u|
       u.campaign_name
     end
     column() {|u| link_to('Editar', edit_admin_url_path(u))}
@@ -50,7 +50,7 @@ ActiveAdmin.register Url do
   member_action :details, method: :post do
     @url = resource
     @country = params[:country]
-    @countries = @url.country_stadistics.countries_for_select.order(country_name: :asc)
+    @countries = @url.country_stadistics.country_select_collection
     @country_stadistics = @url.country_stadistics.by_country(@country).order(date: :desc)
     @page_title = "Estadísticas para articulo: #{resource.title}"
   end

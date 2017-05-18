@@ -1,6 +1,9 @@
 var app = angular.module('upsocl',[
   'ngResource',
+  'upsocl.shared',
   'upsocl.controllers',
+  'upsocl.controllers.url',
+  'upsocl.controllers.video',
   'upsocl.services',
   'daterangepicker',
   'ui.router',
@@ -10,29 +13,40 @@ var app = angular.module('upsocl',[
 
 app.filter('arrayToName', function() {
   return function(input) {
-    var output = input.map(function(u){return u.name}).join(', ')
+    var names = input.map(function(u){return u.name});
+    var output = "";
+    if(names.length > 0) {output = names.join(', ');}
     return output;
   }
 });
 
 app.config(function($stateProvider) {
-  $stateProvider.state('campaigns', {
+  $stateProvider.state('viewAllUrlCampaign', { 
     url: '/',
+    templateUrl: 'url_index_view',
+    controller: 'UrlListController'})
+  .state('campaigns', {
+    url: '/campaigns',
     templateUrl: 'index_view',
     controller: 'CampaignListController'
-  }).state('viewCampaignUrl', { //state for showing single movie
+  })
+  .state('viewCampaignUrl', { 
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
-  }).state('viewCampaignVideo', { //state for showing single movie
+  })
+  .state('viewCampaignVideo', {
     url: '/campaign/videos/:id',
     templateUrl: 'facebook_posts_view',
     controller: 'CampaignVideoViewController'
-  }).state('viewAllCampaignUrl', { //state for showing single movie
-    url: '/campaigns',
+  })
+  .state('viewAllCampaignUrl', { 
+    url: '/campaigns_index',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
-  }).state('viewReactions', {
+
+  })
+  .state('viewReactions', {
     url: '/reactions?url&post_id&publico',
     params: {
         url: null,
@@ -40,7 +54,12 @@ app.config(function($stateProvider) {
     },
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
-  });
-}).run(function($state) {
-  $state.go('campaigns');
+  })
+  .state('viewAllVideoCampaign', { 
+    url: '/videos',
+    templateUrl: 'video_index_view',
+    controller: 'VideoListController'});
+})
+.run(function($state) {
+  $state.go('viewAllUrlCampaign');
 });

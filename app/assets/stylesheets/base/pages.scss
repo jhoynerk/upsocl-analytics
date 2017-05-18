@@ -721,6 +721,9 @@ dd.project-people {
   color: $navy;
   display: block;
 }
+h3.faq-question {
+  font-size: 16px;
+}
 
 .faq-question:hover {
   color: darken($navy, 5%);

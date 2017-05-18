@@ -1,7 +1,8 @@
 ActiveAdmin.register DfpStadistic do
-  permit_params :impressions, :clicks
+  permit_params :impressions, :clicks, :ctr
   config.clear_action_items!
   menu parent: "Estadisticas URL"
+  actions :index, :show, :update, :edit, :destroy
 
   index do
     selectable_column
@@ -14,17 +15,18 @@ ActiveAdmin.register DfpStadistic do
     column :date
     column :impressions
     column :clicks
+    column :ctr
     actions
   end
 
-  filter :url
-  filter :url_id
+  filter :url, label: 'Nombre del articulo', as: :select, input_html: { class: 'chosen-input' }
   filter :date
 
   form do |f|
     f.inputs "Estadistica de dfp" do
       f.input :impressions
       f.input :clicks
+      f.input :ctr
     end
     f.actions
   end

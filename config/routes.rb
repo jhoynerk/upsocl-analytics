@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
     authenticated :user do
-      root 'campaigns#index', as: :root
+      root 'urls#index', as: :root
       get 'campaigns_full', to: 'campaigns#full_info'
     end
 
@@ -22,14 +22,24 @@ Rails.application.routes.draw do
       post 'filter_by_tag', to: 'campaigns#filter_by_tag'
     end
   end
-  resources :urls, only: [:show]
-  resources :facebook_posts, only: [:show]
+  resources :urls, only: [:index, :show] do
+    collection do
+      post 'filter_by_tag', to: 'urls#filter_by_tag'
+    end
+  end
+  resources :facebook_posts, only: [:show] do
+    collection do
+      post 'filter_by_tag', to: 'facebook_posts#filter_by_tag'
+    end
+  end
   get 'facebook_posts/:id/update_stadistics', to: 'facebook_posts#update_stadistics'
   get 'urls/:id/update_stadistics', to: 'urls#update_stadistics'
 
   get 'facebook_posts_view', to: 'facebook_posts#show_view'
   get 'show_view', to: 'urls#show_view'
   get 'index_view', to: 'urls#index_view'
+  get 'url_index_view', to: 'urls#url_index_view'
+  get 'video_index_view', to: 'facebook_posts#index_view'
   get 'show_all_view', to: 'urls#show_all_view'
 
   get 'template', to: 'template#reactions'

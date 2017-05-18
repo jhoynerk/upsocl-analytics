@@ -1,5 +1,8 @@
 ---
 es:
+  status:
+    complete: Completada
+    serving: Sirviendo
   actions:
     new: Nuevo
     edit: Editar
@@ -66,6 +69,12 @@ es:
         one: Agencias
         other: Agencias
     attributes:
+      facebook_post:
+        tltle: Titulo
+        goal: Reproducciones comprometidas
+        post_impressions_unique: Personas Alcanzadas
+        post_impressions: Impresiones
+        post_video_views: Reproducciones
       user/active:
         true_value: Cliente Activo
         false_value: Cliente Inactivo
@@ -98,10 +107,12 @@ es:
       country_mark:
         agencies_countries_marks: agencias
       url:
+        title: Titulo
         committed_visits: Visitas comprometidas
         status: Actualización
         line_id: Line ID (DFP)
         publication_date: Fecha de publicación
+        publication_end_date: Fecha fin de publicación
         data: Url
   datetime:
     distance_in_words:

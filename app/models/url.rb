@@ -1,9 +1,11 @@
 class Url < ActiveRecord::Base
   include TagsUtil
+  include Searchable
 
   DAY_LIMIT_TO_UPDATE = 1.day.ago.to_date
 
   has_enumeration_for :interval_status, with: IntervalStatus, create_scopes: { prefix: true }, create_helpers: true
+  has_enumeration_for :status, with: UrlStatus, create_scopes: { prefix: true }, create_helpers: true
   belongs_to :campaign
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :tags
@@ -27,19 +29,66 @@ class Url < ActiveRecord::Base
   validates :attention, numericality: { greater_than_or_equal_to: :attention_was }, allow_blank: true
   validates :publication_date, presence: true, allow_blank: false
   validates :publication_end_date, presence: true, allow_blank: false
+  validate :publication_dates_valid?
 
   before_save :set_title
   before_create :set_facebook
+  after_save :set_status
   after_create :make_screenshot, :run_analytics_task
-  before_update :run_bg_task
   before_destroy { |record| clean_screenshot(record.id) }
 
   scope :search_urls_to_update, -> { update_start_date.update_end_date }
+  scope :currents, -> { where("'#{Date.today}' between publication_date  and  publication_end_date ") }
+  scope :filter_by_url, -> (url_title){ where(id: ids_finding_by_title(url_title)) }
+  scope :filter_name, -> (campaign_name){ joins(:campaign).where('lower("campaigns"."name") LIKE :query ', query: "%#{campaign_name.downcase}%") }
+  scope :filter_client, -> (id){ joins(campaign: :users).where("users.id": id) }
+  scope :filter_tag, -> (id){ joins(:tags).where(tags: { id: id }) }
+  scope :filter_agency, -> (id){ joins(campaign: :agency).where(agencies: { id: id }) }
 
   scope :update_end_date, -> { where( 'publication_end_date >= ?', DAY_LIMIT_TO_UPDATE ) }
   scope :update_start_date, -> { where( 'publication_date <= ?', DAY_LIMIT_TO_UPDATE ) }
 
   scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  scope :filter_date_range, -> (date) { filter_date_in_date(date) }
+  scope :with_tags, -> (tags) { where(tags: {id: tags}) }
+
+  def publication_dates_valid?
+    if publication_end_date < publication_date
+      errors.add(:publication_date, 'Debe ser menor a fecha fin de publicacion')
+    end
+  end
+
+  def set_status
+    self.update(status: UrlStatus::FINISHED) if reached_the_goal?
+  end
+
+  def reached_the_goal?
+    active? && total_pageviews >= committed_visits
+  end
+
+  def self.ids_finding_by_title(url_title)
+    where('lower("urls"."title") LIKE :query ', query: "%#{url_title.downcase}%").pluck(:id)
+  end
+
+  def self.filter_date_in_date(range)
+    case range
+      when DateFilter::CURRENTS
+        currents
+      when DateFilter::WEEKS_AGO
+        where(publication_end_date: 3.week.ago..Date.today)
+      else
+        all
+    end
+  end
+
+  def tag_titles
+    tags.map(&:title).join(', ')
+  end
+
+  def goal_status
+    (total_pageviews > committed_visits) ? 'Completada' : 'Sirviendo'
+  end
 
   def fb_posts_totals
     {
@@ -61,13 +110,6 @@ class Url < ActiveRecord::Base
   def set_title
     if data_changed?
       self.title = Pismo[data].titles.last.split(' | ').first
-    end
-  end
-
-  def run_bg_task
-    if self.data_changed?
-      make_screenshot
-      run_analytics_task
     end
   end
 

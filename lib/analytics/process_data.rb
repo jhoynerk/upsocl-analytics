@@ -18,11 +18,14 @@ class ProcessData
         avgtimeonpage: data&.avgtimeonpage.to_f,
         pageviews: data&.pageviews.to_i,
         users: data&.users.to_i,
-        country_name: data&.country,
         country_code: data&.countryIsoCode,
+        country_id: country_id_by(data&.countryIsoCode),
         traffic_type: data&.traffictype,
         device_type: data&.deviceCategory
       }
     end
-end
 
+    def country_id_by(country_code)
+      Country.find_by(code: country_code)&.id
+    end
+end

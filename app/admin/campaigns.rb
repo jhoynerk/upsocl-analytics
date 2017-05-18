@@ -1,6 +1,8 @@
 ActiveAdmin.register Campaign do
+  menu parent: "Gestor de Campañas"
+
   permit_params :name, :agencies_countries_mark_id, :url, user_ids: [], tag_ids: [],
-                urls_attributes: [ :id, :publication_date, :publication_end_date, :data, :publicity, :screenshot, :line_id,
+                urls_attributes: [ :id, :publication_date, :committed_visits, :publication_end_date, :data, :publicity, :screenshot, :line_id,
                                    :_destroy, :profile_id, :interval_status, :country_ids=> [],
                                    :tag_ids=> [],facebook_posts_attributes: [ :id, :post_id,
                                    :facebook_account_id, :original, :_destroy ] ],
@@ -65,7 +67,7 @@ ActiveAdmin.register Campaign do
     actions
   end
 
-  filter :name
+  filter :name, label: 'Nombre', as: :select, input_html: { class: 'chosen-input' }
   filter :tags, label: 'Etiquetas', as: :select, collection: proc { Tag.all.to_a }, input_html: { :multiple => true, class: 'chosen-input select_search'}
 
   form do |f|
@@ -83,6 +85,7 @@ ActiveAdmin.register Campaign do
         a.input :screenshot
         a.input :publication_date, as: :datepicker
         a.input :publication_end_date, as: :datepicker
+        a.input :committed_visits, as: :number
         a.input :line_id, :input_html => { :type => 'text' }
         a.input :publicity, label: 'Con publicidad'
         a.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'

@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+  menu  priority: 7
   permit_params :email, :name, :password, :password_confirmation, :role, campaign_ids: []
 
   controller do
@@ -39,6 +40,7 @@ ActiveAdmin.register User do
   filter :name
   filter :current_sign_in_at
   filter :created_at
+  filter :role, as: :select, collection: User.roles.to_a
 
   form do |f|
     f.inputs "User Details" do
