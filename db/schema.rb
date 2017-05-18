@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516151626) do
+ActiveRecord::Schema.define(version: 20170518195207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,24 +293,24 @@ ActiveRecord::Schema.define(version: 20170516151626) do
   create_table "urls", force: :cascade do |t|
     t.string   "data"
     t.integer  "campaign_id"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.string   "title"
-    t.integer  "line_id"
+    t.integer  "line_id",              limit: 8, default: 0
     t.string   "screenshot"
-    t.boolean  "publicity",            default: true
-    t.string   "profile_id",           default: "111669814"
-    t.integer  "interval_status",      default: 0
-    t.integer  "facebook_likes",       default: 0
-    t.integer  "facebook_comments",    default: 0
-    t.integer  "facebook_shares",      default: 0
-    t.float    "attention",            default: 0.0
-    t.boolean  "publico",              default: false
+    t.boolean  "publicity",                      default: true
+    t.string   "profile_id",                     default: "111669814"
+    t.integer  "interval_status",                default: 0
+    t.integer  "facebook_likes",                 default: 0
+    t.integer  "facebook_comments",              default: 0
+    t.integer  "facebook_shares",                default: 0
+    t.float    "attention",                      default: 0.0
+    t.boolean  "publico",                        default: false
     t.date     "publication_date"
     t.date     "publication_end_date"
     t.datetime "data_updated_at"
-    t.integer  "committed_visits",     default: 0
-    t.integer  "status",               default: 0
+    t.integer  "committed_visits",               default: 0
+    t.integer  "status",                         default: 0
   end
 
   add_index "urls", ["campaign_id"], name: "index_urls_on_campaign_id", using: :btree
