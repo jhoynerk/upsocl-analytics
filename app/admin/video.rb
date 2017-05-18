@@ -3,6 +3,11 @@ ActiveAdmin.register FacebookPost do
   actions :index, :edit, :update
   menu  label: 'Video', parent: "Gestor de Campañas"
 
+  #filter :account, label: 'Canal'
+  filter :title, label: 'Titulo', as: :select, input_html: { class: 'chosen-input' }
+  filter :campaign, label: 'Campaña', as: :select, input_html: { class: 'chosen-input' }
+  filter :facebook_account, label: 'Canal', as: :select, collection: proc { FacebookAccount.all.to_a }, input_html: { class: 'chosen-input select_search'}
+
   config.clear_action_items!
   permit_params  :campaign_id
 
