@@ -4,7 +4,23 @@ ActiveAdmin.register Url do
   menu label: 'Artículos', parent: "Gestor de Campañas"
 
   config.clear_action_items!
-  permit_params  :campaign_id, :title
+
+  action_item :only => :index do
+    link_to "Añadir Articulo" , new_admin_url_path
+  end
+
+  permit_params  :campaign_id, :title, :id, :publication_date,
+  :committed_visits, :publication_end_date, :data, :publicity, :screenshot, :line_id,
+  :_destroy, :profile_id, :interval_status, :country_ids=> [],
+  :tag_ids=> [], facebook_posts_attributes: [ :id, :post_id, :facebook_account_id, :original, :_destroy ]
+
+  analytics = [ ["www.cutypaste.com", "41995195"],
+      ["All Web Site Data", "70319478"],
+      ["Cutypaste Vitrina", "95335599"],
+      ["Upsocl Network", "92974712"],
+      ["Upsocl Branded", "111669814"],
+      ["Upsocl + CK2", "118766523"] ]
+
   show title: 'Detalles del artículo' do |url|
     panel 'Detalles' do
       attributes_table_for url do
@@ -30,9 +46,27 @@ ActiveAdmin.register Url do
 
   form do |f|
     f.inputs "Articulo" do
-      li "Título: #{f.object.title}"
-      li "Campaña Actual: #{f.object.campaign_name}"
-      f.input :campaign_id, label: 'Campaña Nueva', as: :select, collection: Campaign.all.map{ |a| [ "#{a.name}", a.id] }, input_html: { class: 'chosen-input'}
+      li "Título: #{f.object.title}" if f.object.title
+      li "Campaña Actual: #{f.object.campaign_name}" if f.object.campaign_name
+      f.input :campaign_id, label: 'Campaña Nueva', as: :select, collection: Campaign.all.map{ |a| [ "#{a.name}", f.id] }, input_html: { class: 'chosen-input'}
+      f.input :data
+      f.input :screenshot
+      f.input :publication_date, as: :datepicker
+      f.input :publication_end_date, as: :datepicker
+      f.input :committed_visits, as: :number
+      f.input :line_id, :input_html => { :type => 'text' }
+      f.input :publicity, label: 'Con publicidad'
+      f.input :countries, :as => :select, :input_html => {:multiple => true, :class => "chosen-input"}, label: 'Paises'
+      f.input :tags, :as => :select, collection: Tag.type_tag_sub_category.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Sub-Categoría'
+      f.input :tags, :as => :select, collection: Tag.type_tag_type_content.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 3 }, label: 'Tipo de Contenido'
+      f.input :tags, :as => :select, collection: Tag.type_tag_tone.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 2 }, label: 'Tono'
+      f.input :tags, :as => :select, collection: Tag.type_tag_format.to_a, :input_html => {:multiple => true, :class => "chosen-input", 'data-maxselected' => 1 }, label: 'Formato'
+      f.input :profile_id, label: 'Account Analytics', as: :select, collection: analytics, input_html: { class: 'chosen-input'}
+      f.has_many :facebook_posts, heading: 'Post Facebook asociados', allow_destroy: true, new_record: 'Añadir Post Facebook' do |e|
+        e.input :post_id, label: 'ID del post de facebook'
+        e.input :facebook_account, :as => :select, :input_html => { :class => "chosen-input"}
+        e.input :original, label: 'Original'
+      end
     end
     f.actions
   end

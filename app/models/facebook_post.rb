@@ -7,9 +7,6 @@ class FacebookPost < ActiveRecord::Base
   belongs_to :campaign
   has_and_belongs_to_many :tags
 
-  scope :active, -> { where('goal >= post_impressions') }
-  scope :finished, -> { where('goal <= post_impressions') }
-
   scope :urls, -> { where.not(campaign_id: nil) }
   scope :goal_achieveds, -> { urls.where(goal_achieved: true) }
   scope :unreached_goals, -> { urls.where(goal_achieved: false) }
@@ -22,8 +19,8 @@ class FacebookPost < ActiveRecord::Base
   scope :ab_posts, -> { where(original: false) }
   scope :sum_ab_impressions, -> { ab_posts.sum(:post_impressions) }
   scope :count_clicks, -> { sum(:post_clicks) }
-  scope :currents, -> { where("goal > post_impressions") }
-  scope :recently_done, -> { where("goal <= post_impressions") }
+  scope :currents, -> { where("goal > post_video_views") }
+  scope :recently_done, -> { where("goal <= post_video_views") }
   scope :sum_people_reached, -> { sum(:post_impressions_unique) }
 
   scope :filter_date_range, -> (date) { filter_date_in_date(date) }
