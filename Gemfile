@@ -107,6 +107,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'faker', '1.4.3'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -118,7 +119,6 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'simplecov', require: false

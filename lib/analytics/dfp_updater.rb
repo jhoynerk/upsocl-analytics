@@ -28,6 +28,10 @@ class DfpUpdater
     end
 
     def conection
-      DfpConnection.new.run_report(start_date: attr_start_date, end_date: attr_end_date, item_id: @url.line_id)
+      if Rails.env.test?
+        DfpData.new(attr_start_date, attr_end_date, @url).results
+      else
+        DfpConnection.new.run_report(start_date: attr_start_date, end_date: attr_end_date, item_id: @url.line_id)
+      end
     end
 end

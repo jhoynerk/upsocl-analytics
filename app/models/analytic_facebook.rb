@@ -2,9 +2,7 @@ class AnalyticFacebook
 
   def initialize(url)
     @url = url
-    @likes = (url.facebook_likes > 0) ? url.facebook_likes : 0
-    @comments = (url.facebook_comments > 0) ? url.facebook_comments : 0
-    @shares = (url.facebook_shares > 0) ? url.facebook_shares : 0
+    @likes, @comments, @shares = url.facebook_likes, url.facebook_comments, url.facebook_shares
   end
 
   def get_data_facebook
@@ -29,7 +27,7 @@ class AnalyticFacebook
   end
 
   def social_shares
-    @shares = SocialShares.facebook @url.data
+    @shares = SocialShares.facebook @url.data unless Rails.env.test?
   end
 
   def save
