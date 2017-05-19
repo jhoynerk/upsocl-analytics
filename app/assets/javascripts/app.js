@@ -21,7 +21,7 @@ app.filter('arrayToName', function() {
 });
 
 app.config(function($stateProvider) {
-  $stateProvider.state('viewAllUrlCampaign', { 
+  $stateProvider.state('viewAllUrlCampaign', {
     url: '/',
     templateUrl: 'url_index_view',
     controller: 'UrlListController'})
@@ -30,7 +30,7 @@ app.config(function($stateProvider) {
     templateUrl: 'index_view',
     controller: 'CampaignListController'
   })
-  .state('viewCampaignUrl', { 
+  .state('viewCampaignUrl', {
     url: '/campaign/urls/:id',
     templateUrl: 'show_view',
     controller: 'CampaignUrlViewController'
@@ -40,11 +40,20 @@ app.config(function($stateProvider) {
     templateUrl: 'facebook_posts_view',
     controller: 'CampaignVideoViewController'
   })
-  .state('viewAllCampaignUrl', { 
+  .state('viewUrl', {
+    url: '/urls/:id',
+    templateUrl: 'show_url_view',
+    controller: 'CampaignUrlViewController'
+  })
+  .state('viewVideo', {
+    url: '/videos/:id',
+    templateUrl: 'show_facebook_post_view',
+    controller: 'CampaignVideoViewController'
+  })
+  .state('viewAllCampaignUrl', {
     url: '/campaigns_index',
     templateUrl: 'show_all_view',
     controller: 'CampaignAllUrlViewController'
-
   })
   .state('viewReactions', {
     url: '/reactions?url&post_id&publico',
@@ -55,7 +64,7 @@ app.config(function($stateProvider) {
     templateUrl: 'view_reactions',
     controller: 'ReactionsController'
   })
-  .state('viewAllVideoCampaign', { 
+  .state('viewAllVideoCampaign', {
     url: '/videos',
     templateUrl: 'video_index_view',
     controller: 'VideoListController'});

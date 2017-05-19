@@ -7,7 +7,7 @@
   .faq-item ng-repeat="video in facebook_posts" ng-if="((!loading) && (facebook_posts.length > 0))"
     .row
       .col-md-3
-        a ui-sref='viewCampaignVideo({ id: video.id })'
+        a ui-sref='viewVideo({ id: video.id })'
           h3.faq-question
             | {{ video.title }}
       .col-md-1.text-center

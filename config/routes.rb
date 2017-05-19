@@ -36,7 +36,9 @@ Rails.application.routes.draw do
   get 'urls/:id/update_stadistics', to: 'urls#update_stadistics'
 
   get 'facebook_posts_view', to: 'facebook_posts#show_view'
+  get 'show_facebook_post_view', to: 'facebook_posts#show_facebook_post_view'
   get 'show_view', to: 'urls#show_view'
+  get 'show_url_view', to: 'urls#show_url_view'
   get 'index_view', to: 'urls#index_view'
   get 'url_index_view', to: 'urls#url_index_view'
   get 'video_index_view', to: 'facebook_posts#index_view'

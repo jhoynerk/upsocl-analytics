@@ -7,7 +7,7 @@
   .faq-item ng-repeat="url in urls" ng-if="((!loading) && (urls.length > 0))"
     .row
       .col-md-3
-        a ui-sref='viewCampaignUrl({ id: url.id })'
+        a ui-sref='viewUrl({ id: url.id })'
           h3.faq-question
             | {{ url.title }}
       .col-md-1.text-center

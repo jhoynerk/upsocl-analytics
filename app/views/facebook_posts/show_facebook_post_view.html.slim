@@ -1,0 +1,14 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-8
+    h2 Campa&ntilde;a: {{ video.campaign.name }}
+    ol.breadcrumb
+      li
+        a href="" ui-sref='viewAllUrlCampaign()'  Inicio
+      li
+        a href='/' ui-sref="viewAllVideoCampaign()" Videos
+      li.active
+        strong
+          | {{ video.title }}
+  .col-sm-4
+    = render 'shared/date_range'
+= render 'facebook_posts/statistic_details'

@@ -1,0 +1,14 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-8
+    h2 Campa&ntilde;a: {{ url.campaign.name }}
+    ol.breadcrumb
+      li
+        a href="" ui-sref='viewAllUrlCampaign()'  Inicio
+      li
+        a href='/' ui-sref="viewAllUrlCampaign()" Artículos
+      li.active
+        strong
+          | {{ url.title }}
+  .col-sm-4
+    = render 'shared/date_range'
+= render 'urls/statistic_details'
