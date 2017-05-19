@@ -7,15 +7,28 @@ describe Url do
   let!(:url_active_week) { create(:url, publication_date: 8.days.ago, publication_end_date: 1.days.ago) }
   let!(:url_active_month) { create(:url, publication_date: 32.days.ago, publication_end_date: 1.days.ago) }
 
+  context 'when this is create' do
+    it 'title should be' do
+      title = 'El juez se levanta totalmente cautivado cuando esta pareja hace esto. Te pasará lo mismo'
+      expect(url_inactive.title).to eq(title)
+    end
 
-  it 'when this url creates a title should be' do
-    title = 'El juez se levanta totalmente cautivado cuando esta pareja hace esto. Te pasará lo mismo'
-    expect(url_inactive.title).to eq(title)
+    it 'date for last update' do
+      expect(url_inactive.data_updated_at.to_date).to eq(Date.today)
+    end
+    context 'line_id should' do
+      it 'be less to "9223372036854775809"' do
+        url_inactive.line_id = 9223372036854775809
+        expect(url_inactive).to_not be_valid
+      end
+      it 'less than or equal to to "9223372036854775807"' do
+        url_inactive.line_id = 9223372036854775807
+        expect(url_inactive).to be_valid
+      end
+    end
   end
 
-  it 'date for last update' do
-    expect(url_inactive.data_updated_at.to_date).to eq(Date.today)
-  end
+
 
   it 'When update stadistic facebook' do
     url = create(:url_with_facebook, post_id: "825943334240548")
