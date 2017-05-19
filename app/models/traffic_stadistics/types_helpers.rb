@@ -7,9 +7,13 @@ class TrafficStadistics::TypesHelpers
 
   private
     def self.search_type
-      self.traffic_hash.each do |key, values|
-        return (values.include? formatted_string) ? key : TrafficTypeStadistics::OTHERS
-      end
+      result = TrafficTypeStadistics::OTHERS
+      TrafficTypeStadistics.list.each{ |key| result = key if exist_value?(key) }
+      result
+    end
+
+    def self.exist_value?(key)
+      traffic_hash[key.to_s].include?(formatted_string)
     end
 
     def self.formatted_string
@@ -19,8 +23,9 @@ class TrafficStadistics::TypesHelpers
     def self.traffic_hash
       {
         "#{TrafficTypeStadistics::UPSOCL}": ['pagina', 'direct'],
-        "#{TrafficTypeStadistics::FACEBOOK}": ['facebook', 'referall']
-      }
+        "#{TrafficTypeStadistics::FACEBOOK}": ['facebook', 'referall'],
+        "#{TrafficTypeStadistics::OTHERS}": []
+      }.stringify_keys!
     end
 
 end
