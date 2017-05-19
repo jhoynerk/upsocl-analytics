@@ -1,0 +1,7 @@
+es:
+  enumerations:
+    traffic_type_stadistics:
+      others: 'Otros'
+      upsocl: 'Upsocl'
+      facebook: 'Facebook'
+
