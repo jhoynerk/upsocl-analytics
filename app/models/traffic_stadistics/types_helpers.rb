@@ -1,7 +1,7 @@
 class TrafficStadistics::TypesHelpers
 
   def self.type_by(traffic_name)
-    @traffic_name = traffic_name
+    @traffic_name = traffic_name.nil? ? '' : traffic_name.to_s
     search_type
   end
 
