@@ -157,7 +157,7 @@ class Url < ActiveRecord::Base
     objects.each do |obj|
       result[obj] = self.send(obj).where( date: datetime ).totals
     end
-    result['traffic_stadistics'] = orden_traffic_stadistics(traffic_stadistics.totals)
+    result['traffic_stadistics'] = traffic_stadistics.totals
     result['country_stadistics'] = country_stadistics.where( date: datetime ).totals(associated_countries)
     result['page_stadistics'] = country_stadistics.where( date: datetime ).totals_by_date(associated_countries)
     result
@@ -249,48 +249,11 @@ class Url < ActiveRecord::Base
     Hash[*array.flatten]
   end
 
-  def orden_traffic_stadistics( data )
-    site = name_site
-    traffic_type = { referral: 'Facebook',
-      facebook: 'Facebook',
-      pagina: site,
-      direct: site,
-      organic: 'Buscadores de Google'
-    }
-    data.each do |v|
-      v[:traffic_type] = traffic_type[:"#{v[:traffic_type].downcase}"]
-      v[:traffic_type] = 'Otros' if v[:traffic_type].nil?
-    end
-    sum_traffic(traffic_type, data, site)
-  end
-
   def name_site
     (profile_id == "41995195")? "C&P" : "Upsocl"
   end
-  def sum_traffic(traffic, data, site)
-    facebook = 0
-    upsocl = 0
-    buscadores = 0
-    otros = 0
-    data.each do |d|
-      case d[:traffic_type]
-        when 'Facebook'
-          facebook += 1
-        when site
-          upsocl += 1
-        when 'Buscadores de Google'
-          buscadores += 1
-        when 'Otros'
-          otros += 1
-      end
-    end
 
-    data = group_traffic(data, 'Facebook') if (facebook > 1)
-    data = group_traffic(data, site) if (upsocl > 1)
-    data = group_traffic(data, 'Buscadores de Google') if (buscadores > 1)
-    data = group_traffic(data, 'Otros') if (otros > 1)
-    return data
-  end
+
 
   def group_traffic(data, group)
     last = nil
