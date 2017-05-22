@@ -6,7 +6,9 @@ class TrafficStadistic < ActiveRecord::Base
   validates :date, uniqueness: { scope: [ :url, :traffic_type] }
   validates :pageviews, numericality: { greater_than_or_equal_to: :pageviews_was }, allow_blank: true
 
-  scope :totals, -> { group(:traffic_type_int).sum(:pageviews).map {|c| { traffic_type: TrafficTypeStadistics.key_for(c[0]), pageviews: c[1]} } }
+  scope :totals, -> { pageviws_to_traffic_by.map {|c| { traffic_type: TrafficTypeStadistics.t(c[0]), pageviews: c[1]} } }
+  scope :pageviws_to_traffic_by, -> { group(:traffic_type_int).sum(:pageviews) }
+
 
   before_create :select_traffic_type
 
