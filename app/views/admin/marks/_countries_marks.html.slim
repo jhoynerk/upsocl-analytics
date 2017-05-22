@@ -1,0 +1,22 @@
+ul
+  - countries_marks.each do |cm|
+    li
+      p
+        strong País
+        span = "  #{cm.country_name}"
+        br
+        br
+        strong Agencias
+        ul
+          - cm.agencies_countries_marks.each do |acm|
+            li
+              strong Agencia
+              |  #{acm.agency_name}
+              br
+              strong Campañas
+              ul
+                - acm.campaigns.each do |c|
+                  li = c.name
+
+
+

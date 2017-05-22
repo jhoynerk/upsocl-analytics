@@ -44,7 +44,6 @@ function make_pie_charts(info, legend_id, canvas_id, label){
   var colors = ["#1ab394", "#1c84c6","#ed5565","#23c6c8","#f8ac59","#9E9E9E"];
 
   var arr = [];
-
   $.each(info, function(index, i){
     arr.push({
       value: parseInt(i.pageviews),
@@ -83,6 +82,8 @@ function make_bars_chart(data){
     arr_pageviews.push([moment(i.date).toDate(), parseInt(i.pageviews)])
   });
 
+
+
   $('#total-visits').html(totalize(arr_pageviews, 1));
 
   set_process_data(progress_percent(arr_pageviews, 1, 'normal'), '#visits-percent');
@@ -104,9 +105,9 @@ function make_bars_chart(data){
   var options = {
       xaxis: {
           mode: "time",
+          timeformat: "%d-%b-%Y",
           tickSize: [size_legend(data), "day"],
           tickLength: 0,
-          axisLabel: "Date",
           axisLabelUseCanvas: true,
           axisLabelFontSizePixels: 12,
           axisLabelFontFamily: 'Arial',

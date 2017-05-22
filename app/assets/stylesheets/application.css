@@ -10,7 +10,12 @@
  *
  *= require_self
  *= require font-awesome
+ *= require jquery-ui
  *= require animate/animate.css
  *= require bootstrap-daterangepicker/daterangepicker.css
+//= require dataTables/dataTables.bootstrap.css
+//= require dataTables/dataTables.responsive.css
+//= require dataTables/dataTables.tableTools.min.css
+//= require chosen.min
  *= require style
  */

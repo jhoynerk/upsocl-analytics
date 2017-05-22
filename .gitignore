@@ -1,3 +1,4 @@
+.DS_Store
 *.rbc
 capybara-*.html
 .rspec
@@ -19,7 +20,10 @@ pickle-email-*.html
 /shared
 /config/cloudinary.yml
 /public/uploads/*
-
+/public/assets/*
+/bower_components/*
+/public/*
+/node_modules/*
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 
@@ -36,7 +40,6 @@ config/initializers/secret_token.rb
 # if using bower-rails ignore default bower_components path bower.json files
 /vendor/assets/bower_components
 *.bowerrc
-bower.json
 
 # Ignore pow environment settings
 .powenv

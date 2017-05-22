@@ -1,37 +1,39 @@
 ActiveAdmin.register CountryStadistic do
+  include AvgUtils
+
   permit_params :pageviews, :avgtimeonpage, :url_id, :date, :users, :country_code, :country_name
+  menu parent: "Estadisticas URL"
+  config.sort_order = 'campaign_name_asc'
 
   index do
     selectable_column
-    column(:campaña) do |u|
-      u.url.campaign.name.titleize
-    end
+    column :campaign_name
     column(:url) do |u|
-      truncate(u.url.title, length: 50)
+      link_to truncate(u.url_title, length: 50), details_admin_url_path(u.url_id, country: u.country_code), method: :post
     end
-    column :date
-    column :country_code
-    column :pageviews
-    column :avgtimeonpage
-    actions
+    column :country_name
+    column :pageviews, sortable: 'sum(pageviews)'
+    column :avgtimeonpage, sortable: 'sum(avgtimeonpage)'
   end
-
-  filter :url
-  filter :url_id
-  filter :date
-  filter :country_code
-
+  filter :url, label: 'Nombre del articulo', as: :select, input_html: {class: 'chosen-input'}
+  filter :country_code, as: :select, collection: Country.for_select, input_html: {class: 'chosen-input'}
   form do |f|
-    f.inputs "Estadisticas de país" do
+    f.inputs "Estadisticas de País" do
       f.input :url, :as => :select, :input_html => { :class => "chosen-input"}
       f.input :date
       f.input :country_name
       f.input :country_code
       f.input :pageviews
       f.input :users
-      f.input :avgtimeonpage
+      f.input :avgtimeonpage, as: :string, input_html: { class: 'timepicker' }
     end
     f.actions
+  end
+
+  controller do
+    def index
+      @country_stadistics = collection.page(params[:page]).by_assigned_country.grouped_by_country
+    end
   end
 
 end

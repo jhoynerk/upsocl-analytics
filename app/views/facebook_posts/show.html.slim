@@ -1,0 +1,22 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-8
+    h2 Campa&ntilde;a: {{ video.campaign.name }}
+    ol.breadcrumb
+      li
+        a href="" ui-sref='campaigns()'  Inicio
+      li
+        a href='/' ui-sref="campaigns" Campa&ntilde;as
+      li.active
+        strong
+          | {{ video.campaign.name }}
+  .col-sm-4
+    = render 'shared/date_range'
+  .col-sm-offset-4.col-sm-4
+    div ng-if="video.next_url != nil"
+      a.btn.btn-outline.btn-info.pull-right ui-sref='viewCampaignUrl({ id: video.next_video.id })'
+        | Siguiente
+        i.fa.fa-arrow-right
+    div ng-if="video.previous_url != nil"
+      a.btn.btn-outline.btn-info.pull-left ui-sref='viewCampaignUrl({ id: video.previous_video.id })'
+        i.fa.fa-arrow-left  Anterior
+= render 'facebook_posts/statistic_details'

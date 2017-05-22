@@ -15,6 +15,10 @@ html ng-app="upsocl"
     #wrapper
       /! Page wraper
       #page-wrapper.gray-bg
+        - if flash[:alert]
+          .alert.alert-danger.alert-dismissable = flash[:alert]
+        - if flash[:notice]
+          .alert.alert-success.alert-dismissable = flash[:notice]
         /! Page wrapper
         = render 'layouts/topnavbar'
         /! Main view

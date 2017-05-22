@@ -1,0 +1,68 @@
+= render 'shared/heading'
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/current_nav_tabs'
+  .ibox-content.m-b-sm.border-bottom.container-search-in-title
+    = render 'shared/search_form'
+
+  .faq-item ng-repeat="url in urls" ng-if="((!loading) && (urls.length > 0))"
+    .row
+      .col-md-3
+        a ui-sref='viewUrl({ id: url.id })'
+          h3.faq-question
+            | {{ url.title }}
+      .col-md-1.text-center
+        span.small.font-bold Estado
+        br/
+        span.badge ng-class="(url.goal_status == 'Completada') ? 'badge-primary' : 'badge-warning'"
+          | {{ url.goal_status }}
+      .col-md-2.text-center
+        div data-toggle="tooltip" title="Usuarios: {{ url.campaign.users | arrayToName }}   |   Cliente/Pais/Agencia: {{ url.agencies_countries_mark_format }}"
+          span.small.font-bold Campaña
+          br/
+          | {{ url.campaign.name }}
+      .col-md-2.text-center
+        br/
+        a href="{{url.data}}"  target="_blank"
+          | Ver Articulo
+      .col-md-2.text-center
+        span.small.font-bold País
+        br/
+        | {{ url.countries | arrayToName }}
+      .col-md-2.text-center ng-if="#{!current_user.cliente?}"
+        span.small.font-bold Etiquetas
+        br/
+        | {{ url.tag_titles }}
+
+  .faq-item ng-if="((!loading) && (urls.length > 0))"
+    .row
+      .col-md-5
+        | Mostrando registros del
+        b.m-xs
+          | {{ firstRegPage() }}
+        | al
+        b.m-xs
+          | {{ lastRegPage() }}
+        | de un total de
+        b.m-xs
+          | {{paginate.count}}
+        | registros
+      col-sm-7
+        ul.pagination.slim
+          li#employees-table_first.paginate_button.first ng-click="firstPage()"
+            a Primero
+          li#employees-table_previous.paginate_button.previous ng-click="prevPage()"
+            a Anterior
+          li.paginate_button ng-repeat="page in paginatePages()" ng-class="(page == paginate.current_page)? 'active': '' " ng-click="toPage(page)"
+            a
+              | {{ page }}
+          li#employees-table_next.paginate_button.next ng-click="nextPage()"
+            a Siguiente
+          li#employees-table_last.paginate_button.last ng-click="lastPage()"
+            a Último
+
+  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="urls.length < 1"
+    .ibox-content.m-b-sm.border-bottom.text-center
+      h3 No se ha encontrado ninguna url
+  .wrapper.wrapper-content.animated.fadeInRight.ng-scope ng-if="loading"
+    .ibox-content.m-b-sm.border-bottom.text-center
+      h3 Cargando..

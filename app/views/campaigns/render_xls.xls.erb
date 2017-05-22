@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ss:Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <ss:Worksheet ss:Name="Sheet1">
+    <ss:Table>
+      <ss:Row>
+        <ss:Cell><ss:Data ss:Type="String">Titulo</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Link</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Campaña</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Ids Facebook</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Visitas</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Shares</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Comments</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Likes</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Divertido</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Indiferente</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Sorprendido</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Molesto</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Entusiasmado</ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String">Total</ss:Data></ss:Cell>
+      </ss:Row>
+    <% @urls.each do |url| %>
+      <ss:Row>
+        <ss:Cell><ss:Data ss:Type="String"><%= url[:title] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= url[:link] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= url[:name_campaign] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="String"><%= url[:ids_facebooks] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url[:visitas] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url[:shares] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url[:comments] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url[:likes] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Divertido"] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Indiferente"] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Sorprendido"] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Molesto"] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Entusiasmado"] %></ss:Data></ss:Cell>
+        <ss:Cell><ss:Data ss:Type="Number"><%= url["Divertido"] + url["Indiferente"] + url["Sorprendido"] + url["Molesto"] + url["Entusiasmado"]%></ss:Data></ss:Cell>
+      </ss:Row>
+    <% end %>
+    </ss:Table>
+  </ss:Worksheet>
+</ss:Workbook>

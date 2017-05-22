@@ -1,0 +1,62 @@
+ul
+  - videos.each do |u|
+    li
+      p
+        strong Url Id
+        span = " = #{u.id}"
+      p
+        strong Post Id
+        span = " = #{u.post_id}"
+      p
+        strong Url Video Vimeo
+        span = " = #{u.url_video}"
+      p
+        strong Cuenta Facebook
+        span = " = #{u.facebook_account.name}"
+      p
+        strong Última actualización
+        span = " = #{u.data_updated_at} "
+      p
+        strong Meta Alcanzada?
+        span = " = #{u.goal_achieved} "
+      p
+        strong Meta Publicitaria
+        span = " = #{u.goal} "
+      p
+        strong Tags
+        span = " = #{u.tags.map(&:title).to_s} "
+      p
+        strong Metricas
+        ul
+          li
+            p
+              strong Total Likes
+              span = " = #{u.total_likes}"
+          li
+            p
+              strong Total Comentarios
+              span = " = #{u.total_comments}"
+          li
+            p
+              strong Total Compartidos
+              span = " = #{u.total_shares}"
+          li
+            p
+              strong Personas Alcanzadas
+              span = " = #{u.post_impressions_unique}"
+          li
+            p
+              strong Tiempo Promedio de Reproducción
+              span = " = #{u.post_video_avg_time_watched}"
+          li
+            p
+              strong Vistas de Video
+              span = " = #{u.post_video_views}"
+          li
+            p
+              strong Tiempo de Reproducción
+              span = " = #{u.post_video_view_time}"
+          li
+            p
+              strong Tiempo de Reproducción Mayor a 10 Seg
+              span = " = #{u.post_video_views_10s}"

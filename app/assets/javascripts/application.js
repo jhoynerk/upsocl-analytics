@@ -12,6 +12,8 @@
 //
 //= require jquery/jquery-2.1.1
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery-ui/datepicker-ru
 //= require bootstrap-sprockets
 //= require moment
 //= require metisMenu/jquery.metisMenu
@@ -24,6 +26,11 @@
 //= require angular-ui-router/release/angular-ui-router
 //= require bootstrap-daterangepicker/daterangepicker.js
 //= require angular-rails-templates
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require angular-datatables
+//= require chosen.jquery.min.js
+//= require angular-chosen-localytics
 //= require_tree ./services
 //= require_tree ./controllers
 //= require app
@@ -32,6 +39,7 @@
 //= require html2canvas
 //= require jspdf
 //= require html2canvas.svg.js
+//= require hide_alerts.js
 
 //= require flot/jquery.flot.js
 //= require flot/jquery.flot.tooltip.min.js
@@ -44,3 +52,4 @@
 //= require jvectormap/jquery-jvectormap-2.0.2.min.js
 //= require jvectormap/jquery-jvectormap-world-mill-en.js
 //= require toastr/toastr.min.js
+//# sourceMappingURL=/assets/toastr/toastr.js.map

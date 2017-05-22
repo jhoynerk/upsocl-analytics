@@ -8,4 +8,11 @@ class CampaignDecorator < Draper::Decorator
     I18n.l(object.created_at, format: :short)
   end
 
+  def agencies_countries_mark_format
+    object.agencies_countries_mark ? object.agencies_countries_mark.full_info : 'Sin Asignar'
+  end
+
+  def tag_names
+    active_tag_names
+  end
 end

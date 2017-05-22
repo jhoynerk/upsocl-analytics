@@ -1,0 +1,95 @@
+div#url_id data="{{ video.id }}"
+.wrapper.wrapper-content
+  .ibox-content.m-b-sm.border-bottom
+    .text-center.p-sm
+      button.btn.btn-success.btn-stadistic-update ng-click="update_stadistics()" data-loading-text="Actualizando..."
+        | Actualizar Estadísticas
+      h2
+        | {{ video.title }}
+    .screenshot.text-center ng-show="video.url_video.length > 0"
+      iframe allowfullscreen="" frameborder="0" height="360" mozallowfullscreen="" ng-src="{{ detailFrame }}" webkitallowfullscreen="" width="640"
+    .row
+      .text-center.p-sm
+        h3
+          | Ultima Actualizacion:
+          strong#data_updated_at.color_updated_at data-date="{{ video.created_at }}"
+            | {{ video.data_updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
+        span.color_updated_at
+          i.fa.fa-info-circle.fa-lg
+          span#text-updated-at
+        br
+        span ng-if="#{current_user.can_view_admin?}"
+          h4 Etiquetas
+        div  ng-if="#{current_user.can_view_admin?}" ng-repeat="tag_name in video.tag_names"
+          b
+            | {{ tag_name.key }} :
+          span
+            | {{ tag_name.value }}
+
+  .row
+    .col-md-12
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Reproducciones de Video
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_views }}
+          small Veces reproducido
+  .row
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Shares
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_shares }}
+          small Veces Compartido
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Reacciones
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_likes }}
+          small Reaccionaron!
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Comments
+        .ibox-content
+          h1.no-margins
+            | {{ video.total_comments }}
+          small Veces Comentado
+
+  .row
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Personas Alcanzadas
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_impressions_unique }}
+          small Personas
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Tiempo Promedio
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_avg_time_watched }}
+          small Segundos
+    .col-lg-4.col-md-4.col-sm-6
+      .ibox.float-e-margins.text-center
+        .ibox-title
+          span.label.label-success.pull-right Facebook
+          h5 Reproducciones Mayor a 10seg
+        .ibox-content
+          h1.no-margins
+            | {{ video.post_video_views_10s }}
+          small reproduciones 

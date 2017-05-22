@@ -1,9 +1,9 @@
 class DfpConnection
-  require 'dfp_api_statement'
+  #require 'dfp_api_statement'
   require 'dfp_api'
   require 'open-uri'
 
-  API_VERSION = :v201508
+  API_VERSION = :v201608
   MAX_RETRIES = 10
   RETRY_INTERVAL = 30
 
@@ -68,13 +68,13 @@ class DfpConnection
       report_job_status = report_service.get_report_job_status(report_job[:id])
 
       break unless report_job_status == 'IN_PROGRESS'
-      puts "Report with ID: %d is still running." % report_job[:id]
+      #puts "Report with ID: %d is still running." % report_job[:id]
       sleep(RETRY_INTERVAL)
     end
 
-    puts "Report job with ID: %d finished with status %s." %
-        [report_job[:id],
-         report_service.get_report_job_status(report_job[:id])]
+    #puts "Report job with ID: %d finished with status %s." %
+    #    [report_job[:id],
+    #     report_service.get_report_job_status(report_job[:id])]
 
     download_url = report_service.get_report_download_url(
         report_job[:id], export_format);
@@ -88,7 +88,7 @@ class DfpConnection
 
     CSV.foreach(file_name, converters: :numeric, headers: true) do |row|
       arr << {date: row['Dimension.DATE'], line_name: row['Dimension.LINE_ITEM_NAME'], line_id: row['Dimension.LINE_ITEM_ID'], impressions: row['Column.AD_SERVER_IMPRESSIONS'], clicks: row['Column.AD_SERVER_CLICKS'], ctr: row['Column.AD_SERVER_CTR']}
-      puts arr
+      #puts arr
     end
 
     File.delete(Rails.root + 'test.csv')

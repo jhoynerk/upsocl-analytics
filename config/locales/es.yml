@@ -1,5 +1,16 @@
 ---
 es:
+  status:
+    complete: Completada
+    serving: Sirviendo
+  actions:
+    new: Nuevo
+    edit: Editar
+    read: Leer
+    destroy: Eliminar
+    batch_action: Acción en Lotes
+    create: Crear
+    update: Actualizar
   date:
     abbr_day_names: [ Dom, Lun, Mar, Mié, Jue, Vie, Sab ]
     abbr_month_names: [ ~, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic ]
@@ -15,6 +26,15 @@ es:
     - :year
   activerecord:
     models:
+      active_admin/permission:
+        one: Permiso
+        other: Permisos
+      active_admin/permission:
+        one: Permiso
+        other: Permisos
+      active_admin/comment:
+        one: Comentario
+        other: Comentarios
       user:
         one: Usuario
         other: Usuarios
@@ -28,12 +48,36 @@ es:
         one: Estadistica de Pagina
         other: Estadisticas de Pagina
       country_stadistic:
-        one: Estadistica de pais
-        other: Estadisticas de pais
+        one: Estadistica de País
+        other: Estadisticas de País
       dfp_stadistic:
         one: Estadistica de DFP
         other: Estadisticas de DFP
+      reaction:
+        one: Reaccion
+        other: Reaciones
+      facebook_account:
+        one: Facebook
+        other: Facebook
+      agency:
+        one: Agencia
+        other: Agencias
+      mark:
+        one: Cliente / Marca
+        other: Clientes / Marcas
+      agencies_countries_marks:
+        one: Agencias
+        other: Agencias
+      url:
+        one: Artículo
+        other: Artículos
     attributes:
+      facebook_post:
+        tltle: Titulo
+        goal: Reproducciones comprometidas
+        post_impressions_unique: Personas Alcanzadas
+        post_impressions: Impresiones
+        post_video_views: Reproducciones
       user/active:
         true_value: Cliente Activo
         false_value: Cliente Inactivo
@@ -49,16 +93,38 @@ es:
       dfp_stadistic:
         date: Fecha
         impressions: Impresiones
-
       user:
         name: Nombre
         current_sign_in_at: Actual inicio de sesion
         created_at: Creado el
         active: Activo
+        role: Rol
         campaigns: Campañas
       campaign:
         name: Nombre
         users: Usuarios
+      agency:
+        name: Nombre
+      mark:
+        name: Nombre
+      country_mark:
+        agencies_countries_marks: agencias
+      url:
+        title: Titulo
+        committed_visits: Visitas comprometidas
+        status: Actualización
+        line_id: Line ID (DFP)
+        publication_date: Fecha de publicación
+        publication_end_date: Fecha fin de publicación
+        data: 
+      urls:
+        title: Titulo
+        committed_visits: Visitas comprometidas
+        status: Actualización
+        line_id: Line ID (DFP)
+        publication_date: Fecha de publicación
+        publication_end_date: Fecha fin de publicación
+        data: Url
   datetime:
     distance_in_words:
       about_x_hours:
@@ -203,6 +269,8 @@ es:
       short: "%a %d de %b de %Y"
     pm: pm
   active_admin:
+    scopes:
+      all: Todos
     dashboard: Inicio
     dashboard_welcome:
       welcome: "Bienvenido a Active Admin. Esta es la página de inicio predeterminada."
@@ -222,7 +290,7 @@ es:
     download: "Descargar:"
     has_many_new: "Añadir %{model}"
     has_many_delete: "Eliminar"
-    has_many_remove: "Quitar"
+    has_many_remove: "X"
     filters:
       buttons:
         filter: "Filtrar"
@@ -274,6 +342,8 @@ es:
       action_label: "%{title} seleccionado"
       labels:
         destroy: "Borrar"
+        can: "Permitir"
+        cannot: "No Permitir"
     comments:
       created_at: "Fecha de creación"
       resource_type: "Tipo de recurso"
@@ -336,3 +406,12 @@ es:
       block: "Lista"
       grid: "Grilla"
       blog: "Blog"
+    order: Orden
+  enumerations:
+    tag_type:
+      category: 'Categoría'
+      sub_category: 'Sub-Categoría'
+      format: 'Formato'
+      context: 'Contexto'
+      type_content: 'Tipo de Contenido'
+      tone: 'Tono'

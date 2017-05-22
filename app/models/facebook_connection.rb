@@ -1,8 +1,14 @@
 class FacebookConnection
-  def initialize(post_id, user_id)
+
+  def initialize(user_id, post_id = nil)
     @graph = Koala::Facebook::API.new(oauth_access_token, ENV['FB_APP_SECRET'])
     @post_id = post_id
     @user_id = user_id
+  end
+
+  def self.insights_metrics
+    [:post_consumptions, :post_impressions, :post_impressions_unique, :post_video_views, :post_video_views_10s,
+     :post_video_avg_time_watched, :post_video_view_time]
   end
 
   def object(id, fields)
@@ -13,34 +19,49 @@ class FacebookConnection
     "#{@user_id}_#{@post_id}"
   end
 
-  def consult_likes
-    object(user_post, "likes.summary(true)")
-  end
-
-  def consult_comments
-    object(user_post, "comments.summary(true)")
-  end
-
-  def consult_shares
-    object(user_post, "shares")
-  end
-
   def count_likes
-    consult_likes["likes"]["summary"]["total_count"]
+    data["reactions"]["summary"]["total_count"]
   end
 
   def count_comments
-    consult_comments["comments"]["summary"]["total_count"]
+    data["comments"]["summary"]["total_count"]
   end
 
   def count_shares
-    consult_shares["shares"]["count"]
+    (data["shares"]) ? data["shares"]["count"] : 0
   end
 
-  private
+  FacebookConnection.insights_metrics.each do |insight_method|
+    define_method insight_method do
+      insights_metrics
+      instance_variable_get("@#{insight_method}")
+    end
+  end
+
+  def data
+    @data ||= get_data
+  end
+
+  def insights_metrics
+    data['insights']['data'].each do |metric|
+      instance_variable_set("@#{metric['name']}", extract_insights_metric(metric))
+    end
+  end
+
+  def extract_insights_metric(metric)
+    metric['values'].first['value']
+  end
+
+  def get_data
+    @graph.get_object(user_post, fields: query_data)
+  end
+
+  def query_data
+    #api-2.9
+    "insights.metric(post_consumptions, post_impressions, post_impressions_unique, post_video_views_10s, post_video_views, post_video_avg_time_watched, post_video_view_time).period(lifetime){name,values}, reactions.summary(true).limit(0), comments.summary(true).filter(stream).limit(0), shares"
+  end
 
   def oauth_access_token
-    @oauth_access_token ||= Koala::Facebook::OAuth.new(ENV['FB_APP_ID'], ENV['FB_APP_SECRET']).get_app_access_token
+    @oauth_access_token = ENV['FB_ACCESS_TOKEN'];
   end
 end
-

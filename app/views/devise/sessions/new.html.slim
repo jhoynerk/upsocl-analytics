@@ -5,14 +5,14 @@
     h3 Bienvenido a Upsocl Analytics
     p
       | Herramienta escencial para el estudio de estadisticas de sus anuncios.
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| 
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .form-group
-        = f.email_field :email, autofocus: true, class:"form-control", placeholder:'Usuario' 
+        = f.email_field :email, autofocus: true, class:"form-control", placeholder:'Usuario'
       .form-group
-        = f.password_field :password, autocomplete: "off", class:"form-control", placeholder:'Contraseña' 
-        
+        = f.password_field :password, autocomplete: "off", class:"form-control", placeholder:'Contraseña'
+
       = f.submit "Ingresar", class:'btn btn-primary block full-width m-b'
-      
+
       = link_to new_password_path(resource_name) do
           small ¿Olvido su contraseña?
     p.m-t

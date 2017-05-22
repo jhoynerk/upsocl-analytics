@@ -60,3 +60,54 @@
     color: red;
   }
 }
+
+.absence-table{
+  th,td{
+    text-align: center;
+    &:last-child{
+      text-align: right;
+    }
+  }
+  .fa.fa-cloud-download{
+    font-size: 20px;
+  }
+}
+
+.pointer { cursor: pointer; cursor: hand; }
+
+.table-responsive {
+  overflow-x: hidden !important;
+}
+
+.container-search-in-title{
+  position: relative;
+  border-color: #1bb394;
+  border-width: 3px 0px;
+  .search-in-title{
+    position: absolute;
+    top: 10px;
+    display: block;
+    right: 0;
+  }
+}
+
+.container-search-chosen{
+  .chosen-container{
+    width: 100%;
+  }
+  .chosen-choices{
+    padding-bottom: 3px;
+    padding-top: 2px;
+  }
+}
+
+.btn-stadistic-update{
+  float: right;
+  margin-left: -170px;
+}
+
+.pagination.slim{
+  margin: 0 12px;
+  float: right;
+}
+

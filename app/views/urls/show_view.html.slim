@@ -3,194 +3,20 @@
     h2 Campa&ntilde;a: {{ url.campaign.name }}
     ol.breadcrumb
       li
-        a href="/"  Inicio
+        a href="" ui-sref='campaigns()'  Inicio
       li
         a href='/' ui-sref="campaigns" Campa&ntilde;as
       li.active
         strong
           | {{ url.campaign.name }}
   .col-sm-4
-    h2.ng-binding.text-center Rango de Fechas
-    input#daterange.input-sm.form-control.text-center.date-picker date-range-picker='' options="opts" ng-model="date" type="text" placeholder='Selecciones fechas a consultar' /
-    button.btn.btn-primary.btn-block onClick="get_report()" Generar Reporte
-div#url_id data="{{ url.id }}"
-.wrapper.wrapper-content
-  .ibox-content.m-b-sm.border-bottom
-    .text-center.p-lg
-      h2
-        | {{ url.title }}
-    .screenshot
-      img.center-block.img-responsive src="{{ url.screenshot.url }}"
-    .row
-      .text-center.p-lg
-        h3
-          | Ultima Actualizacion:
-          strong#data_updated_at.color_updated_at data-date="{{ url.created_at }}"
-            | {{ url.data_updated_at | date:'d / MM / yyyy, h:mm:ss a UTC-3' }}
-        span.color_updated_at
-          i.fa.fa-info-circle.fa-lg
-          span#text-updated-at
-
-  .row
-    .col-lg-12
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-primary.pull-right Google Analytics
-          h5 Visitas
-        .ibox-content
-          h1.no-margins
-            | {{ url.totals_stadistics.pageviews }}
-          small Visitas
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-warning.pull-right DoubleClick
-          h5 Impresiones
-        .ibox-content
-          h1.no-margins
-            div ng-if="url.publicity == true"
-              | {{ url.stadistics.dfp_stadistics.impressions }}
-            div ng-if="url.publicity != true"
-              | 0
-          small Impresiones de Anuncios
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-warning.pull-right DoubleClick
-          h5 Clicks
-        .ibox-content
-          h1.no-margins
-            div ng-if="url.publicity == true"
-              | {{ url.stadistics.dfp_stadistics.clicks }}
-            div ng-if="url.publicity != true"
-              | 0
-          small Clicks en Anuncios
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-warning.pull-right DoubleClick
-          h5 CTR
-        .ibox-content
-          h1.no-margins
-            div ng-if="url.publicity == true"
-              | {{ url.stadistics.dfp_stadistics.ctr | number: 2 }}%
-            div ng-if="url.publicity != true"
-              | 0 %
-          small % de clicks en Anuncios
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-success.pull-right Facebook
-          h5 Shares
-        .ibox-content
-          h1.no-margins
-            | {{ url.total_count_facebook.shares }}
-          small Veces Compartido
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-success.pull-right Facebook
-          h5 Likes
-        .ibox-content
-          h1.no-margins
-            | {{ url.total_count_facebook.likes }}
-          small Me gusta!
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-success.pull-right Facebook
-          h5 Comments
-        .ibox-content
-          h1.no-margins
-            | {{ url.total_count_facebook.comments }}
-          small Veces Comentado
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-danger.pull-right Google Analytcis
-          h5 Atención
-        .ibox-content
-          h1.no-margins
-            | {{ (url.totals_stadistics.avgtimeonpage * url.totals_stadistics.pageviews) / 60 | number: 2}}
-          small Tiempo de Atención Total (Horas)
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-danger.pull-right Google Analytcis
-          h5 Usuarios
-        .ibox-content
-          h1.no-margins
-            | {{ url.totals_stadistics.users }}
-          small Usuarios Unicos
-    .col-lg-4.col-md-4.col-sm-6
-      .ibox.float-e-margins.text-center
-        .ibox-title
-          span.label.label-danger.pull-right Google Analytics
-          h5 Tiempo Promedio
-        .ibox-content
-          h1.no-margins
-            | {{ url.totals_stadistics.avgtimeonpage }}
-          small Tiempo promedio (Min)
-  .row
-    .col-lg-6
-      .ibox.float-e-margins
-        .ibox-title
-          h5 Distribucion de Dispositivos
-        .ibox-content
-          .col-lg-8
-            div
-              canvas#device_chart height='150'
-          .col-lg-4
-            #device_legend
-          .clearfix
-    .col-lg-6
-      .ibox.float-e-margins
-        .ibox-title
-          h5 Distribucion de Tipos de Trafico
-        .ibox-content
-          .col-lg-8
-            div
-              canvas#traffic_chart height='150'
-          .col-lg-4
-            #traffic_legend
-          .clearfix
-  .row
-    .col-lg-12
-      .ibox.float-e-margins
-        .ibox-title
-          h5 Ultimos 7 dias de progreso
-        .ibox-content
-          .row
-            .col-lg-9
-              .flot-chart
-                #flot-dashboard-chart.flot-chart-content
-            .col-lg-3
-              ul.stat-list
-                li#visits-percent
-                  h2.no-margins#total-visits
-                  small Total de visitas
-                  .stat-percent
-                    | 0%
-                    i.fa.fa-level-up.text-navy
-                  .progress.progress-mini
-                    .progress-bar style=("width: 0%;")
-
-      .row
-        .col-lg-12
-          .ibox.float-e-margins
-            .ibox-title
-              h5 Visitas por pais
-            .ibox-content
-              .row
-                .col-lg-6
-                  table.table.table-hover.margin.bottom
-                    thead
-                      tr
-                        th Pais
-                        th.text-center Visitas
-                    tbody.table-country
-
-                .col-lg-6
-                  #world-map style=("height: 300px;")
-
-= javascript_include_tag 'graphics'
+    = render 'shared/date_range'
+  .col-sm-offset-4.col-sm-4
+    div ng-if="url.next_url != nil"
+      a.btn.btn-outline.btn-info.pull-right ui-sref='viewCampaignUrl({ id: url.next_url.id })'
+        | Siguiente
+        i.fa.fa-arrow-right
+    div ng-if="url.previous_url != nil"
+      a.btn.btn-outline.btn-info.pull-left ui-sref='viewCampaignUrl({ id: url.previous_url.id })'
+        i.fa.fa-arrow-left  Anterior
+= render 'urls/statistic_details'

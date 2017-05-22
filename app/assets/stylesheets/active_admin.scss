@@ -11,8 +11,61 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 @import "chosen.min";
+@import "datetimepicker/jquery-ui-timepicker-addon.css";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+
+.has_many_add{
+  background-image: none!important;
+  background-color: #5cb85c!important;
+  border-color: #4cae4c!important;
+}
+
+thead th {
+  background: #E5E6E7;
+}
+
+#admin_country_submit{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.has_many_remove{
+  background-image: none!important;
+  background-color: #d9534f!important;
+  border-color: #d43f3a!important;
+  float: right;
+  top: 5px;
+  position: absolute;
+  right: 5px;
+}
+
+.close{
+  background-image: none!important;
+  background-color: #f0ad4e!important;
+  border-color: #eea236!important;
+  float: right;
+  top: 5px;
+  position: absolute;
+  right: 50px;
+}
+
+.inputs input[type=text], .inputs input[type=number]{
+  width: 60%;
+}
+
+
+
+.agencies_countries_marks{
+  fieldset{
+    background: #ddd!important;
+  }
+}
+
+.select_search{
+  width: 100%!important;
+}

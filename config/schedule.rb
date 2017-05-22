@@ -5,15 +5,24 @@
 
 # Example:
 #
-set :environment, "production"
-set :output, "log/cron_log.log"
-#
-every 1.day, :at => '10:00 am' do
-  rake "analytics:add_records[day]"
+every 1.day, :at => '1:30 am' do
+  command "backup perform -t db_backup"
 end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
 
-# Learn more: http://github.com/javan/whenever
+set :environment, "production"
+set :output, "/data/log_upsocl/cron_log.log"
+
+
+every 1.day, :at => '2:00 am' do
+  rake "facebook:add_data"
+end
+
+every 1.day, :at => '2:30 am' do
+  rake '"analytics:add_records[week, day]"'
+end
+
+every 1.month, :at => '3:30 am' do
+  rake '"analytics:add_records[month, month]"'
+end
+
+
